@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE"
+ content="text/html; charset=windows-1252">
+  <title>PD - Práctica 3</title>
+  <meta name="GENERATOR" content="OpenOffice.org 2.2  (Win32)">
+  <meta name="AUTHOR" content="José Marí­a Molinelli">
+  <meta name="CREATED" content="20071013;10373648">
+  <meta name="CHANGEDBY" content="José M. Molinelli">
+  <meta name="CHANGED" content="20081026;10071554">
+  <meta name="ProgId" content="Word.Document">
+  <meta name="Originator" content="Microsoft Word 10">
+<!-- saved from url=(0059)http://www.lfcia.org/staff/molinelli/PD/04-05/Practica1.htm --><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Tabla normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!-- saved from url=(0053)http://www.lfcia.org/~molineli/PD/03-04/Practica1.htm --><!--[if gte mso 9]><xml>
+ <u1:DocumentProperties>
+  <u1:Author>José María Molinelli</u1:Author>
+  <u1:LastAuthor>José María Molinelli</u1:LastAuthor>
+  <u1:Revision>6</u1:Revision>
+  <u1:TotalTime>37</u1:TotalTime>
+  <u1:Created>2003-10-09T14:41:00Z</u1:Created>
+  <u1:LastSaved>2003-10-09T19:30:00Z</u1:LastSaved>
+  <u1:Pages>2</u1:Pages>
+  <u1:Words>418</u1:Words>
+  <u1:Characters>2384</u1:Characters>
+  <u1:Lines>19</u1:Lines>
+  <u1:Paragraphs>4</u1:Paragraphs>
+  <u1:CharactersWithSpaces>2927</u1:CharactersWithSpaces>
+  <u1:Version>9.2812</u1:Version>
+ </u1:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <u2:WordDocument>
+  <u2:Zoom>150</u2:Zoom>
+  <u2:HyphenationZone>21</u2:HyphenationZone>
+  <u2:DisplayHorizontalDrawingGridEvery>0</u2:DisplayHorizontalDrawingGridEvery>
+  <u2:DisplayVerticalDrawingGridEvery>0</u2:DisplayVerticalDrawingGridEvery>
+  <u2:UseMarginsForDrawingGridOrigin/>
+  <u2:Compatibility>
+   <u2:FootnoteLayoutLikeWW8/>
+   <u2:ShapeLayoutLikeWW8/>
+   <u2:AlignTablesRowByRow/>
+   <u2:ForgetLastTabAlignment/>
+   <u2:LayoutRawTableWidth/>
+   <u2:LayoutTableRowsApart/>
+  </u2:Compatibility>
+ </u2:WordDocument>
+</xml><![endif]-->
+  <style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm }
+		P { color: #000000 }
+		P.msonormal { margin-bottom: 0cm; font-family: "Times New Roman"; font-size: 10pt }
+		A:link { color: #0000ff }
+		A:visited { color: #800080 }
+	-->
+	</style>
+  <meta content="José M. Molinelli" name="author">
+</head>
+<body dir="ltr" lang="es-ES" link="#0000ff" text="#000000"
+ vlink="#800080">
+<p align="center"><font style="font-size: 16pt;" size="4"><span
+ style="font-weight: bold;">Programación
+Declarativa</span><br>
+2009-2010<br>
+Práctica 3<br>
+<br>
+</font></p>
+<ol>
+  <li>
+    <p><span style="font-family: Arial;">En</span><font face="Arial">
+ocaml pueden hacerse definiciones recursivas si añadimos la palabra
+reservada "rec" justo después de "let". Así, por ejemplo, podría
+definirse la función "factorial":</font> </p>
+    <p style="margin-left: 1.68cm;"><font face="Courier New"><font
+ size="4">let
+rec fact n = <br>
+&nbsp;&nbsp;&nbsp; if n &lt;= 1 then 1 else n * fact
+(n-1);;</font></font></p>
+  </li>
+</ol>
+<div style="margin-left: 40px; font-family: Arial;">
+<p><span style="font-weight: bold;">Defina en ocaml una función fib:
+int </span><span
+ style="font-family: Courier New,Courier,monospace; font-weight: bold;">-&gt;</span><span
+ style="font-weight: bold;"> int, que sirva para representar la
+sucesión de Fiboacci. (Recuerde que, para cada n natural,&nbsp; fib n =
+n si n es 0 o 1 y en otro caso fib n = fib (n-1) + fib (n-2)).</span><br>
+</p>
+<p><span style="font-weight: bold;">Defina en ocaml una funcion sumto:
+int </span><span
+ style="font-family: Courier New,Courier,monospace; font-weight: bold;">-&gt;</span><span
+ style="font-weight: bold;"> int, que, para cada n natural, devuelva la
+suma de todos los naturales de 0 a n.<br>
+</span><br>
+</p>
+</div>
+<ol start="2">
+  <li>
+    <p><span style="font-family: Arial;">El principal problema de estas
+definiciones de <span style="font-style: italic;">fact</span> y <span
+ style="font-style: italic;">fib</span> es que, al tratarse de
+funciones que crecen muy rápidamente, en seguida los valores se salen
+del rango del tipo de dato int.</span></p>
+  </li>
+</ol>
+<div style="margin-left: 40px;"><span
+ style="font-family: Arial; font-weight: bold;">Redefina las funciones <span
+ style="font-style: italic;">fact</span> y <span
+ style="font-style: italic;">fib</span> para que tengan tipo int <span
+ style="font-family: Courier New,Courier,monospace;">-&gt;</span> float
+y podamos calcular así valores más grandes.</span><br>
+<span style="font-family: Arial;"></span></div>
+<p style="margin-left: 40px;"><span style="font-family: Arial;"></span><span
+ style="font-family: Arial;"><br>
+</span></p>
+<ol start="3">
+  <li><span style="font-family: Arial;">El problema del tipo float es
+que nos trabaja con una aritmética aproximada. Así, las funciones
+anteriores nos dan sólo una idea de la magnitud de las imágenes, pero
+no su valor exacto. En el módulo Num de la librería Num está definido
+un tipo de dato "num", que sirve (entre otras cosas) para representar
+en ocaml números enteros arbitrariamente grandes y operar con ellos con
+precisión absoluta. </span></li>
+</ol>
+<p style="margin-left: 40px;"><span style="font-family: Arial;"></span><span
+ style="font-family: Arial;">Al comienzo del capítulo dedicado en el
+manual de ocaml a la librería Num, se explica cómo utilizar esta
+librería, tanto desde el compilador interactivo como desde el
+compilador <span style="font-style: italic;">batch</span>.</span></p>
+<p style="margin-left: 40px;"><span style="font-family: Arial;"></span><span
+ style="font-family: Arial;">Recuerde que para utilizar los nombres
+definidos dentro de un módulo (que no sea de la "core library") es
+preciso "calificarlos" poniendo delante el nombre del módulo con un
+punto (por ejemplo, </span><span style="font-family: 'Courier New';">Num.add_num</span><span
+ style="font-family: Arial;">). Esto puede evitarse con la directiva de
+compilación open (en este caso sería </span><span
+ style="font-family: 'Courier New';">open Num;;</span><span
+ style="font-family: Arial;">) que indica al compilador cómo resolver
+los nombre no "calificados". Esto permite además utilizar los
+operadores que se usan en modo infijo (entre dos operandos) y que en el
+manual aparecen entre paréntesis. En el caso del módulo Num puede
+resultar muy cómodo utilizar operadores como (</span><span
+ style="font-family: 'Courier New';">+/)</span><span
+ style="font-family: Arial;">,</span><span
+ style="font-family: 'Courier New';"> </span><span
+ style="font-family: Arial;"><span style="">&nbsp;</span>(</span><span
+ style="font-family: 'Courier New';">-/<span class="GramE">)<span
+ style="font-family: Arial;"> ,</span></span></span><span
+ style="font-family: Arial;"> (</span><span
+ style="font-family: 'Courier New';"> */</span><span
+ style="font-family: Arial;">) <span style="">&nbsp;</span>o <span
+ style="">&nbsp;</span>(</span><span style="font-family: 'Courier New';">//</span><span
+ style="font-family: Arial;">).</span></p>
+<p style="margin-left: 40px;"><span style="font-family: Arial;"></span><span
+ style="font-family: Arial; font-weight: bold;">Redefina en ocaml las
+funciones </span><span
+ style="font-family: 'Courier New'; font-weight: bold;">fact</span><span
+ style="font-family: Arial; font-weight: bold;"> y </span><span
+ style="font-family: 'Courier New'; font-weight: bold;">fib</span><span
+ style="font-family: Arial; font-weight: bold;"> para que tengan tipo </span><span
+ style="font-family: 'Courier New'; font-weight: bold;">int -&gt; num</span><span
+ style="font-family: Arial; font-weight: bold;">, y puedan así
+calcularse valores mucho más grandes.<br>
+<br>
+</span></p>
+<ol start="4">
+  <li>
+    <p><b style=""><span style="font-family: Arial;"></span></b><b
+ style=""><span style="font-family: Arial;">Defina dos funciones </span></b><b
+ style=""><span style="font-family: 'Courier New';">fact_s: int -&gt;
+string </span></b><b style=""><span style="font-family: Arial;"><span
+ style="">&nbsp;</span>y <span style="">&nbsp;</span></span></b><b
+ style=""><span style="font-family: 'Courier New';">fib_s: int -&gt;
+string</span></b><b style=""><span style="font-family: Arial;">, que
+den el resultado de las funciones "factorial" y "de Fibonacci"
+convertido a cadena de caracteres.<br>
+    <br>
+    </span></b></p>
+  </li>
+  <li class="MsoNormal"
+ style="color: rgb(0, 0, 153); font-family: Arial;"><span
+ style="color: rgb(0, 0, 0);">Cuando se
+solicita la ejecución de un programa desde la línea
+de comandos del sistema operativo (</span><i
+ style="color: rgb(0, 0, 0);">shell</i><span
+ style="color: rgb(0, 0, 0);">), pueden a la vez
+pasársele parámetros, escribiéndolos
+después del nombre del programa. Desde un programa ocaml
+puede accederse a los valores de estos parámetros
+consultando el vector de </span><i style="color: rgb(0, 0, 0);">strings</i><span
+ style="color: rgb(0, 0, 0);"> predefinido Sys.argv. El nombre del
+programa
+será el valor del elemento 0 del vector (Sys.argv.(0)) el primer
+parámetro será el valor del elemento 1 (Sys.argv.(1)), etc. El
+número de </span><i style="color: rgb(0, 0, 0);">palabras</i><span
+ style="color: rgb(0, 0, 0);"> utilizadas en la línea de
+comandos al invocar el programa coincidirá con el valor de
+la expresión&nbsp; Array.length Sys.argv.</span><br
+ style="color: rgb(0, 0, 0);">
+    <br style="color: rgb(0, 0, 0);">
+    <span style="color: rgb(0, 0, 0);">Utilizando los valores de este
+vector y la función
+print_endline (ya
+usada en la práctica 1), puede construirse un programa que
+calcule el factorial de un número tomando el argumento de la
+línea de comandos y mostrando el resultado por la pantalla
+.</span><br style="color: rgb(0, 0, 0);">
+    <p class="MsoNormal" style="margin-left: 27pt; color: rgb(0, 0, 0);"><font
+ size="+1"><span style="font-family: monospace;">% fact 10</span><br
+ style="font-family: monospace;">
+    <span style="font-family: monospace;">3628800</span><br
+ style="font-family: monospace;">
+    <span style="font-family: monospace;">%</span></font><br>
+    <br>
+    </p>
+    <span style="color: rgb(0, 0, 0);">Escriba y compile un programa
+“fact” (ejecutable de
+forma independiente) que calcule y muestre el factorial de un
+número que se le indicará desde la línea de
+comandos al invocarlo.</span><br>
+    <br>
+    <br>
+  </li>
+  <li class="MsoNormal" style="color: rgb(0, 0, 153);"><span
+ style="font-family: Arial;">Haga lo mismo
+con un programa “fib” para la función de
+Fibonacci.</span><br style="font-family: Arial;">
+    <p class="MsoNormal"
+ style="margin-left: 27pt; font-family: monospace;"><span
+ style="color: rgb(0, 0, 153);"><font style="font-family: monospace;"
+ size="+1">% fib 10<br>
+55<br>
+%</font><br>
+    </span></p>
+  </li>
+</ol>
+<p><br>
+</p>
+</body>
+</html>
