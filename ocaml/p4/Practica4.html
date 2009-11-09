@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+
+
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
+  <title>PD - Práctica 4</title>
+  <meta name="GENERATOR" content="OpenOffice.org 2.2  (Win32)">
+  <meta name="AUTHOR" content="José Marí­a Molinelli">
+  <meta name="CREATED" content="20071013;10373648">
+  <meta name="CHANGEDBY" content="José M. Molinelli">
+  <meta name="CHANGED" content="20081102;5225451">
+  <meta name="ProgId" content="Word.Document">
+  <meta name="Originator" content="Microsoft Word 10">
+<!-- saved from url=(0059)http://www.lfcia.org/staff/molinelli/PD/04-05/Practica1.htm --><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Tabla normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!-- saved from url=(0053)http://www.lfcia.org/~molineli/PD/03-04/Practica1.htm --><!--[if gte mso 9]><xml>
+ <u1:DocumentProperties>
+  <u1:Author>José María Molinelli</u1:Author>
+  <u1:LastAuthor>José María Molinelli</u1:LastAuthor>
+  <u1:Revision>6</u1:Revision>
+  <u1:TotalTime>37</u1:TotalTime>
+  <u1:Created>2003-10-09T14:41:00Z</u1:Created>
+  <u1:LastSaved>2003-10-09T19:30:00Z</u1:LastSaved>
+  <u1:Pages>2</u1:Pages>
+  <u1:Words>418</u1:Words>
+  <u1:Characters>2384</u1:Characters>
+  <u1:Lines>19</u1:Lines>
+  <u1:Paragraphs>4</u1:Paragraphs>
+  <u1:CharactersWithSpaces>2927</u1:CharactersWithSpaces>
+  <u1:Version>9.2812</u1:Version>
+ </u1:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <u2:WordDocument>
+  <u2:Zoom>150</u2:Zoom>
+  <u2:HyphenationZone>21</u2:HyphenationZone>
+  <u2:DisplayHorizontalDrawingGridEvery>0</u2:DisplayHorizontalDrawingGridEvery>
+  <u2:DisplayVerticalDrawingGridEvery>0</u2:DisplayVerticalDrawingGridEvery>
+  <u2:UseMarginsForDrawingGridOrigin/>
+  <u2:Compatibility>
+   <u2:FootnoteLayoutLikeWW8/>
+   <u2:ShapeLayoutLikeWW8/>
+   <u2:AlignTablesRowByRow/>
+   <u2:ForgetLastTabAlignment/>
+   <u2:LayoutRawTableWidth/>
+   <u2:LayoutTableRowsApart/>
+  </u2:Compatibility>
+ </u2:WordDocument>
+</xml><![endif]-->
+  <style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm }
+		P { color: #000000 }
+		P.msonormal { margin-bottom: 0cm; font-family: "Times New Roman"; font-size: 10pt }
+		A:link { color: #0000ff }
+		A:visited { color: #800080 }
+	-->
+	</style>
+  <meta content="J. M. Molinelli" name="author">
+</head><body dir="ltr" lang="es-ES" link="#0000ff" text="#000000" vlink="#800080">
+<p align="center"><font style="font-size: 16pt;" size="4"><font style="font-weight: bold;" size="5">Programación
+Declarativa</font><font size="4"><br>
+</font><font style="font-size: 16pt;" size="4">2009-2010<br>
+Práctica 4</font></font></p>
+<p style="margin-bottom: 0cm;" align="center"><br>
+</p>
+<ol>
+  <li>
+    <p><font size="3"><font face="Arial">Intente deducir "a mano" cuál
+será el resultado de la compilación y ejecución de las siguientes
+expresiones. Escriba el resultado que espera y compruebe luego la
+respuesta real del compilador al introducir esas frases. Tome buena
+nota de los tipos de dato que vayan apareciendo, así como de todas las
+respuestas inesperadas y trate de explicar su razón. Si se produjera
+algún error, lea atentamente el mensaje del compilador y tome nota de
+la causa.</font></font></p>
+  </li>
+</ol>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">[1];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4"><font face="monospace"><font size="4">[3;2;1];;</font></font></font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4"><font face="monospace"><font size="4">[1;"dos"];;</font></font></font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4"><font face="monospace"><font size="4">[1;2.0];;</font></font></font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4"><font face="monospace"><font size="4">2
+:: [3;4];;</font></font></font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4"><font face="monospace"><font size="4">List.length
+[3;3;3;3];;</font></font></font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4"><font face="monospace"><font size="4">List.nth
+[5;4;3;2;1] 2;;</font></font></font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4"><font face="monospace"><font size="4">List.nth
+[5;4;3;2;1] 1 + List.nth [5;4] 0;;</font></font></font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">[1;1+1;1+1+1];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">[1; 2] @ [3; 4];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.hd [1; 2; 3];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.tl [1; 2; 3];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.hd [0];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.tl [0];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">['a'; 'e'; 'i'; 'o'; 'u'];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.rev ['a'; 'b'; 'c'];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">[];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">"hola" :: [];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">[1,2,3];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">[1; "dos"; 3];;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">0 :: [1; 2; 3];;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">[];;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">3 :: [];;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">2 :: (3 :: []);;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">1 :: (2 :: (3 :: []));;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(1 :: 2 :: 3 ::[]) ;;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.length ([1; 2] @ [3; 4]);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.append ['a'; 'e'; 'i']
+(List.tl ['o'; 'u']);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.hd [];; </font></font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">List.tl [];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">function x -&gt; [x];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; [x]) 0;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">function x -&gt; List.hd x,
+List.tl x;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; List.hd x,
+List.tl x) [3;2;1];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; List.hd x,
+List.tl x) [[]];;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">function x -&gt; [x; [x]];;</font></font></p>
+<p style="margin-left: 0.64cm; margin-bottom: 0.21cm;">
+<br>
+<br>
+<br>
+</p>
+<ol start="2">
+  <li>
+    <p><font face="Arial">La siguiente definición se refiere a una
+función que devuelve la suma de una lista de enteros.<br>
+    </font><font face="Courier New"><font size="4"><br>
+let
+rec sumalista l = <br>
+&nbsp;&nbsp;&nbsp; if l = [] then 0 <br>
+&nbsp;&nbsp;&nbsp;
+else List.hd l + sumalista (List.tl l);;</font></font><br>
+    <font face="Arial"><br>
+Las definiciones de funciones sobre listas suelen realizarse utilizando
+patrones ("pattern-matching"):<br>
+    <br>
+    </font><font face="Courier New"><font size="4">let
+rec sumalista = function<br>
+&nbsp;&nbsp;&nbsp; [] -&gt; 0<br>
+&nbsp; | h::t -&gt; h + sumalista t<br>
+    <br>
+    </font></font><font face="Arial">En general, estas definiciones
+resultan más claras al evitar el uso de las funciones "hd" y "tl"
+y&nbsp; expresiones "if...then...else..." (a veces anidadas).</font><br>
+    <font face="Courier New"><font size="4"><br>
+    </font></font></p>
+  </li>
+</ol>
+<p style="margin-left: 1.06cm;"><!--[if !supportLists]--><font face="Arial">Defina
+una función </font><font style="font-family: Arial; font-style: italic;" face="Courier New"><b>nprimeros:
+int
+-&gt; int list</b></font><span style="font-style: italic;">&nbsp; </span><font face="Arial">que devuelva, para cada
+número </font><font face="Arial"><i>n</i></font><font face="Arial">,
+la lista de los primeros </font><font face="Arial"><i>n </i></font><font face="Arial">números
+naturales. Así, por ejemplo, </font><font face="Arial"><i>nprimeros
+4</i></font><font face="Arial"> deberá ser la lista </font><font face="Arial"><i>[1;
+2; 3; 4]</i></font><font face="Arial">. <br>
+</font><font face="Arial"><br>
+</font><font face="Arial"><font size="3">Defina
+una función</font></font><font size="3"> </font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3"><b>from_to:
+int -&gt;</b></font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3"> </font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3"><b>int
+-&gt;</b></font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3"> </font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3"><b>int
+list</b></font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3">,</font></font><font size="3">
+</font><font face="Arial"><font size="3">de forma que </font></font><font face="Arial"><font size="3"><i>from_to
+m n </i></font></font><font face="Arial"><font size="3">sea la lista
+ascendente de los enteros mayores o iguales que </font></font><font face="Arial"><font size="3"><i>m</i></font></font><font size="3">
+</font><font face="Arial"><font size="3">y menores o iguales que </font></font><font face="Arial"><font size="3"><i>n.</i></font></font><font size="3">
+</font><font face="Arial"><font size="3">Así, por ejemplo,
+</font></font><font face="Arial"><font size="3"><i>from_to 3 7 </i></font></font><font face="Arial"><font size="3">sería
+la lista </font></font><font face="Arial"><font size="3"><i>[3; 4; 5;
+6; 7].<br>
+<br>
+</i></font></font><font face="Arial">Defina las
+funciónes&nbsp;</font> <font style="font-family: Arial; font-style: italic;" face="Courier New"><b>lmax:'a
+list -&gt; 'a&nbsp;</b></font><span style="font-family: Arial; font-style: italic;"> </span><font style="font-family: Arial; font-style: italic;" face="Arial">y &nbsp;</font><span style="font-family: Arial; font-style: italic;">
+</span><font style="font-family: Arial; font-style: italic;" face="Courier New"><b>lmin:‘a list -&gt;‘a</b></font>&nbsp;
+<font face="Arial">que devuelvan respectivamente el mayor y el menor
+valor de los que aparecen en una lista.<br>
+<br>
+Defina una función&nbsp;</font>
+<font style="font-family: Arial; font-style: italic;" face="Courier New"><b>rango:'a
+list -&gt;'a * 'a</b></font>&nbsp;&nbsp;
+<font face="Arial">tal que si&nbsp;</font> <font style="font-family: Arial; font-style: italic;" face="Courier New"><b>rango
+l = (a,b)</b></font>&nbsp; <font face="Arial">entonces&nbsp;</font>
+<font style="font-family: Arial; font-style: italic;" face="Courier New"><b>lmin
+l = a</b></font>&nbsp;&nbsp; <font face="Arial">y&nbsp;&nbsp;</font>
+<font style="font-family: Arial; font-style: italic;" face="Courier New"><b>lmax
+l = b</b></font><font face="Arial">.</font><br>
+<font face="Arial"><br>
+</font><font face="Arial"><font size="3">Defina
+una función</font></font><font size="3"> </font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3"><b>ordenada:
+'a list -&gt;</b></font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3">
+</font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3"><b>bool</b></font></font><font style="font-family: Arial; font-style: italic;" face="Courier New"><font size="3">
+</font></font><font face="Arial"><font size="3">que indique si una
+lista tiene sus elementos ordenados según el orden </font></font><font face="Arial"><font size="3"><i>(&lt;=)</i></font></font><font face="Arial"><font size="3">.
+Así, por ejemplo, </font></font><font face="Arial"><font size="3"><i>ordenada
+[2; 5; 5; 7]</i></font></font><font size="3">&nbsp; </font><font face="Arial"><font size="3">valdría</font></font><font size="3">
+</font><font face="Arial"><font size="3"><i>true</i></font></font><font face="Arial"><font size="3">,
+pero </font></font><font face="Arial"><font size="3"><i>ordenada ['a';
+'u'; 'i']</i></font></font><font size="3">&nbsp; </font><font face="Arial"><font size="3">valdría
+</font></font><font face="Arial"><font size="3"><i>false.</i></font></font>
+<br>
+</p>
+<div style="margin-left: 40px;"><span style="font-family: Arial;">Defina
+una
+función&nbsp; </span><span style="font-style: italic; font-weight: bold; font-family: Arial;">del_fst
+: 'a-&gt; 'a
+list -&gt; 'a list</span><span style="font-weight: bold; font-family: Arial;">&nbsp;</span><span style="font-family: Arial;">
+que elimine la
+primera aparición (si la hay) de un elemento en una lista. </span><br>
+<span style="font-family: Arial;">Es decir, </span><span style="font-style: italic; font-family: Arial; font-weight: bold;">del_fst&nbsp;
+x&nbsp; l</span><span style="font-family: Arial;"><span style="font-weight: bold;">&nbsp;</span>
+será
+la
+lista&nbsp; </span><span style="font-style: italic; font-family: Arial; font-weight: bold;">l</span><span style="font-family: Arial;">&nbsp; si</span><span style="font-style: italic; font-family: Arial;">&nbsp; <span style="font-weight: bold;">x</span></span><span style="font-family: Arial;">&nbsp; no aparece en&nbsp;<span style="font-weight: bold;"> </span></span><span style="font-style: italic; font-family: Arial; font-weight: bold;">l</span><span style="font-family: Arial;"> , o, en otro caso, la
+concatenación de dos listas</span><span style="font-style: italic; font-family: Arial;"> <span style="font-weight: bold;">l1</span></span><span style="font-family: Arial; font-weight: bold;">
+y&nbsp; </span><span style="font-style: italic; font-family: Arial; font-weight: bold;">l2</span><span style="font-family: Arial;">&nbsp; (</span><span style="font-style: italic; font-family: Arial; font-weight: bold;">l1
+@ l2</span><span style="font-family: Arial;">)&nbsp; tales que </span><span style="font-style: italic; font-family: Arial; font-weight: bold;">x</span><span style="font-family: Arial;"> no aparece en&nbsp; </span><span style="font-style: italic; font-family: Arial; font-weight: bold;">l1</span><span style="font-family: Arial;">&nbsp; y que</span><span style="font-style: italic; font-family: Arial;"> <span style="font-weight: bold;">l = l1 @ x :: l2</span> </span><span style="font-family: Arial;">. </span><br style="font-family: Arial;">
+<span style="font-family: Arial;">(Así, por ejemplo, <span style="font-style: italic;">del_fst 3 [2;
+3; 5; 3; 2] = [2; 5; 3; 2]</span> &nbsp;
+y&nbsp; <span style="font-style: italic;">del_fst 4 [2; 3; 5; 3;
+2]&nbsp; =&nbsp; [2; 3; 5; 3; 2]</span>).</span><br>
+<br>
+<span style="font-family: Arial;">Defina una
+función&nbsp; </span><span style="font-style: italic; font-weight: bold; font-family: Arial;">del_all
+: 'a -&gt; 'a list -&gt; 'a list</span><span style="font-family: Arial;">&nbsp;
+que
+elimine todas
+las apariciones de un elemento en una lista. </span><br style="font-family: Arial;">
+</div>
+<div style="margin-left: 40px; font-family: Arial;">(Así, por
+ejemplo,&nbsp; <span style="font-style: italic;">dell_all 3 [2; 3; 5;
+3; 2] = [2; 5; 2]</span> &nbsp;
+y&nbsp; <span style="font-style: italic;">del_all 4 [2; 3; 5; 3;
+2]&nbsp; =&nbsp; [2; 3; 5; 3; 2]</span>).<br>
+</div>
+<p style="margin-left: 40px;"><span style="font-family: Arial;">Defina
+una función</span><span style="font-style: italic; font-family: Arial;">&nbsp;
+<span style="font-weight: bold;">dif_1
+:</span></span><span style="font-weight: bold; font-family: Arial;"> </span><span style="font-style: italic; font-weight: bold; font-family: Arial;">'a
+list -&gt; 'a list -&gt;</span><span style="font-style: italic; font-family: Arial;"><span style="font-weight: bold;"> 'a list</span>&nbsp; </span><span style="font-family: Arial;">tal que</span><span style="font-style: italic; font-family: Arial;">&nbsp; <span style="font-weight: bold;">dif_1&nbsp;
+l1&nbsp; l2</span>&nbsp; </span><span style="font-family: Arial;">sea
+la
+lista que resulta al eliminar en la lista&nbsp;</span><span style="font-style: italic; font-family: Arial;"> <span style="font-weight: bold;">l1</span></span><span style="font-family: Arial;">&nbsp; (cuando sea posible) un
+elemento por cada elemento de </span><span style="font-style: italic; font-family: Arial; font-weight: bold;">l2</span><span style="font-family: Arial;">&nbsp;
+(con la función </span><span style="font-style: italic; font-family: Arial;">del_fst</span>).<br>
+<span style="font-family: Arial;">(Así, por&nbsp; ejemplo,&nbsp; <span style="font-style: italic;">dif_1 [2; 3; 5; 3; 2] [1; 2; 3; 2] = [5;
+3]</span>)</span><br>
+</p>
+<div style="margin-left: 40px;"><span style="font-family: Arial;">Defina
+una función&nbsp; </span><span style="font-style: italic; font-weight: bold; font-family: Arial;">dif_2
+:</span><span style="font-weight: bold; font-family: Arial;"> </span><span style="font-style: italic; font-weight: bold; font-family: Arial;">'a
+list -&gt; 'a list -&gt; 'a list</span><span style="font-weight: bold; font-family: Arial;">&nbsp;</span><span style="font-family: Arial;"> tal que&nbsp;<span style="font-weight: bold;"> </span></span><span style="font-style: italic; font-family: Arial;"><span style="font-weight: bold;">dif_2&nbsp; l1&nbsp;
+l2</span>&nbsp; </span><span style="font-family: Arial;">sea
+la lista que
+resulta al eliminar de</span><span style="font-style: italic; font-family: Arial;"> <span style="font-weight: bold;">l1</span></span><span style="font-family: Arial;">&nbsp;
+todas las apariciones de los elementos de </span><span style="font-style: italic; font-family: Arial; font-weight: bold;">l2</span><span style="font-family: Arial;">.</span><br>
+<span style="font-family: Arial;">(Así, por ejemplo,&nbsp; <span style="font-style: italic;">dif_2 [2; 3; 5; 3; 2] [1; 2; 3; 2] = [5]</span>)</span><br>
+<br>
+</div>
+<p><span style="font-family: Arial;"><br>
+</span></p>
+<p style="margin-left: 1.06cm;"><br>
+<br>
+<br>
+</p>
+<p><br>
+<br>
+</p>
+</body></html>
