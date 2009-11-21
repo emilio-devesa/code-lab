@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE"
+ content="text/html; charset=windows-1252">
+  <title>PD - Práctica 6</title>
+  <meta name="GENERATOR" content="OpenOffice.org 2.0  (Win32)">
+  <meta name="AUTHOR" content="José Marí-a Molinelli">
+  <meta name="CREATED" content="20061105;12473220">
+  <meta name="CHANGEDBY" content="José María Molinelli Barba">
+  <meta name="CHANGED" content="20061105;13102042">
+  <style>
+	<!--
+		P { font-family: "Times New Roman"; font-size: 12pt }
+		P.msonormal { margin-bottom: 0cm; font-family: "Times New Roman"; font-size: 12pt }
+	-->
+	</style>
+  <meta content="José Marí­a Molinelli" name="author">
+</head>
+<body dir="ltr" lang="es-ES">
+<p class="msonormal" style="margin-bottom: 0.56cm;" align="center"><font
+ face="Arial"><font style="font-size: 16pt;" size="4">Programación
+Declarativa<br>
+2009-2010<br>
+Práctica 6<br>
+<br>
+</font></font></p>
+<ol>
+  <li style="font-family: Arial;">
+    <p style="margin-bottom: 0cm;"><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Considere
+la siguiente definición en </span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i>ocaml</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES">
+para el tipo de dato </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>‘a
+arbolgen</i></span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">
+(que sirve para representar árboles con nodos etiquetados con
+valores de tipo </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>‘a</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES">,
+en los que de cada nodo puede colgar cualquier número de
+ramas)</span></font></font></font></p>
+    <p style="margin-bottom: 0cm;" lang="es-ES"><font color="#000000"><font
+ face="Courier New, monospace"><font size="3">type
+'a arbolgen = Nodo of 'a * 'a arbolgen list;;</font></font></font></p>
+    <p style="margin-bottom: 0cm;"><br>
+    <font color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES">de
+modo que, por ejemplo, el valor </span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i>ag1</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES">
+definido por</span></font></font></font></p>
+    <p style="margin-bottom: 0cm;"><br>
+    <font color="#000000"><font face="Courier New, monospace"><font
+ size="3">let
+ag1 = Nodo (0, [Nodo (1, []); Nodo (2, []);</font></font></font><font
+ color="#000000"><font face="Courier New, monospace"><font size="3"><span
+ lang="en-GB"> Nodo
+(3, []); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Nodo (4, [Nodo (5, [])]);</span></font></font></font><font
+ color="#000000"><font face="Courier New, monospace"><font size="3"><span
+ lang="en-GB"> Nodo
+(6, [])])</span></font></font></font></p>
+    <p style="margin-bottom: 0cm;" lang="es-ES"><br>
+    <font color="#000000"><font face="Arial, sans-serif"><font size="3">correspondería
+al árbol</font></font></font></p>
+    <p style="margin-bottom: 0cm;" lang="es-ES"><img
+ style="width: 591px; height: 207px;" src="tree.gif" alt=""> </p>
+    <p style="margin-bottom: 0cm;"><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina la
+función</span></font></font></font><font color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>numnodos
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> int</i>&nbsp; que
+devuelva el número de nodos de un árbol, de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>
+numnodos ag1 = 7<br>
+    <br>
+    </i></span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina
+una función</span></font></font></font><font color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>nodos
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> 'a list</i>&nbsp; que
+devuelva, para cada árbol,&nbsp; una lista con sus nodos, de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>nodos
+ag1 = [0; 1; 2; 3; 4; 5; 6]&nbsp;</i> (no necesariamente en ese orden).<br>
+    <br>
+    </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina la
+función</span></font></font></font><font color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>nodomax
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> 'a&nbsp; </i>que
+devuelva el valor máximo de los nodos de un árbol, de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>nodomax
+ag1 = 6<br>
+    </i></span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><br>
+    </span></font></font></font></p>
+    <font color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES">Defina la función</span></font></font></font><font
+ color="#000000"><font face="Courier New, monospace"><font size="3"><span
+ lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>raiz
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> 'a</i>&nbsp; que
+devuelva la raíz de un árbol, de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>raiz ag1
+= 0<br>
+    </i></span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><br>
+    </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina la
+función</span></font></font></font><font color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>primera_rama
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> 'a</i>&nbsp; </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>arbolgen</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES">&nbsp; que
+devuelva la primera rama de un árbol, de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>raiz ag1
+= Nodo (1, [ ])<br>
+    </i></span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><br>
+    </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina la
+función</span></font></font></font><font color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>hojas
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> 'a list</i>&nbsp; que
+devuelva la lista con las hojas de un árbol (de izquierda a derecha),
+de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>hojas
+ag1 = [1; 2; 3; 5; 6]<br>
+    </i></span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><br>
+Defina la función</span></font></font></font><font color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>altura :
+‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> int</i>&nbsp;&nbsp; que
+devuelva la altura de un árbol (considerando que los árboles que sólo
+tienen raíz son de altura 0), de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>altura
+ag1 = 2<br>
+    <br>
+    </i></span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina la
+función</span></font></font></font><font color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>monticulo
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold;" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><i style="font-weight: bold;"> bool</i>&nbsp; que indique
+si un árbol es o no "montículo" (entendiendo que un árbol es
+"montículo" si el valor de cada nodo es mayor o igual que el de todos
+los nodos que cuelgan de él), de forma que,
+por ejemplo, </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>monticulo
+ag1 = false<br>
+    </i></span></font></font></font><br>
+    <font color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES"><br>
+    </span></font></font></font><font color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><br>
+    </span></font></font></font><font style="color: rgb(51, 51, 255);"
+ color="#000000"><font face="Arial, sans-serif"><font size="3"><span
+ lang="es-ES">Defina la función</span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>mont_gen
+: ('a -&gt; 'a -&gt; bool) -&gt; ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i
+ style="font-weight: bold;"> bool</i>&nbsp;
+que indique si un árbol es o no "montículo" con una relación de orden
+dada, de forma que,
+por ejemplo, </span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>mont_gen
+(&gt;=) ag1 = false, </i>pero<i> </i></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>mont_gen
+(&lt;=) ag1 = true</i></span></font></font></font><br
+ style="color: rgb(51, 51, 255);">
+    <br style="color: rgb(51, 51, 255);">
+    <font style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina la
+función</span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>espejo
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i
+ style="font-weight: bold;"> 'a arbolgen</i> que
+devuelva, para cada árbol, su imagen especular</span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>.<br>
+    <br>
+    </i></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina la
+función</span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>anchura
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i
+ style="font-weight: bold;"> 'a list</i>&nbsp; que
+devuelva , para cada árbol, una lista con el recorrido de sus nodos "en
+anchura", de forma que,
+por ejemplo, </span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>anchura
+ag1 = [0; 1; 2; 3; 4; 6; 5]<br>
+    <br>
+    </i></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES">Defina una
+función</span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"> </span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>maxpath
+: ‘a arbolgen </i></span></font></font></font><font
+ style="font-weight: bold; color: rgb(51, 51, 255);" color="#000000"><font
+ face="Courier New, monospace"><font size="3"><span lang="es-ES"><i>-&gt;</i></span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i
+ style="font-weight: bold;"> 'a list</i>&nbsp; que
+devuelva , para cada árbol, una lista con un camino de longitud maximal
+desde la raíz del árbol hasta una de sus hojas, de forma que,
+por ejemplo, </span></font></font></font><font
+ style="color: rgb(51, 51, 255);" color="#000000"><font
+ face="Arial, sans-serif"><font size="3"><span lang="es-ES"><i>maxpath
+ag1 = [0; 4; 5]<br>
+    </i></span></font></font></font><br>
+    <br>
+    <br>
+    <br>
+  </li>
+</ol>
+</body>
+</html>
