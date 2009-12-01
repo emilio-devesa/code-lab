@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+
+
+
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252"><title>PD - Práctica 7</title>
+  
+  <meta name="GENERATOR" content="OpenOffice.org 2.0  (Win32)">
+  <meta name="AUTHOR" content="José Marí-a Molinelli">
+  <meta name="CREATED" content="20061105;12473220">
+  <meta name="CHANGEDBY" content="José María Molinelli Barba">
+  <meta name="CHANGED" content="20061105;13102042">
+  <style>
+	<!--
+		P { font-family: "Times New Roman"; font-size: 12pt }
+		P.msonormal { margin-bottom: 0cm; font-family: "Times New Roman"; font-size: 12pt }
+	-->
+	</style>
+  <meta content="José Marí­a Molinelli" name="author"></head><body dir="ltr" lang="es-ES">
+<p class="msonormal" style="margin-bottom: 0.56cm;" align="center"><font face="Arial"><font style="font-size: 16pt;" size="4">Programación
+Declarativa<br>
+2008-2009<br>
+Práctica 7</font></font></p>
+<ol>
+  <font face="arial">Si se considera que <span style="font-style: italic; font-weight: bold;">Empty</span> representa
+el arbol vacío y que <span style="font-style: italic; font-weight: bold;">Node (r,i,d)</span>
+representa el árbol que tiene raíz <span style="font-style: italic; font-weight: bold;">r</span>, rama
+izquierda <span style="font-style: italic;"><span style="font-weight: bold;">i</span> </span>y rama derecha <span style="font-style: italic; font-weight: bold;">d</span><span style="font-weight: bold;">,</span> el tipo de dato <span style="font-style: italic; font-weight: bold;">'a bintree</span>,
+definido a continuación, serviría para representar árboles binarios
+cuyos nodos están etiquetados con valores de tipo 'a.<br>
+  <br>
+  </font><font size="+1"><span style="font-family: monospace;">type 'a
+bintree = Empty | Node of 'a * 'a bintree * 'a bintree;;<br>
+  <br style="font-family: monospace;">
+  </span></font><font face="arial"><br>
+Defina en ocaml las siguientes funciones:<br>
+  <br>
+  </font><font size="+1"><span style="font-family: monospace;">raiz: 'a
+bintree -&gt; 'a<br>
+  </span></font><font style="font-family: helvetica,arial,sans-serif;">que
+devuelva el valor de la raíz del árbol</font><font size="+1"><br>
+  <br style="font-family: monospace;">
+  </font><span style="font-family: monospace;"><font size="+1">ramaizda:
+'a bintree -&gt; 'a bintree<br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">la
+rama izquierda del árbol</font><span style="font-family: monospace;"><font size="+1"><br>
+  <br>
+ramadcha: 'a bintree -&gt; 'a bintree<br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">la
+rama derecha del árbol</font><span style="font-family: monospace;"><font size="+1"><br>
+  <br>
+altura: 'a bintree -&gt; int<br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">el
+número de níveles del árbol (atención: áltura del árbol vacío = 0)</font><span style="font-family: monospace;"><font size="+1"><br>
+  <br>
+num_nodos: 'a bintree -&gt; int<br>
+  </font></span><span style="font-family: helvetica,arial,sans-serif;">el
+número de nodos</span><span style="font-family: monospace;"><font size="+1"><br>
+  <br>
+t_max: 'a bintree -&gt; 'a<br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">el
+valor máximo de los nodos</font><span style="font-family: monospace;"><font size="+1"><br>
+  <br>
+t_min: 'a bintree -&gt; 'a <br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">el
+valor mínimo de los nodos</font><span style="font-family: monospace;"><font size="+1"><br>
+  <br>
+t_sum: int bintree -&gt; int<br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">la
+suma de todos los nodos</font><span style="font-family: monospace;"><br>
+  <br>
+  <font size="+1">t_spec: 'a bintree -&gt;'a bintree</font><br>
+  </span><span style="font-family: helvetica,arial,sans-serif;">la
+imágen especular del árbol</span><span style="font-family: monospace;"><br>
+  </span><span style="font-family: monospace;"><font size="+1"><br>
+hojas: 'a bintree -&gt; 'a list<br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">la
+lista de hojas del árbol, de izda a derecha</font> <br>
+</ol>
+<div style="margin-left: 40px; color: rgb(51, 51, 255);"><span style="font-family: monospace;"><font size="+1">monticulo:('a -&gt;'a
+-&gt; bool) -&gt; 'a bintree -&gt; bool</font></span><br>
+<span style="font-family: monospace;"><font size="+1"> </font></span></div>
+<div style="margin-left: 40px;"><font style="font-family: helvetica,arial,sans-serif; color: rgb(51, 51, 255);">si
+un árbol es "montículo" con una relación de orden dada</font><br>
+</div>
+<ol>
+</ol>
+<div style="margin-left: 40px; color: rgb(51, 51, 255);"><span style="font-family: monospace;"><font size="+1">completo: 'a bintree
+-&gt; bool</font></span><br>
+<span style="font-family: monospace;"><font size="+1"> </font></span></div>
+<div style="margin-left: 40px;"><font style="font-family: helvetica,arial,sans-serif; color: rgb(51, 51, 255);">si
+todas las hojas del árbol están en el mismo nivel</font><br>
+</div>
+<ol>
+  <span style="font-family: monospace;"></span><span style="font-family: monospace;"><font size="+1">preorden: 'a
+bintree -&gt; 'a list </font> </span><br>
+  <font style="font-family: helvetica,arial,sans-serif;">todos los
+nodos del
+árbol en pre-orden </font><br>
+  <br>
+  <span style="font-family: monospace;"><font size="+1">postorden: 'a
+bintree -&gt; 'a list<br>
+  </font></span> <font style="font-family: helvetica,arial,sans-serif;">todos
+los nodos del árbol en post-orden</font> <span style="font-family: monospace;"><font size="+1"><br>
+  <br>
+inorden: 'a bintree -&gt; 'a list<br>
+  </font></span><font style="font-family: helvetica,arial,sans-serif;">todos
+los nodos del árbol en in-orden<br>
+  <br>
+  </font><font style="font-family: helvetica,arial,sans-serif; color: rgb(51, 102, 255);" size="+1"><span style="font-family: monospace;">anchura: 'a bintree
+-&gt; 'a list</span></font><font style="font-family: helvetica,arial,sans-serif; color: rgb(51, 102, 255);"><br>
+todos los nodos del árbol según un recorrido "en achura" de arriba a
+abajo y de izquierda a derecha.<br>
+  <br>
+  <br>
+  <br>
+  </font>
+</ol>
+<div style="margin-left: 40px;"><font face="arial">Considerando el tipo
+de dato <span style="font-style: italic; font-weight: bold;">'a
+arbolgen</span> definido en la <a href="file:///D:/Usuarios/Moli/PD/08-09/Practica6.html">Práctica 6</a>,
+defina una función </font><big style="font-weight: bold;"><span style="font-family: monospace;">arbolgen_of_bintree:'a bintree -&gt;'a
+arbolgen</span></big><font face="arial"> que transforme un valor de
+tipo <span style="font-weight: bold; font-style: italic;">'a bintree</span>
+en el correspondiente de tipo <span style="font-style: italic; font-weight: bold;">'a arbolgen</span>. <br>
+<br>
+<br>
+<span style="color: rgb(51, 51, 255);">Defina una función </span></font><big style="font-weight: bold; color: rgb(51, 51, 255);"><span style="font-family: monospace;">bintree_of_arbolgen:'a arbolgen
+-&gt;'a bintree</span></big><font style="color: rgb(51, 51, 255);" face="arial">&nbsp; que realice la transformación inversa, cuando
+tenga sentido.</font></div>
+<div style="text-align: left;"><font size="+1"><span style="font-family: monospace;"></span></font></div>
+<font size="+1"><span style="font-family: monospace;"> <br style="font-family: monospace;">
+</span></font><font face="arial"><br>
+</font>
+<ol>
+  <br>
+  <span style="font-family: monospace;"><font size="+1"> </font><br>
+  <br>
+  </span>
+</ol>
+<br>
+<br>
+</body></html>
