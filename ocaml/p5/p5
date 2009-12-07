@@ -1,0 +1,183 @@
+(* PRACTICA 5 *)
+
+(* Ejercicio 1 *)
+#load "nums.cma";;
+open Num;;
+
+let fact n = if n = 0
+			 then num_of_int 0
+			 else let rec f (i, r) = if i = n
+									 then num_of_int r
+									 else f (i+1, r*(i+1))
+				  in f (1,1);;
+(* val fact : int -> Num.num = <fun> *)
+
+
+let fib n = if n < 2
+			then num_of_int n
+			else let rec f (i, r, s) = 	if i = n
+										then num_of_int (r+s)
+										else f (i+1, r+s, r)
+				 in f (2,1,0);;
+(* val fib : int -> Num.num = <fun> *)
+
+
+(* Ejercicio 2 *)
+(* Ver archivos fact_t.ml y fib_t.ml *)
+
+
+(* Ejercicio 3 *)
+(* Redefinir las siguientes funciones del modulo List sin utilizar este
+modulo ni la funcion @ *)
+(* hd *)
+let hd = function
+			[] -> raise (Failure "hd")
+			| h::t -> h;;
+(* val hd : 'a list -> 'a = <fun> *)
+
+
+(* tl *)
+let tl = function
+			[] -> raise (Failure "tl")
+			| h::t -> t;;
+(* val tl : 'a list -> 'a list = <fun> *)
+
+			
+(* length *)
+let rec length = function
+			[] -> 0
+			| h::t -> 1 + length t;;
+(* val length : 'a list -> int = <fun> *)
+
+
+(* rev *)
+let rev l = let rec rev l = function
+					[] -> l
+					| h::t -> rev (h::l) t
+			in rev [] l;;
+						
+(* val rev : 'a list -> 'a list = <fun> *)
+
+
+(* nth *)
+let rec nth = function
+		[] -> raise (Failure "nth")
+		| h::t -> (function
+					0 -> h
+					| n -> nth t (n-1));;
+let nth l n = if n < 0
+		then raise (Invalid_argument "nth")
+		else nth l n;;
+(* val nth : 'a list -> int -> 'a = <fun> *)
+
+
+(* append *)
+let rec append = function
+		[] -> (function l -> l)
+		| h::t -> (function l -> h::append t l);;
+(* val append : 'a list -> 'a list -> 'a list = <fun> *)
+
+
+(* concat *)
+let rec concat = function
+			[] -> []
+			| h::t -> append h (concat t);;
+(* val concat : 'a list list -> 'a list = <fun> *)
+
+
+(* flatten *)
+let flatten = concat;;
+(* val flatten : 'a list list -> 'a list = <fun> *)
+
+(* map *)
+let rec map f l = match l with
+		[] -> []
+		| h::t -> f(h)::(map f t);;
+(* val map : ('a -> 'b) -> 'a list -> 'b list = <fun> *)
+
+
+(* Ejercicio 4 *)
+(* Redefinir las siguientes funciones del modulo List sin utilizar este
+modulo *)
+(* for_all *)
+let rec for_all f l = match l with
+			[] -> true
+			| h::t -> if f (h)
+					  then for_all f t
+					  else false;;
+(* val for_all : ('a -> bool) -> 'a list -> bool = <fun> *)
+
+
+(* exists *)
+let rec exists f l = match l with
+			[] -> false
+			| h::t -> if f (h)
+					  then true
+					  else exists f t;;
+(* val exists : ('a -> bool) -> 'a list -> bool = <fun> *)
+
+
+(* mem *)
+let rec mem a l = match l with
+			[] -> false
+			| h::t -> if h=a then true else mem a t;;
+(* val mem : 'a -> 'a list -> bool = <fun> *)
+
+
+(* find *)
+let rec find p l = match l with
+			[] -> raise (Not_found)
+			| h::t -> if p(h) then h else find p l;;
+(* val find : ('a -> bool) -> 'a list -> 'a = <fun> *)
+
+
+(* filter *)
+let rec filter p l = match l with
+			[] -> []
+			| h::t -> if p(h) then h::(filter p t) else (filter p t);;
+(* val filter : ('a -> bool) -> 'a list -> 'a list = <fun> *)
+
+
+(* find_all *)
+let find_all = filter;;
+(* val find_all : ('a -> bool) -> 'a list -> 'a list = <fun> *)
+
+(* partition *)
+let partition p l = let rec partition l1 l2 = function
+					[] -> (rev l1, rev l2)
+					|h::t -> if p(h)
+							 then partition t (h::l1) l2
+							 else partition t l1 (h::l2)
+					in partition l [] [];;
+(* val partition : ('a -> bool) -> 'a list -> 'a list * 'a list = <fun> *)
+
+
+(* Ejercicio 5 *)
+(* Redefinir fold_left y fold_right del módulo List *)
+
+(* fold_left *)
+let fold_left f a l = match l with
+		[] -> raise (Invalid_argument "fold_left")
+		| _ -> let rec fold_left (f, r, l) = match l with
+				[] -> r
+				| [h] -> f r h
+				| h::t -> fold_left (f, f r h, t)
+				in fold_left (f, a, l);;
+(* val fold_left : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a = <fun> *)
+
+
+(* fold_right *)
+let fold_right f l b = match l with
+		[] -> raise (Invalid_argument "fold_right")
+		| _ -> let rec fold_right (f, l, r) = match l with
+				[] -> r
+				| [h] -> f h r
+				| h::t -> fold_right (f, t, f h r)
+				in fold_right (f, l, b);;
+(* val fold_right : ('a -> 'b -> 'b) -> 'a list -> 'b -> 'b = <fun> *)
+
+
+(* Ejercicio 6 *)
+(* Definir la funcion uncurry *)
+let uncurry f (x, y) = function y -> f x y;;
+(* val uncurry : ('a -> 'b -> 'c) -> 'a * 'b -> 'c = <fun> *)
