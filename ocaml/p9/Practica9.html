@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <meta name="Generator" content="Microsoft Word 10 (filtered)">
+  <title>Programación Declarativa - Práctica 9</title>
+  <style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+span.MsoFootnoteReference
+	{vertical-align:super;}
+pre
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Courier New";}
+tt
+	{font-family:"Courier New";}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 3.0cm 70.85pt 3.0cm;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+  </style>
+  <meta content="José Marí­a Molinelli" name="author">
+</head>
+<body lang="ES">
+<div class="Section1">
+<p class="MsoNormal"
+ style="margin-bottom: 12pt; text-align: center; color: rgb(51, 51, 255);"
+ align="center"><span style="font-size: 16pt;">Programación Declarativa</span><br>
+<span style="font-size: 16pt;">2009</span><span style="font-size: 16pt;"></span><span
+ style="font-size: 16pt;">-2010</span><span style="font-size: 8pt;"><br>
+</span><span style="font-size: 16pt;">Práctica 9<br>
+</span></p>
+<p style="color: rgb(51, 51, 255);" class="MsoNormal">Un ejercicio
+clásico de programación consiste en
+el diseño de un programa que resuelva "el problema de las reinas".
+Este problema es el de colocar <i>n</i> reinas en un tablero de
+ajedrez de <i>n</i>
+<span style="font-family: Helvetica;">x</span> <i>n</i> casillas, de
+forma que no
+se coman entre sí. Es decir, no puede haber dos reinas en una misma
+fila,
+columna o diagonal del tablero.</p>
+<p style="color: rgb(51, 51, 255);" class="MsoNormal">Se pide <b>definir
+una función <span class="grame"><i>reinas</i></span><i>
+: <span class="spelle">int</span> -&gt; (<span class="spelle">int</span>
+</i></b><b><i><span style="font-family: &quot;Courier New&quot;;">*</span> <span
+ class="spelle">int</span>) <span class="spelle">list option</span><a
+ href="#_ftn1" name="_ftnref1" title=""><span
+ class="MsoFootnoteReference">*</span></a></i></b>&nbsp; <span
+ class="grame">que</span>,
+dado un entero <i>n</i>, que representa las dimensiones del tablero,
+devuelva
+una solución al problema de las reinas (la lista de posiciones que
+deben
+ocupar), si existe.</p>
+<p class="MsoNormal"
+ style="margin-bottom: 12pt; color: rgb(51, 51, 255);">&nbsp;</p>
+<p class="MsoNormal"
+ style="margin-bottom: 12pt; color: rgb(51, 51, 255);">Ejemplos de
+ejecución:</p>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB"># <span class="grame">reinas</span> 1;;</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB">- : (<span class="spelle">int</span> * <span
+ class="spelle">int</span>) <span class="spelle">list</span> <span
+ class="spelle">option</span> = <span class="spelle">Some</span> [(1, 1)]<br>
+</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">Sólo es posible colocar la reina en la casilla (1,1).<br>
+</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">&nbsp;</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB"># <span class="grame">reinas</span> 2;;</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB">- :(<span class="spelle">int</span> * <span class="spelle">int</span>) <span
+ class="spelle">list</span> <span class="spelle">option</span> = <span
+ class="spelle">None</span><br>
+</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">El problema no tiene solución para tableros de 2 x 2.<br>
+</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">&nbsp;</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB"># <span class="grame">reinas</span> 3;;</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB">- :(<span class="spelle">int</span> * <span class="spelle">int</span>) <span
+ class="spelle">list</span> <span class="spelle">option</span> = <span
+ class="spelle">None</span><br>
+</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">Lo mismo ocurre para n = 3.<br>
+</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">&nbsp;</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB"># <span class="grame">reinas</span> 4;;</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB">- :(<span class="spelle">int</span> * <span class="spelle">int</span>) <span
+ class="spelle">list</span> <span class="spelle">option</span> = Some [(1, 2); (2, 4); (3, 1); (4, 3)]</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);"><span
+ lang="EN-GB">&nbsp;</span></pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">Para n = 4, la lista que se ha obtenido coresponde a la solución de la siguiente figura.</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">&nbsp;</pre>
+<pre style="margin-left: 36pt; color: rgb(51, 51, 255);">&nbsp;</pre>
+<p class="MsoNormal" style="margin-bottom: 12pt; text-align: center;"
+ align="center"><img src="image001.gif"
+ style="height: 170px; width: 170px;"
+ alt="Una solución al Problema
+de las Reinas sobre tableros de 4 x 4"
+ align="middle" border="0" height="170" width="170"></p>
+<p class="MsoNormal" style="margin-left: 36pt; text-align: center;"
+ align="center">&nbsp;</p>
+<p class="MsoNormal" style="margin-bottom: 12pt;"><span
+ style="color: blue;">En
+"el problema de las reinas", para algunos valores de <i>n</i>, la
+solución no es única.</span></p>
+<p class="MsoNormal" style="margin-bottom: 12pt;"><span
+ style="color: blue;">Por
+ejemplo, para <i>n = 4</i>, otra posible repuesta sería:</span></p>
+<pre style="margin-left: 36pt;"><span style="color: blue;" lang="EN-GB"># <span
+ class="grame">reinas</span> 4;;</span></pre>
+<pre style="margin-left: 36pt;"><span style="color: blue;" lang="EN-GB">- : (<span
+ class="spelle">int</span> * <span class="spelle">int</span>) <span
+ class="spelle">list</span> <span class="spelle">option</span> = <span
+ class="spelle">Some</span> [(1, 3); (2, 1); (3, 4); (4, 2)]</span></pre>
+<pre style="margin-left: 36pt;"><span style="color: blue;" lang="EN-GB">&nbsp;</span></pre>
+<p class="MsoNormal"><span style="color: blue;">que se corresponde
+precisamente con
+la imagen especular de la figura anterior. La función reinas puede
+devolver una
+u otra, dependiendo de cómo se implemente. <br>
+Sin embargo, se puede también pensar en otra función, <i>reinas_all</i>,
+que
+devuelva todas y cada una de las posibles soluciones. <br>
+<br>
+<b>Implemente la función <i>reinas_all</i>: <span class="spelle"><i>int</i></span><i>
+-&gt; (<span class="spelle">int</span> * <span class="spelle">int</span>)
+<span class="spelle">list</span> <span class="spelle">list</span></i>.</b></span><br>
+<br>
+<span style="color: rgb(51, 51, 255);">Ejemplo de ejecución:</span><br>
+<br>
+</p>
+<p class="MsoNormal" style="margin-left: 36pt;">&nbsp;</p>
+<pre style="margin-left: 36pt;"><span style="color: blue;">&nbsp;&nbsp; </span><span
+ style="color: blue;" lang="EN-GB"># reinas_all 4<span class="grame">;;</span></span></pre>
+<pre style="margin-left: 36pt;"><span style="color: blue;" lang="EN-GB">&nbsp;&nbsp; - : <span
+ class="spelle">int</span> -&gt; (<span class="spelle">int</span> * <span
+ class="spelle">int</span>) <span class="spelle">list</span> <span
+ class="spelle">list</span> = </span></pre>
+<pre style="margin-left: 36pt;"><span style="color: blue;" lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+ style="color: blue;">[[(1, 2); (2, 4); (3, 1); (4, 3)];</span></pre>
+<pre style="margin-left: 36pt;"><span style="color: blue;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [(1, 3); (2, 1); (3, 4); (4, 2)]]</span></pre>
+<p class="MsoNormal">&nbsp;</p>
+</div>
+<div><br clear="all">
+<hr align="left" size="1" width="33%">
+<div id="ftn1">
+<p class="MsoFootnoteText"><a href="#_ftnref1" name="_ftn1" title=""><span
+ class="MsoFootnoteReference">*</span></a> Para cada de tipo de dato <i>‘a</i>
+&nbsp;en <span class="spelle">ocaml</span>,
+existe otro tipo <i>‘a <span class="spelle">option</span> </i>&nbsp;cuyos
+valores
+son <span class="spelle"><i>None</i></span><i> </i>&nbsp;o &nbsp;<span
+ class="spelle"><i>Some</i></span><i> <span class="grame">x</span></i><span
+ class="grame"> ,</span> para cualquier <i>x</i> de tipo <i>‘a</i>.<br>
+Si lo prefiere, puede definir la
+función reinas con tipo <span style="font-style: italic;">int </span><span
+ style="font-family: monospace; font-style: italic;">-&gt;</span><span
+ style="font-style: italic;"> (int * int) list</span> <br>
+</p>
+<p class="MsoFootnoteText">&nbsp;</p>
+</div>
+</div>
+</body>
+</html>
