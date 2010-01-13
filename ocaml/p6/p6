@@ -1,0 +1,59 @@
+(* PRACTICA 6 *)
+
+(* Ejercicio 1 *)
+(* Definir numnodos *)
+let rec numnodos = function
+		Nodo (_, []) -> 1
+		| Nodo (r, h::t) -> numnodos h + numnodos (Nodo (r,t));;
+(* val numnodos : 'a arbolgen -> int = <fun> *)
+
+
+(* Definir nodos *)
+let rec nodos = function
+		Nodo (r, []) -> [r]
+		| Nodo (r, h::t) -> List.append (nodos h) (nodos (Nodo(r,t)));;
+(* val nodos : 'a arbolgen -> 'a list = <fun> *)
+
+
+(* Definir nodomax *)
+let rec nodomax = function
+    Nodo (r,[]) -> r
+  | Nodo (r, h::t) -> max (nodomax h) (nodomax (Nodo(r,t)));;
+(* val nodomax = 'a arbolgen -> 'a = <fun> *)
+
+
+(* Definir raiz *)
+let raiz (Nodo(r,_)) = r;;
+(* val raiz = 'a arbolgen -> 'a = <fun> *)
+
+
+(* Definir primera_rama *)
+let primera_rama = function 
+			Nodo (_,[]) -> raise (Invalid_argument "primera_rama")
+			|Nodo (_,h::t) -> h;;
+(* val primera_rama : 'a arbolgen -> 'a arbolgen = <fun> *)
+
+
+(* Definir hojas *)
+let rec hojas = function
+		Nodo (r,[]) -> [r]
+		| Nodo (r,[Nodo(a,[])]) -> [a]
+		| Nodo (r,h::t) -> hojas(h) @ hojas(Nodo(r,t));;
+(* val hojas : 'a arbolgen -> 'a list = <fun> *)
+
+
+(* Definir altura *)					
+let rec altura = function
+	Nodo (_,[]) -> 0
+	| Nodo (r,h::t) -> max (1+altura h) (altura (Nodo(r,t)));;
+(* val altura : 'a arbolgen -> int = <fun> *)
+
+
+(* Definir monticulo *)
+let rec monticulo = function
+	Nodo(r,l) -> if List.for_all monticulo l
+				 then match l with
+					[] -> true
+					| (Nodo(h,_))::_ -> (max r h = r)
+				 else false;;
+(* val monticulo : 'a arbolgen -> bool = <fun> *)
