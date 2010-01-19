@@ -1,0 +1,193 @@
+(* PRACTICA 1 *)
+
+
+(* Ejercicio 2 *)
+(* Ver archivo hello.ml y ejecutable hello *)
+
+
+(* Ejercicio 5 *)
+(* Deducir resultado de la compilacion y ejecucion de: *)
+
+5/3;;
+(* - : int = 1 *)
+
+5 mod 3;;
+(* - : int = 2 *)
+
+3.0 *. 2.0 ** 3.0;;
+(* - : float = 24. *)
+
+3.0 = float_of_int 3;;
+(* - : bool = true *)
+
+int_of_float 2.1 + int_of_float (-2.9);;
+(* - : int = 0 *)
+
+truncate 2.1 + truncate (-2.9);;
+(* - : int = 0 *)
+
+floor 2.1 +. floor (-2.9);;
+(* - : float = -1. *)
+
+ceil 2.1 +. ceil (-2.9);;
+(* - : float = 1.*)
+
+'B';;
+(* - : char = 'B' *)
+
+int_of_char 'A';;
+(* - : int = 65 *)
+
+char_of_int 66;;
+(* - : char = 'B' *)
+
+Char.code 'B';;
+(* - : int = 66 *)
+
+Char.chr 67;;
+(* - : char = 'C' *)
+
+Char.chr (Char.code 'a' - Char.code 'A' + Char.code 'Ñ');;
+(* - : char = '\241' *)
+
+Char.uppercase 'ñ';;
+(* - : char = '\209' *)
+
+Char.lowercase 'O';;
+(* - : char = 'o' *)
+
+"this is a string";;
+(* - : string = "this is a string" *)
+
+String.length "longitud";;
+(* - : int = 8 *)
+
+"1999" + "1";;
+(* Error: expresión de tipo string utilizada como int *)
+
+"1999" ^ "1";;
+(* - : string = "19991" *)
+
+int_of_string "1999" + 1;;
+(* - : int = 2000 *)
+
+string_of_int 010;;
+(* - : string = "10" *)
+
+not true;;
+(* - : bool = false *)
+
+true && false;;
+(* - : bool = false *)
+
+true || false;;
+(* - : bool = true *)
+
+true or false;;
+(* - : bool = true *)
+
+true and false;;
+(* Syntax error and es una palabra reservada. Se debe usar && *)
+
+(1 < 2) = false;;
+(* - : bool = false *)
+
+"1" < "2";;
+(* - : bool = true *)
+
+2 < 12;;
+(* - : bool = true *)
+
+"2" < "12";;
+(* - : bool = false *)
+
+"uno" < "dos";;
+(* - : bool = false *)
+
+let pi = 3.14;;
+(* val pi : float = 3.14 *)
+
+sin (pi /. 2.);;
+(* - : float = 0.99999968293183461 *)
+
+let pi = 4. *. atan 1;;
+(* This expression has type int but is here used with type float *)
+
+sin (pi /. 2.);;
+(* - : float = 0.99999968293183461 *)
+
+let x = 1;;
+(* val x : int = 1 *)
+
+let y = 2;;
+(* val y : int = 2 *)
+
+x - y;;
+(* - : int = -1 *)
+
+let x = y in x - y;;
+(* - : int = 0 *)
+
+x - y;;
+(* - : int = -1 *)
+
+z;;
+(* Unbound value z -- No se han definido expresiones o valores para z *)
+
+let z = x + y;;
+(* val z : int = 3 *)
+
+z;;
+(* - : int = 3;; *)
+
+let x = 5;;
+(* val x : int = 5 *)
+
+z;;
+(* - : int = 3 *)
+
+let y = 5 in x + y;;
+(* - : int = 10 *)
+
+x + y;;
+(* - : int = 7 *)
+
+if 3 = 4 then 0 else 4;;
+(* - : int = 4 *)
+
+if 3 = 4 then "0" else "4";;
+(* - : string = "0" *)
+
+if 3 = 4 then 0 else "4";;
+(* This expression has type string but is here used with type int *)
+
+(if 3 < 5 then 8 else 10) + 4;;
+(* - : int = 12 *)
+
+function x -> 2 * x;;
+(* - : int -> int = <fun> *)
+
+(function x -> 2 * x) (2 + 1);;
+(* - : int = 6 *)
+
+int_of_float;;
+(* - : float -> int = <fun> *)
+
+float_of_int;;
+(* - : int -> float = <fun> *)
+
+int_of_char;;
+(* - : char -> int = <fun> *)
+
+char_of_int;;
+(* - : int -> char = <fun> *)
+
+
+(* Ejercicio 7 *)
+(* Averiguar menor y mayor valor de tipo "int" *)
+
+min_int;;
+(* - : int = -1073741824 *)
+
+max_int;;
+(* - : int = 1073741823 *)
