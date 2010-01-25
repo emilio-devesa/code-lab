@@ -1,0 +1,177 @@
+(* PRACTICA 4 *) 
+
+(* Ejercicio 1 *) 
+[1];;
+(* - : int list = [1] *) 
+
+[3;2;1];;
+(* - : int list = [3; 2; 1] *)
+
+[1;"dos"];;
+(* Error: This expression has type string but is here used with type int *)
+
+[1;2.0];;
+(* Error: This expression has type float but is here used with type int *)
+
+2 :: [3;4];;
+(* - : int list = [2; 3; 4] *)
+
+List.length [3;3;3;3];;
+(* - : int = 4 *)
+
+List.nth [5;4;3;2;1] 2;;
+(* - : int = 3 *)
+
+List.nth [5;4;3;2;1] 1 + List.nth [5;4] 0;;
+(* - : int = 9 *)
+
+[1;1+1;1+1+1];;
+(* - : int list = [1; 2; 3] *)
+
+[1; 2] @ [3; 4];;
+(* - : int list = [1; 2; 3; 4] *)
+
+List.hd [1; 2; 3];;
+(* - : int = 1 *)
+
+List.tl [1; 2; 3];;
+(* - : int list = [2; 3] *)
+
+List.hd [0];;
+(* - : int = 0 *)
+
+List.tl [0];;
+(* - : int list = [] *)
+
+['a'; 'e'; 'i'; 'o'; 'u'];;
+(* - : char list = ['a'; 'e'; 'i'; 'o'; 'u'] *)
+
+List.rev ['a'; 'b'; 'c'];;
+(* - : char list = ['c'; 'b'; 'a'] *)
+
+[];;
+(* - : 'a list = [] *)
+
+"hola" :: [];;
+(* - : string list = ["hola"] *)
+
+[1,2,3];;
+(* - : (int * int * int) list = [(1, 2, 3)] *)
+
+[1; "dos"; 3];;
+(* Error: This expression has type string but is here used with type int *)
+
+0 :: [1; 2; 3];;
+(* - : int list = [0; 1; 2; 3] *)
+
+[];;
+(* - : 'a list = [] *)
+
+3 :: [];;
+(* - : int list = [3] *)
+
+2 :: (3 :: []);;
+(* - : int list = [2; 3] *)
+
+1 :: (2 :: (3 :: []));;
+(* - : int list = [1; 2; 3] *)
+
+(1 :: 2 :: 3 :: []);;
+(* - : int list = [1; 2; 3] *)
+
+List.length ([1; 2] @ [3; 4]);;
+(* - : int = 4 *)
+
+List.append ['a'; 'e'; 'i'] (List.tl ['o'; 'u']);;
+(* - : char list = ['a'; 'e'; 'i'; 'u'] *)
+
+List.hd [];;
+(* Exception: Failure "hd" *)
+
+List.tl [];;
+(* Exception: Failure "tl" *)
+
+function x -> [x];;
+(* - : 'a -> 'a list = <fun> *)
+
+(function x -> [x]) 0;;
+(* - : int list = [0] *)
+
+function x -> List.hd x, List.tl x;;
+(* - : 'a list -> 'a * 'a list = <fun> *)
+
+(function x -> List.hd x, List.tl x) [3;2;1];;
+(* - : int * int list = (3, [2; 1]) *)
+
+(function x -> List.hd x, List.tl x) [[]];;
+(* - : 'a list * 'a list list = ([], []) *)
+
+function x -> [x; [x]];;
+(* Error: This expression has type 'a list but is here used with type 'a *)
+
+
+
+(* Ejercicio 2*) 
+
+
+(* Definir nprimeros: int -> int list*) 
+let rec nprimeros = function
+			  0 -> []
+			| n -> nprimeros (n-1) @ [n];;
+
+
+(* Definir una funcion from_to: int -> int -> int list*) 
+let rec from_to m n= 
+			if m > n then []
+			else m :: from_to (m+1) n;;
+
+
+(* Definir una funcion lmax: 'a list -> 'a
+	   y una funcion lmin: 'a list -> 'a*) 
+let rec lmax = function
+			| [] -> failwith "lmax"
+			| [x] -> x
+			| h::t -> max h (lmax t);;
+			
+let rec lmin = function
+			| [] -> failwith "lmin"
+			| [x] -> x
+			| h::t -> min h (lmin t);;
+
+
+(* Definir una función rango:'a list ->'a * 'a*) 
+let rango = function x -> (lmin x, lmax x);;
+
+
+(* Definir una funcion ordenada: 'a list -> bool*) 
+let rec ordenada = function
+			[] | [_] -> true
+			| h1::h2::t -> (h1 <= h2) && ordenada (h2::t);;
+
+
+(* Definir una funcion del_fst: 'a -> 'a list -> 'a list*) 
+let rec del_fst x = function
+			[] -> []
+			| h::t -> if h = x
+					  then t
+					  else h::(del_fst x t);;
+
+
+(* Definir una funcion del_all: 'a -> 'a list -> 'a list*) 
+let rec del_all x = function
+			[] -> []
+			| h::t -> if h = x
+					  then del_all x t
+					  else h::(del_all x t);;
+
+
+(* Definir una funcion dif_1: 'a list -> 'a list -> 'a list*) 
+let rec dif_1 a = function
+			| [] -> a
+			| h::t -> dif_1 (del_fst h a) t;;
+
+
+(* Definir una funcion dif_2: 'a list -> 'a list -> 'a list*) 
+let rec dif_2 a = function
+			| [] -> a
+			| h::t -> dif_2 (del_all h a) t;;
