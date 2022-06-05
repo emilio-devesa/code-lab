@@ -1,8 +1,10 @@
 package kot;
 
+import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import org.hibernate.Session;
+import org.hibernate.annotations.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 
 
