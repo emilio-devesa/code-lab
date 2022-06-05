@@ -1,4 +1,4 @@
-import core.Issue;
+package kot;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,7 +9,12 @@ public class Main {
 
     public static void main(String[] args){
         input=new Scanner(System.in);
-        menu();
+        try {
+            HibernateUtil.buildSessionFactory();
+            menu();
+        } catch (Throwable ex){
+            System.out.println("DB Conection Failed");
+        }
     }
 
     private static void menu(){

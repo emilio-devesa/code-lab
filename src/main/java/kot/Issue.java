@@ -1,7 +1,6 @@
-package core;
+package kot;
 
 import org.hibernate.Session;
-import persistence.HibernateUtil;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -74,11 +73,11 @@ public class Issue {
         this.tags = tags;
     }
 
-    public core.Issue[] getParentIssues() {
+    public Issue[] getParentIssues() {
         return parentIssues;
     }
 
-    public void setParentIssues(core.Issue[] parentIssues) {
+    public void setParentIssues(Issue[] parentIssues) {
         this.parentIssues = parentIssues;
     }*/
 
@@ -119,7 +118,7 @@ public class Issue {
      * @return A new collection of type ArrayList containing all objects of class Issue in the database
      */
     public static ArrayList<Issue> get(){
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM ISSUES");
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM issues");
         return (ArrayList<Issue>) ((org.hibernate.query.Query<?>) query).list();
     }
 
