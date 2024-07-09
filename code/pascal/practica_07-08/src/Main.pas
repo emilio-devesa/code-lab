@@ -8,6 +8,7 @@ program Main;
 }
 
 import  StandardInput; StandardOutput;
+        TextFile qualified;
 
 const   textFileName = 'texto.txt';
         statsFileName = 'informacion.txt';
