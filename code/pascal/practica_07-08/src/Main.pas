@@ -9,6 +9,7 @@ program Main;
 
 import  StandardInput; StandardOutput;
         TextFile qualified;
+        Stats qualified;
 
 const   textFileName = 'texto.txt';
         statsFileName = 'informacion.txt';
@@ -57,7 +58,7 @@ end;
 function start(option: integer): integer;
 begin
     case (option) of
-        1: {Print stats};
+        1: Stats.printStats(statsFileName);
         2: case (submenuExamineFile) of
                 1: {Print words alphabetically sorted};
                 2: {Print a words number of ocurrencies};
@@ -71,6 +72,7 @@ end;
 
 begin
     writeln('Generando estadística para ',textFileName,'...');
+    Stats.getStats(textFileName, statsFileName);
     writeln('Eliminando elementos repetidos...');
     writeln('Cifrando fichero ',noRepeatedWordsFileName,'...');
     writeln('Descifrando fichero ',cryptFileName,'...');
