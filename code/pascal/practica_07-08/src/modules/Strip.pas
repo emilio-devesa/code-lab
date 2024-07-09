@@ -46,7 +46,7 @@ end;
 
 procedure stripRepetitions;
 var fInput, fOutput: TextFile.tFile;
-    line, word: String(255);
+    line, word: String(1024);
     pos: integer;
 begin
     if (TextFile.fileExists(inputFile)) and_then (TextFile.openFile(fInput, inputFile))
