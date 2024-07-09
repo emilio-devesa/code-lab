@@ -9,7 +9,15 @@ program Main;
 
 import  StandardInput; StandardOutput;
 
+const   textFileName = 'texto.txt';
+        statsFileName = 'informacion.txt';
+        noRepeatedWordsFileName = 'sinrepetidas.txt';
+        cryptFileName = 'cifrado.txt';
+        decryptFileName = 'descifrado.txt';
 
 begin
-    
+    writeln('Generando estadística para ',textFileName,'...');
+    writeln('Eliminando elementos repetidos...');
+    writeln('Cifrando fichero ',noRepeatedWordsFileName,'...');
+    writeln('Descifrando fichero ',cryptFileName,'...');
 end.
