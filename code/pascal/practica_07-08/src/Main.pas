@@ -57,7 +57,7 @@ begin
 end;
 
 {** Operations **}
-procedure populateListFromFile;
+procedure populateListFromFile(inputFile: String; var l: List.tList);
 var fText: TextFile.tFile;
     inputString: String(1024);
     pos: integer;
