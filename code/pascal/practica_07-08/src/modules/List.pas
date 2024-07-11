@@ -10,7 +10,7 @@ module List;
     Provides a Dinamic List data structure and basic operations
 }
 
-export  List = (tList, tInfo, tPosition, init, isEmpty, add, get, update, getSize, print, populateFromFile);
+export  List = (tList, tInfo, tPosition, init, isEmpty, add, get, update, getSize, print, populateFromFile, sort);
 
 import  StandardInput; StandardOutput;
         TextFile qualified;
@@ -33,6 +33,8 @@ procedure update(var l: tList; p: tPosition; info: tInfo);
 function getSize(l: tList): integer;
 procedure print(l: tList);
 procedure populateFromFile(inputFile: String; var l: tList);
+procedure sort(var l: tList);
+
 
 end;
 
@@ -126,39 +128,43 @@ begin
     end;
 end;
 
-procedure populateFromFile;
-var fText: TextFile.tFile;
-    inputString: String(1024);
-    pos: integer;
-    word: String(1024);
+procedure quicksort(var l: tList; low, high: integer);
+var i, j: integer; pivot, aux1, aux2: tInfo; pos1, pos2: tPosition;
 begin
-    if (TextFile.fileExists(inputFile)) and_then (TextFile.openFile(fText, inputFile))
+    if low < high
     then begin
-        reset(fText);
-        readln(fText, inputString);
-        inputString := Trim(inputString);
+        { Choose the pivot (in this case, the middle element) }
+        pivot := get(l, (low + high) div 2)^.info;
+        i := low;
+        j := high;
+        { Partition the array into two halves }
         repeat
-            pos := index(inputString, ' ');
-            word := '';
-            { Only one word }
-            if (pos = 0)
+            while get(l,i)^.info<pivot do i:=i+1;
+            while get(l,j)^.info>pivot do j:=j-1;
+            if i <= j
             then begin
-                word := inputString;
-                inputString := '';
-            end
-            { More words }
-            else begin
-                { Make sure strings don't start with a blank space }
-                if (pos > 1)
-                then word := SubStr(inputString, 1, pos-1);
-                inputString := SubStr(inputString, pos+1);
+                { Swap elements and move indices }
+                aux1 := get(l,i)^.info;
+                pos1 := get(l,i);
+                aux2 := get(l, j)^.info;
+                pos2 := get(l,j);
+                update(l, pos1, aux2);
+                update(l, pos2, aux1);
+                i := i+1;
+                j := j-1;
             end;
-            if (word <> '') then add(l, word);
-        until inputString = '';
-    end
-    else begin
-        writeln('ERROR List.populateFromFile(): Can´t open '+inputFile);
+        until i > j;
+        { Recursively sort the sub-lists }
+        quicksort(l, low, j);
+        quicksort(l, i, high);
     end;
+end;
+
+procedure sort;
+begin
+    if isEmpty(l)
+    then writeln('List is empty') 
+    else quicksort(l, 1, getSize(l));
 end;
 
 end.
