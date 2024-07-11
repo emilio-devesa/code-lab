@@ -26,12 +26,12 @@ var option: integer;
 begin
     repeat
         writeln;
-        writeln('PRACTICA 2007-2008');
-        writeln('1. Consultar estádistica');
-        writeln('2. Examinar texto');
-        writeln('3. Cifrar línea');
-        writeln('0. Salir');
-        write('Opcion?: ');
+        writeln('MAIN MENU');
+        writeln('1. Consult statistics');
+        writeln('2. Examine text');
+        writeln('3. Encrypt line');
+        writeln('0. Quit');
+        write('Option?: ');
         readln(option);
         if (option < 0) or (3 < option)
         then writeln('Opción no válida.');
@@ -44,27 +44,62 @@ var option: integer;
 begin
     repeat
         writeln;
-        writeln('EXAMINAR FICHERO:');
-        writeln('1. Ver palabras ordenadas alfabéticamente');
-        writeln('2. Conocer el número de ocurrencias de una palabra');
-        writeln('0. Volver');
-        write('Opcion?: ');
+        writeln('EXAMINE FILE:');
+        writeln('1. View words arranged alphabetically');
+        writeln('2. Know the number of occurrences of a word');
+        writeln('0. Back');
+        write('Option?: ');
         readln(option);
         if (option < 0) or (2 < option)
-        then writeln('Opción no válida.');
+        then writeln('Invalid option');
         submenuExamineFile := option;
     until(0 <= option) and (option <= 2);
 end;
 
-{** Menu operations **}
+{** Operations **}
+procedure populateListFromFile;
+var fText: TextFile.tFile;
+    inputString: String(1024);
+    pos: integer;
+    word: String(1024);
+begin
+    if (TextFile.fileExists(inputFile)) and_then (TextFile.openFile(fText, inputFile))
+    then begin
+        reset(fText);
+        readln(fText, inputString);
+        inputString := Trim(inputString);
+        repeat
+            pos := index(inputString, ' ');
+            word := '';
+            { Only one word }
+            if (pos = 0)
+            then begin
+                word := inputString;
+                inputString := '';
+            end
+            { More words }
+            else begin
+                { Make sure strings don't start with a blank space }
+                if (pos > 1)
+                then word := SubStr(inputString, 1, pos-1);
+                inputString := SubStr(inputString, pos+1);
+            end;
+            if (word <> '') then List.add(l, word);
+        until inputString = '';
+    end
+    else begin
+        writeln('ERROR Main(): Can´t open '+inputFile);
+    end;
+end;
 procedure printSortedWords;
 var l: List.tList;
 begin
     writeln('Creating list...');
     List.init(l);
     writeln('Populating list...');
-    List.populateFromFile(noRepeatedWordsFileName, l);
-    { TODO: sort list }
+    populateListFromFile(noRepeatedWordsFileName, l);
+    writeln('Sorting list...');
+    List.sort(l);
     List.print(l);
     writeln;
 end;
@@ -72,15 +107,15 @@ end;
 procedure printOcurrenciesOfWord;
 var searchWord: String(1024);
 begin
-    write('Palabra? ');
+    write('Type word: ');
     readln(searchWord);
-    writeln('Ocurrencias: ',Strip.getOcurrencies(textFileName, searchWord));
+    writeln('Ocurrences: ', Strip.getOcurrencies(textFileName, searchWord));
 end;
 
 procedure cryptString;
 var lineNumber: integer; cryptedStr: String (1024);
 begin
-    write('Introducir numero de linea: ');
+    write('Type line number: ');
     readln(lineNumber);
     Crypt.CryptLineFromFile(textFileName, lineNumber, cryptedStr);
     writeln(cryptedStr);
@@ -102,13 +137,13 @@ begin
 end;
 
 begin
-    writeln('Generando estadística para ',textFileName,'...');
+    writeln('Creating statistics from ',textFileName,'...');
     Stats.getStats(textFileName, statsFileName);
-    writeln('Eliminando elementos repetidos...');
+    writeln('Deletion of repeated elements...');
     Strip.stripRepetitions(textFileName, noRepeatedWordsFileName);
-    writeln('Cifrando fichero ',noRepeatedWordsFileName,'...');
+    writeln('Encrypting file ',noRepeatedWordsFileName,'...');
     Crypt.CryptFile(noRepeatedWordsFileName, cryptFileName);
-    writeln('Descifrando fichero ',cryptFileName,'...');
+    writeln('Decrypting file ',cryptFileName,'...');
     Crypt.DecryptFile(cryptFileName, decryptFileName);
     repeat
     until (start(mainMenu)=0);
