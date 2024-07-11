@@ -104,12 +104,12 @@ begin
     writeln;
 end;
 
-procedure printOcurrenciesOfWord;
+procedure printOcurrencesOfWord;
 var searchWord: String(1024);
 begin
     write('Type word: ');
     readln(searchWord);
-    writeln('Ocurrences: ', Strip.getOcurrencies(textFileName, searchWord));
+    writeln('Ocurrences: ', Strip.getOcurrences(textFileName, searchWord));
 end;
 
 procedure cryptString;
@@ -127,7 +127,7 @@ begin
         1: Stats.printStats(statsFileName);
         2: case (submenuExamineFile) of
                 1: printSortedWords;
-                2: printOcurrenciesOfWord;
+                2: printOcurrencesOfWord;
                 0: {return};
             end;
         3: cryptString;

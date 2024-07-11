@@ -7,20 +7,20 @@ module Strip;
     https://emiliodevesa.wordpress.com/
 
     Strip.pas
-    Provides operations to get the number of ocurrencies of a word in a text file
+    Provides operations to get the number of ocurrences of a word in a text file
     and to write a file without word repetitions
 }
 
-export  Strip = (getOcurrencies, stripRepetitions);
+export  Strip = (getOcurrences, stripRepetitions);
 
 import  StandardInput; StandardOutput; TextFile qualified;
 
-function getOcurrencies(inputFile: String; token: String): integer;
+function getOcurrences(inputFile: String; token: String): integer;
 procedure stripRepetitions(inputFile: String; outputFile: String);
 
 end;
 
-function getOcurrencies;
+function getOcurrences;
 var pos, count: integer value 0;
     line: String(1024);
     fText: TextFile.tFile;
@@ -37,10 +37,10 @@ begin
                 line := SubStr(line, pos + 1);
             until pos = 0;
         end;
-        getOcurrencies := count;
+        getOcurrences := count;
     end
     else begin
-        writeln('ERROR Strip.getOcurrencies(): Can´t open ', inputFile);
+        writeln('ERROR Strip.getOcurrences(): Can´t open ', inputFile);
     end;
 end;
 
@@ -61,7 +61,7 @@ begin
                     pos := index(line, ' ');
                     if pos > 0 then begin
                         word := SubStr(line, 1, pos - 1);
-                        if (getOcurrencies(outputFile, word) = 0)
+                        if (getOcurrences(outputFile, word) = 0)
                         then begin
                             write(fOutput, word);
                             write(fOutput, ' ');
