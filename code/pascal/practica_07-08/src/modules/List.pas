@@ -10,7 +10,7 @@ module List;
     Provides a Dinamic List data structure and basic operations
 }
 
-export  List = (tList, tInfo, tPosition, init, isEmpty, add, get, update, getSize, print, populateFromFile, sort);
+export  List = (tList, tInfo, tPosition, init, isEmpty, add, get, update, getSize, print, sort);
 
 import  StandardInput; StandardOutput;
         TextFile qualified;
@@ -32,7 +32,6 @@ function get(l: tList; index: integer): tPosition;
 procedure update(var l: tList; p: tPosition; info: tInfo);
 function getSize(l: tList): integer;
 procedure print(l: tList);
-procedure populateFromFile(inputFile: String; var l: tList);
 procedure sort(var l: tList);
 
 
