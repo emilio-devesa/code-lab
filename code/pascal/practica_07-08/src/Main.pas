@@ -11,6 +11,7 @@ import  StandardInput; StandardOutput;
         TextFile qualified;
         Stats qualified;
         Strip qualified;
+        Crypt qualified;
 
 const   textFileName = 'texto.txt';
         statsFileName = 'informacion.txt';
@@ -64,6 +65,15 @@ begin
     writeln('Ocurrencias: ',Strip.getOcurrencies(textFileName, searchWord));
 end;
 
+procedure cryptString;
+var lineNumber: integer; cryptedStr: String (1024);
+begin
+    write('Introducir numero de linea: ');
+    readln(lineNumber);
+    Crypt.CryptLineFromFile(textFileName, lineNumber, cryptedStr);
+    writeln(cryptedStr);
+end;
+
 function start(option: integer): integer;
 begin
     case (option) of
@@ -73,7 +83,7 @@ begin
                 2: printOcurrenciesOfWord;
                 0: {return};
             end;
-        3: {Crypt a text line};
+        3: cryptString;
         0: {exit};
     end;
     start := option;
@@ -85,7 +95,10 @@ begin
     writeln('Eliminando elementos repetidos...');
     Strip.stripRepetitions(textFileName, noRepeatedWordsFileName);
     writeln('Cifrando fichero ',noRepeatedWordsFileName,'...');
+    Crypt.CryptFile(noRepeatedWordsFileName, cryptFileName);
     writeln('Descifrando fichero ',cryptFileName,'...');
+    Crypt.DecryptFile(cryptFileName, decryptFileName);
     repeat
-    until (start(mainMenu) = 0);
+    until (start(mainMenu)=0);
+end.
 end.
