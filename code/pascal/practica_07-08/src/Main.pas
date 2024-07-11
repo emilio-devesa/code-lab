@@ -14,11 +14,11 @@ import  StandardInput; StandardOutput;
         Crypt qualified;
         List qualified;
 
-const   textFileName = 'texto.txt';
-        statsFileName = 'informacion.txt';
-        noRepeatedWordsFileName = 'sinrepetidas.txt';
-        cryptFileName = 'cifrado.txt';
-        decryptFileName = 'descifrado.txt';
+const   textFileName = 'text.txt';
+        statsFileName = 'information.txt';
+        noRepeatedWordsFileName = 'norepetition.txt';
+        cryptFileName = 'crypt.txt';
+        decryptFileName = 'decrypt.txt';
 
 {** Menus' logics **}
 function mainMenu: integer;
