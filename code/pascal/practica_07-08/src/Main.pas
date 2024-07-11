@@ -12,13 +12,13 @@ import  StandardInput; StandardOutput;
         Stats qualified;
         Strip qualified;
         Crypt qualified;
+        List qualified;
 
 const   textFileName = 'texto.txt';
         statsFileName = 'informacion.txt';
         noRepeatedWordsFileName = 'sinrepetidas.txt';
         cryptFileName = 'cifrado.txt';
         decryptFileName = 'descifrado.txt';
-
 
 {** Menus' logics **}
 function mainMenu: integer;
@@ -57,6 +57,18 @@ begin
 end;
 
 {** Menu operations **}
+procedure printSortedWords;
+var l: List.tList;
+begin
+    writeln('Creating list...');
+    List.init(l);
+    writeln('Populating list...');
+    List.populateFromFile(noRepeatedWordsFileName, l);
+    { TODO: sort list }
+    List.print(l);
+    writeln;
+end;
+
 procedure printOcurrenciesOfWord;
 var searchWord: String(1024);
 begin
@@ -79,7 +91,7 @@ begin
     case (option) of
         1: Stats.printStats(statsFileName);
         2: case (submenuExamineFile) of
-                1: {Print words alphabetically sorted};
+                1: printSortedWords;
                 2: printOcurrenciesOfWord;
                 0: {return};
             end;
