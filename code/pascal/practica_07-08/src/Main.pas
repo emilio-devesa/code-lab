@@ -101,4 +101,3 @@ begin
     repeat
     until (start(mainMenu)=0);
 end.
-end.
