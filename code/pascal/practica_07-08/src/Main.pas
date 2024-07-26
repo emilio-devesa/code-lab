@@ -34,7 +34,7 @@ begin
         write('Option?: ');
         readln(option);
         if (option < 0) or (3 < option)
-        then writeln('Opción no válida.');
+        then writeln('Invalid option');
         mainMenu := option;
     until(0 <= option) and (option <= 3);
 end;
