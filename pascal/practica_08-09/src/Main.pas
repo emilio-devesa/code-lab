@@ -7,6 +7,8 @@ program Main;
 import
     StandardInput;
     StandardOutput;
+    Operations qualified;
+    ConfigurationController qualified;
 
 {** Menus' logics **}
 
@@ -63,16 +65,21 @@ begin
                 3: { List students and their season grades descendentally sorted };
                 0: { Return };
             end;
-        5: { Change configuration };
+        5: { Change configuration } ConfigurationController.change;
         0: { Exit };
     end;
     start := option;
 end;
 
 begin
+    Operations.ClearScreen;
     writeln('============================');
     writeln('  STUDENT GRADE MANAGER');
     writeln('============================');
+    ConfigurationController.load;
 	repeat
     until (start(mainMenu) = 0);
+    writeln;
+    Operations.WaitForEnter;
+    Operations.ClearScreen;
 end.
