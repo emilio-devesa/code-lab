@@ -18,6 +18,8 @@ export  Definitions = (
 );
 
 const   MAX_ITEMS = 100;
+        TAB = chr(9);
+        LF = chr(10);
 
 type    tPersonalInfo = String (50);
 

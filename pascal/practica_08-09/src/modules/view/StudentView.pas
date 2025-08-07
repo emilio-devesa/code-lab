@@ -45,9 +45,8 @@ begin
 end;
 
 procedure print;
-const TAB=chr(9);
 begin
-    writeln(firstName, TAB, lastName, TAB, login);
+    writeln(firstName, ' ', lastName, ' ', login);
 end;
 
 end.

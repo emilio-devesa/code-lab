@@ -10,6 +10,7 @@ import
     Operations qualified;
     ConfigurationController qualified;
     StudentController qualified;
+    ListController qualified;
 
 {** Menus' logics **}
 
@@ -61,7 +62,7 @@ begin
         2: { Update Student };
         3: { Update grades };
         4: case (submenuLists) of
-                1: { List students alphabetically };
+                1: { List students alphabetically } ListController.listStudentsAlphabetically(StudentController.studentsList);
                 2: { List students alphabetically and their Season Grades };
                 3: { List students and their season grades descendentally sorted };
                 0: { Return };
