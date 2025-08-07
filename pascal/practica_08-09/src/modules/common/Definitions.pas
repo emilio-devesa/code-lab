@@ -49,7 +49,7 @@ type    tPersonalInfo = String (50);
         end;
 
         tGradesList = record
-            item: array [1 .. MAX_ITEMS] of tStudentGrades;
+            item: array [1 .. MAX_ITEMS] of tGrades;
             count: integer value 0
         end;
 

@@ -9,6 +9,7 @@ import
     StandardOutput;
     Operations qualified;
     ConfigurationController qualified;
+    StudentController qualified;
 
 {** Menus' logics **}
 
@@ -56,7 +57,7 @@ end;
 function start(option: integer): integer;
 begin
     case (option) of
-        1: { New Student };
+        1: { New Student } StudentController.newStudent;
         2: { Update Student };
         3: { Update grades };
         4: case (submenuLists) of
@@ -77,9 +78,11 @@ begin
     writeln('  STUDENT GRADE MANAGER');
     writeln('============================');
     ConfigurationController.load;
+    StudentController.loadStudents;
 	repeat
     until (start(mainMenu) = 0);
     writeln;
+    StudentController.saveStudents;
     Operations.WaitForEnter;
     Operations.ClearScreen;
 end.
