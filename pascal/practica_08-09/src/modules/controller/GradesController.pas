@@ -55,15 +55,15 @@ begin
             then begin
                 case part of
                     1: begin
-                        writeln ('Previous grade: ', grades.term[term].theory.val, grades.term[term].theory.passedIn);
+                        writeln ('Previous grade: ', grades.term[term].theory.val:3:2, grades.term[term].theory.passedIn);
                         grades.term[term].theory.val := GradesView.getTheoryGrade;
                     end;
                     2: begin
-                        writeln ('Previous grade: ', grades.term[term].practice.val, grades.term[term].practice.passedIn);
+                        writeln ('Previous grade: ', grades.term[term].practice.val:3:2, grades.term[term].practice.passedIn);
                         grades.term[term].practice.val := GradesView.getPracticeGrade;
                     end;
                     3: begin
-                        writeln ('Previous grade: ', grades.term[term].global);
+                        writeln ('Previous grade: ', grades.term[term].global:3:2);
                         grades.term[term].global := GradesView.getGlobalGrade;
                     end;
                 end;
