@@ -7,9 +7,11 @@ program Main;
 import
     StandardInput;
     StandardOutput;
+    Definitions qualified;
     Operations qualified;
     ConfigurationController qualified;
     StudentController qualified;
+    GradesController qualified;
     ListController qualified;
 
 {** Menus' logics **}
@@ -60,7 +62,7 @@ begin
     case (option) of
         1: { New Student } StudentController.newStudent;
         2: { Update Student };
-        3: { Update grades };
+        3: GradesController.setGrades;
         4: case (submenuLists) of
                 1: { List students alphabetically } ListController.listStudentsAlphabetically(StudentController.studentsList);
                 2: { List students alphabetically and their Season Grades };
@@ -80,10 +82,12 @@ begin
     writeln('============================');
     ConfigurationController.load;
     StudentController.loadStudents;
+    GradesController.loadGrades;
 	repeat
     until (start(mainMenu) = 0);
     writeln;
     StudentController.saveStudents;
+    GradesController.saveGrades;
     Operations.WaitForEnter;
     Operations.ClearScreen;
 end.
