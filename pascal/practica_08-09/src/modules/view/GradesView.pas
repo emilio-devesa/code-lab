@@ -13,11 +13,15 @@ export  GradesView = (
             getPart,
             getTheoryGrade,
             getPracticeGrade,
-            getGlobalGrade
+            getGlobalGrade,
+            printTheoryGrade,
+            printPracticeGrade,
+            printGlobalGrade
 );
 
 import  StandardInput;
         StandardOutput;
+        Definitions qualified;
 
 
 function getTerm: integer;
@@ -25,6 +29,10 @@ function getPart: integer;
 function getTheoryGrade: real;
 function getPracticeGrade: real;
 function getGlobalGrade: real;
+procedure printTheoryGrade(grade: Definitions.tGrade);
+procedure printPracticeGrade(grade: Definitions.tGrade);
+procedure printGlobalGrade(grade: real);
+
 
 end;
 
@@ -102,6 +110,21 @@ begin
         readln(grade);
     until validateGrade(grade);
     getGlobalGrade := grade;
+end;
+
+procedure printTheoryGrade;
+begin
+    writeln('Theory: ', grade.val:0:1, grade.passedIn);
+end;
+
+procedure printPracticeGrade;
+begin
+    writeln('Practice: ', grade.val:0:1, grade.passedIn);
+end;
+
+procedure printGlobalGrade;
+begin
+    writeln('Global: ', grade:0:1);
 end;
 
 

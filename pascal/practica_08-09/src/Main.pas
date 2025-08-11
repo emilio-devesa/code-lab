@@ -65,7 +65,7 @@ begin
         3: GradesController.setGrades;
         4: case (submenuLists) of
                 1: { List students alphabetically } ListController.listStudentsAlphabetically(StudentController.studentsList);
-                2: { List students alphabetically and their Season Grades };
+                2: { List students alphabetically and their Season Grades } ListController.listStudentsAlphabeticallyAndSeasonGrades(StudentController.studentsList, GradesController.gradesList);
                 3: { List students and their season grades descendentally sorted };
                 0: { Return };
             end;
