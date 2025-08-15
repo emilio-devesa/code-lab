@@ -12,6 +12,7 @@ export  Definitions = (
             tPersonalInfo,
             tStudent,
             tGrade,
+            tTermGrades,
             tGrades,
             tStudentsList,
             tGradesList
@@ -34,13 +35,15 @@ type    tPersonalInfo = String (50);
             passedIn: char value ' ';  { 'f', 'j', 's', 'd', ' ' }
         end;
 
+        tTermGrades = record
+            theory: tGrade;
+            practice: tGrade;
+            global: real value 0.0;
+        end;
+
         tGrades = record
             login: tPersonalInfo;
-            term: array [1 .. 4] of record
-                theory: tGrade;
-                practice: tGrade;
-                global: real value 0.0;
-            end;
+            term: array [1 .. 4] of tTermGrades;
         end;
 
         { LISTS }
@@ -52,7 +55,7 @@ type    tPersonalInfo = String (50);
 
         tGradesList = record
             item: array [1 .. MAX_ITEMS] of tGrades;
-            count: integer value 0
+            count: integer value 0;
         end;
 
 
