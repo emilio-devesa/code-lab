@@ -11,7 +11,8 @@ export	StudentController = (
             studentsList,
             loadStudents,
             saveStudents,
-            newStudent
+            newStudent,
+            updateStudent
 );
 
 import  StandardOutput;
@@ -26,6 +27,7 @@ var     studentsList: Definitions.tStudentsList;
 procedure loadStudents;
 procedure saveStudents;        
 procedure newStudent;
+procedure updateStudent;
 
 end;
 
@@ -57,5 +59,40 @@ begin
     else writeln('Could not add new student');
 end;
 
+procedure updateStudent;
+var idx: integer;
+    key: Definitions.tPersonalInfo;
+    student: Definitions.tStudent;
+begin
+    StudentView.getLogin(key);
+    idx := StudentsListModel.find(studentsList, key);
+    if idx = 0
+    then writeln('Student not found')
+    else begin
+        if StudentsListModel.get(studentsList, idx, student)
+        then begin
+            writeln;
+            writeln('Updating student:');
+            StudentView.print(StudentModel.getFirstName(student),
+                            StudentModel.getLastName(student),
+                            StudentModel.getLogin(student));
+            case StudentView.getPersonalInfoField of
+                1: begin
+                    StudentView.getFirstName(key);
+                    StudentModel.setFirstName(student, key);
+                end;
+                2: begin
+                    StudentView.getLastName(key);
+                    StudentModel.setLastName(student, key);
+                end;
+                3: writeln('Student login cannot be changed');
+            end;
+            if StudentsListModel.put(studentsList, idx, student)
+            then writeln('Student updated successfully')
+            else writeln('Could not update student');
+        end
+        else writeln('Student could not be retrieved');
+    end;
+end;
 
 end.

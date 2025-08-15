@@ -8,6 +8,7 @@ module StudentView;
 }
 
 export	StudentView = (
+            getPersonalInfoField,
             getFirstName,
             getLastName,
             getLogin,
@@ -18,11 +19,31 @@ import  StandardInput;
         StandardOutput;
         Definitions qualified;
 
+function getPersonalInfoField: integer;
 procedure getFirstName(var firstName: Definitions.tPersonalInfo);
 procedure getLastName(var lastName: Definitions.tPersonalInfo);
 procedure getLogin(var login: Definitions.tPersonalInfo);
 procedure print(firstName, lastName, login: Definitions.tPersonalInfo);
 
+end;
+
+
+function getPersonalInfoField;
+var option: integer;
+begin
+    repeat
+        writeln;
+        writeln('Select Field: ');
+        writeln('1. First Name');
+        writeln('2. Last Name');
+        writeln('3. Login');
+        writeln('0. Back');
+        write('Option?: ');
+        readln(option);
+        if (option < 0) or (3 < option)
+        then writeln('Invalid option');
+        getPersonalInfoField := option;
+    until (0 <= option) and (option <= 3);
 end;
 
 
