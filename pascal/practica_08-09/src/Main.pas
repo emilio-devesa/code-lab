@@ -62,7 +62,7 @@ begin
     case (option) of
         1: { New Student } StudentController.newStudent;
         2: { Update Student } StudentController.updateStudent;
-        3: GradesController.setGrades;
+        3: { Update Grades } GradesController.setGrades;
         4: case (submenuLists) of
                 1: { List students alphabetically } ListController.listStudentsAlphabetically(StudentController.studentsList);
                 2: { List students alphabetically and their Season Grades } ListController.listStudentsAlphabeticallyAndSeasonGrades(StudentController.studentsList, GradesController.gradesList);
