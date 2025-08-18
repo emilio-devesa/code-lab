@@ -9,7 +9,8 @@ module ListController;
 
 export	ListController = (
             listStudentsAlphabetically,
-            listStudentsAlphabeticallyAndSeasonGrades
+            listStudentsAlphabeticallyAndSeasonGrades,
+            listStudentsByDescendingSeasonGrades
 );
 
 import  Definitions qualified;
@@ -23,6 +24,7 @@ import  Definitions qualified;
 
 procedure listStudentsAlphabetically(var origin: Definitions.tStudentsList);
 procedure listStudentsAlphabeticallyAndSeasonGrades(var students: Definitions.tStudentsList; var grades: Definitions.tGradesList);
+procedure listStudentsByDescendingSeasonGrades(var students: Definitions.tStudentsList; var grades: Definitions.tGradesList);
 
 end;
 
@@ -70,6 +72,37 @@ begin
         end;
     end;
 end;
+
+
+
+procedure listStudentsByDescendingSeasonGrades;
+var list: Definitions.tGradesList;
+    term, part: integer;
+    s: Definitions.tStudent;
+    g: Definitions.tGrades;
+    i: integer;    
+begin
+    term := GradesView.getTerm;
+    part := GradesView.getPart;
+    ListSort.sortGradesDesc(grades, list, term, part);
+    for i := GradesListModel.getCount(list) downto 1 do begin
+        if GradesListModel.get(list, i, g)
+        then begin
+            if StudentsListModel.get(students, 
+                                       StudentsListModel.find(students, GradesModel.getLogin(g)),
+                                       s
+                                      )
+            then StudentView.print(StudentModel.getFirstName(s),
+                                   StudentModel.getLastName(s),
+                                   StudentModel.getLogin(s)
+                                  );
+            GradesView.printTheoryGrade(GradesModel.getTheoryGrade(g, term));
+            GradesView.printPracticeGrade(GradesModel.getPracticeGrade(g, term));
+            GradesView.printGlobalGrade(GradesModel.getGlobalGrade(g, term));
+        end;
+    end;
+end;
+
 
 
 end.
