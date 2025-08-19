@@ -21,7 +21,7 @@ import  StandardInput;
 
 const   dataFileName = '.students';
 
-type    tFile = bindable file of Definitions.tStudent;
+type    tFile = bindable file of Definitions.tStudentsList;
 
 function loadFromFile (var list: Definitions.tStudentsList): boolean;
 function saveToFile (var list: Definitions.tStudentsList): boolean;
@@ -54,36 +54,24 @@ end;
 
 function loadFromFile;
 var f: tFile;
-    s: Definitions.tStudent;
 begin
     if fileExists(f, dataFileName) and_then fileIsBound(f, dataFileName)
     then begin
         reset(f);
+        read(f, list);
         loadFromFile := true;
-        while not eof(f) do begin
-            read(f, s);
-            if not StudentsListModel.add(list, s)
-            then loadFromFile := false;
-        end;
     end
     else loadFromFile := false;
 end;
 
 function saveToFile;
 var f: tFile;
-    i, n: integer;
-    s: Definitions.tStudent;
-    success: boolean value true;
 begin
     if fileIsBound(f, dataFileName)
     then begin
         rewrite(f);
-        n := StudentsListModel.getCount(list);
-        for i := 1 to n do begin
-            success := success and StudentsListModel.get(list, i, s);
-            write(f, s);
-        end;
-        saveToFile := success;
+        write(f, list);
+        saveToFile := true;
     end
     else saveToFile := false;
 end;

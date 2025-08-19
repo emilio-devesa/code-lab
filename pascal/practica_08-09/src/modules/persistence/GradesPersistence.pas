@@ -20,7 +20,7 @@ import  StandardInput;
 
 const   dataFileName = '.grades';
 
-type    tFile = bindable file of Definitions.tGrades;
+type    tFile = bindable file of Definitions.tGradesList;
 
 function loadFromFile (var list: Definitions.tGradesList): boolean;
 function saveToFile (var list: Definitions.tGradesList): boolean;
@@ -53,36 +53,24 @@ end;
 
 function loadFromFile;
 var f: tFile;
-    grades: Definitions.tGrades;
 begin
     if fileExists(f, dataFileName) and_then fileIsBound(f, dataFileName)
     then begin
         reset(f);
+        read(f, list);
         loadFromFile := true;
-        while not eof(f) do begin
-            read(f, grades);
-            if not GradesListModel.add(list, grades)
-            then loadFromFile := false;
-        end;
     end
     else loadFromFile := false;
 end;
 
 function saveToFile;
 var f: tFile;
-    i, n: integer;
-    grades: Definitions.tGrades;
-    success: boolean value true;
 begin
     if fileIsBound(f, dataFileName)
     then begin
         rewrite(f);
-        n := GradesListModel.getCount(list);
-        for i := 1 to n do begin
-            success := success and GradesListModel.get(list, i, grades);
-            write(f, grades);
-        end;
-        saveToFile := success;
+        write(f, list);
+        saveToFile := true;
     end
     else saveToFile := false;
 end;
