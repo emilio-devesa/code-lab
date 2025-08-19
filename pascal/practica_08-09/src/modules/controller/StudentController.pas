@@ -34,15 +34,15 @@ end;
 procedure loadStudents;
 begin
     if StudentPersistence.loadFromFile(studentsList)
-    then writeln('Data loaded successfully')
-    else writeln('Data could not be loaded');
+    then writeln('Students loaded successfully.')
+    else writeln('Students could not be loaded.');
 end;
 
 procedure saveStudents;
 begin
     if StudentPersistence.saveToFile(studentsList)
-    then writeln('Data saved successfully')
-    else writeln('Data could not be saved');
+    then writeln('Students saved successfully.')
+    else writeln('Students could not be saved.');
 end;
 
 procedure newStudent;
@@ -55,8 +55,8 @@ begin
     StudentView.getLogin(s);
     StudentModel.setLogin(student, s);
     if StudentsListModel.add(studentsList, student)
-    then writeln('Student added successfully')
-    else writeln('Could not add new student');
+    then writeln('Student added successfully.')
+    else writeln('Could not add new student.');
 end;
 
 procedure updateStudent;
@@ -67,7 +67,7 @@ begin
     StudentView.getLogin(key);
     idx := StudentsListModel.find(studentsList, key);
     if idx = 0
-    then writeln('Student not found')
+    then writeln('Student not found.')
     else begin
         if StudentsListModel.get(studentsList, idx, student)
         then begin
@@ -85,13 +85,13 @@ begin
                     StudentView.getLastName(key);
                     StudentModel.setLastName(student, key);
                 end;
-                3: writeln('Student login cannot be changed');
+                3: writeln('Student login cannot be changed.');
             end;
             if StudentsListModel.put(studentsList, idx, student)
-            then writeln('Student updated successfully')
-            else writeln('Could not update student');
+            then writeln('Student updated successfully.')
+            else writeln('Could not update student.');
         end
-        else writeln('Student could not be retrieved');
+        else writeln('Student could not be retrieved.');
     end;
 end;
 

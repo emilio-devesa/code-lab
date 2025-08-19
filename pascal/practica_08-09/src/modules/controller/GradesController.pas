@@ -32,15 +32,15 @@ end;
 procedure loadGrades;
 begin
     if GradesPersistence.loadFromFile(gradesList)
-    then writeln('Grades loaded successfully')
-    else writeln('Grades could not be loaded');
+    then writeln('Grades loaded successfully.')
+    else writeln('Grades could not be loaded.');
 end;
 
 procedure saveGrades;
 begin
     if GradesPersistence.saveToFile(gradesList)
-    then writeln('Grades saved successfully')
-    else writeln('Grades could not be saved');
+    then writeln('Grades saved successfully.')
+    else writeln('Grades could not be saved.');
 end;
 
 procedure inputGradesLoop(var grades: Definitions.tGrades);
@@ -84,22 +84,22 @@ begin
         then begin
             inputGradesLoop(grades);
             if GradesListModel.add(gradesList, grades)
-            then writeln ('Grades saved successfully')
-            else writeln ('Error when saving new grades');
+            then writeln ('Grades saved successfully.')
+            else writeln ('Error when saving new grades.');
         end
         else begin
             if GradesListModel.get(gradesList, idx, grades)
             then begin
                 inputGradesLoop(grades);
                 if GradesListModel.put(gradesList, idx, grades)
-                then writeln ('Grades updated successfully')
-                else writeln ('Error when saving updated grades');
+                then writeln ('Grades updated successfully.')
+                else writeln ('Error when saving updated grades.');
             end
-            else writeln ('Error obtaining grades this student');
+            else writeln ('Error obtaining grades for this student.');
         end;
     end
     else begin
-        writeln('Student not found');
+        writeln('Student not found.');
     end;    
 end;
 

@@ -40,8 +40,8 @@ end;
 procedure save;
 begin
     if (ConfigurationPersistence.saveToFile)
-    then writeln('Saved preferences in configuration file')
-    else writeln('ERROR: Can´t save preferences in configuration file');
+    then writeln('Saved preferences in configuration file.')
+    else writeln('ERROR: Can´t save preferences in configuration file.');
 end;
 
 procedure change;
