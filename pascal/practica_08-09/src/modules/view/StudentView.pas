@@ -67,7 +67,10 @@ end;
 
 procedure print;
 begin
-    writeln(firstName, ' ', lastName, ' ', login);
+    writeln('-------------------------');
+    writeln(firstName, ' ', lastName);
+    writeln(login);
+    writeln('-------------------------');
 end;
 
 end.

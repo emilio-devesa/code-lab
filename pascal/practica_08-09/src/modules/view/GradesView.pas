@@ -106,7 +106,7 @@ function getGlobalGrade;
 var grade: real;
 begin
     repeat
-        write('Enter exam grade (0.0 - 10.0): ');
+        write('Enter global grade (0.0 - 10.0): ');
         readln(grade);
     until validateGrade(grade);
     getGlobalGrade := grade;

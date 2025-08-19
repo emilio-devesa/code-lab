@@ -21,7 +21,9 @@ var option: integer;
 begin
     repeat
         writeln;
+        writeln('-------------------------');
         writeln('MAIN MENU');
+        writeln('-------------------------');
         writeln('1. New student');
         writeln('2. Update student');
         writeln('3. Update grades');
@@ -41,7 +43,9 @@ var option: integer;
 begin
     repeat
         writeln;
+        writeln('-------------------------');
         writeln('LISTS:');
+        writeln('-------------------------');
         writeln('1. List students alphabetically');
         writeln('2. List students alphabetically and their season grades');
         writeln('3. List students and their season grades in descending order');
