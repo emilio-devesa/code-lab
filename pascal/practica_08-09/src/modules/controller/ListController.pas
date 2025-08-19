@@ -97,9 +97,8 @@ begin
                                    StudentModel.getLastName(s),
                                    StudentModel.getLogin(s)
                                   );
-            GradesView.printTheoryGrade(GradesModel.getTheoryGrade(g, term));
-            GradesView.printPracticeGrade(GradesModel.getPracticeGrade(g, term));
-            GradesView.printGlobalGrade(GradesModel.getGlobalGrade(g, term));
+            GradesView.printGradesOfTerm(g, term);
+            writeln;
         end;
     end;
 end;
