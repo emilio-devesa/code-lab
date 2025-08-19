@@ -8,7 +8,6 @@ module StudentController;
 }
 
 export	StudentController = (
-            studentsList,
             loadStudents,
             saveStudents,
             newStudent,
@@ -21,13 +20,13 @@ import  StandardOutput;
         StudentsListModel qualified;
         StudentView qualified;
         StudentPersistence qualified;
+        GradesService qualified;
 
-var     studentsList: Definitions.tStudentsList;
 
-procedure loadStudents;
-procedure saveStudents;        
-procedure newStudent;
-procedure updateStudent;
+procedure loadStudents(var studentsList: Definitions.tStudentsList);
+procedure saveStudents(var studentsList: Definitions.tStudentsList);        
+procedure newStudent(var studentsList: Definitions.tStudentsList);
+procedure updateStudent(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
 
 end;
 
@@ -46,6 +45,8 @@ begin
 end;
 
 procedure newStudent;
+{ Adds a new student to the students list. }
+{ The student is created from the data entered by the user. }
 var student: Definitions.tStudent; s: Definitions.tPersonalInfo;
 begin
     StudentView.getFirstName(s);
@@ -60,8 +61,10 @@ begin
 end;
 
 procedure updateStudent;
+{ Updates a student in the students list.
+  If the student has grades, it updates the login in the grades list too. }
 var idx: integer;
-    key: Definitions.tPersonalInfo;
+    key, aux: Definitions.tPersonalInfo;
     student: Definitions.tStudent;
 begin
     StudentView.getLogin(key);
@@ -85,8 +88,16 @@ begin
                     StudentView.getLastName(key);
                     StudentModel.setLastName(student, key);
                 end;
-                3: writeln('Student login cannot be changed.');
+                3: begin
+                    aux := StudentModel.getLogin(student);
+                    StudentView.getLogin(key);
+                    StudentModel.setLogin(student, key);
+                    if GradesService.loginExists(gradesList, aux) and_then GradesService.updateLogin(gradesList, aux, key)
+                    then writeln('Login updated in grades list.')
+                    else writeln('Login not found in grades list, no update made.');
+                end;
             end;
+            writeln;
             if StudentsListModel.put(studentsList, idx, student)
             then writeln('Student updated successfully.')
             else writeln('Could not update student.');

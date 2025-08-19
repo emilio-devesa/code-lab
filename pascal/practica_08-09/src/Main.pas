@@ -14,6 +14,13 @@ import
     GradesController qualified;
     ListController qualified;
 
+
+
+var studentsList: Definitions.tStudentsList;
+    gradesList: Definitions.tGradesList;
+
+{** Procedures **}
+
 {** Menus' logics **}
 
 function mainMenu: integer;
@@ -64,13 +71,13 @@ end;
 function start(option: integer): integer;
 begin
     case (option) of
-        1: { New Student } StudentController.newStudent;
-        2: { Update Student } StudentController.updateStudent;
-        3: { Update Grades } GradesController.setGrades;
+        1: { New Student } StudentController.newStudent(studentsList);
+        2: { Update Student } StudentController.updateStudent(studentsList, gradesList);
+        3: { Update Grades } GradesController.setGrades(studentsList, gradesList);
         4: case (submenuLists) of
-                1: { List students alphabetically } ListController.listStudentsAlphabetically(StudentController.studentsList);
-                2: { List students alphabetically and their Season Grades } ListController.listStudentsAlphabeticallyAndSeasonGrades(StudentController.studentsList, GradesController.gradesList);
-                3: { List students and their season grades descendentally sorted } ListController.listStudentsByDescendingSeasonGrades(StudentController.studentsList, GradesController.gradesList);
+                1: { List students alphabetically } ListController.listStudentsAlphabetically(studentsList);
+                2: { List students alphabetically and their Season Grades } ListController.listStudentsAlphabeticallyAndSeasonGrades(studentsList, gradesList);
+                3: { List students and their season grades descendentally sorted } ListController.listStudentsByDescendingSeasonGrades(studentsList, gradesList);
                 0: { Return };
             end;
         5: { Change configuration } ConfigurationController.change;
@@ -85,13 +92,13 @@ begin
     writeln('  STUDENT GRADE MANAGER');
     writeln('============================');
     ConfigurationController.load;
-    StudentController.loadStudents;
-    GradesController.loadGrades;
+    StudentController.loadStudents(studentsList);
+    GradesController.loadGrades(gradesList);
 	repeat
     until (start(mainMenu) = 0);
     writeln;
-    StudentController.saveStudents;
-    GradesController.saveGrades;
+    StudentController.saveStudents(studentsList);
+    GradesController.saveGrades(gradesList);
     Operations.WaitForEnter;
     Operations.ClearScreen;
 end.

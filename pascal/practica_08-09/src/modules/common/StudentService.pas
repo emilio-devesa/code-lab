@@ -17,22 +17,22 @@ import  Definitions qualified;
         StudentView qualified;
 
 
-function checkStudentByLogin (login: Definitions.tPersonalInfo): boolean;
-function promptAndCheckStudentByLogin: boolean;
+function checkStudentByLogin (var list: Definitions.tStudentsList; login: Definitions.tPersonalInfo): boolean;
+function promptAndCheckStudentByLogin(var list: Definitions.tStudentsList): boolean;
 
 end;
 
 function checkStudentByLogin;
 begin
     StudentView.getLogin(login);
-    checkStudentByLogin := (StudentsListModel.find(StudentController.studentsList, login) <> 0)
+    checkStudentByLogin := (StudentsListModel.find(list, login) <> 0)
 end;
 
 function promptAndCheckStudentByLogin;
 var login: Definitions.tPersonalInfo;
 begin
     StudentView.getLogin(login);
-    promptAndCheckStudentByLogin := checkStudentByLogin(login);
+    promptAndCheckStudentByLogin := checkStudentByLogin(list, login);
 end;
 
 end.

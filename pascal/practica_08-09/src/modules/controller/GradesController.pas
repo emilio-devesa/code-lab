@@ -7,7 +7,6 @@ module GradesController;
 }
 
 export	GradesController = (
-            gradesList,
             loadGrades,
             saveGrades,
             setGrades
@@ -21,11 +20,10 @@ import  StandardOutput;
         GradesPersistence qualified;
         StudentService qualified;
 
-var     gradesList: Definitions.tGradesList;
+procedure loadGrades(var gradesList: Definitions.tGradesList);
+procedure saveGrades(var gradesList: Definitions.tGradesList);
+procedure setGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
 
-procedure loadGrades;
-procedure saveGrades;
-procedure setGrades;
 
 end;
 
@@ -77,7 +75,7 @@ var login: Definitions.tPersonalInfo;
     grades: Definitions.tGrades;
     idx: integer;
 begin
-    if StudentService.checkStudentByLogin(login)
+    if StudentService.checkStudentByLogin(studentsList, login)
     then begin
         idx := GradesListModel.find(gradesList, login);
         if (idx = 0) and (GradesListModel.getCount(gradesList) < Definitions.MAX_ITEMS)
