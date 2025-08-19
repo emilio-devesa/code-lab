@@ -22,21 +22,20 @@ import  Definitions qualified;
         GradesView qualified;
         ListSort qualified;
 
-procedure listStudentsAlphabetically(var origin: Definitions.tStudentsList);
-procedure listStudentsAlphabeticallyAndSeasonGrades(var students: Definitions.tStudentsList; var grades: Definitions.tGradesList);
-procedure listStudentsByDescendingSeasonGrades(var students: Definitions.tStudentsList; var grades: Definitions.tGradesList);
+procedure listStudentsAlphabetically(var studentsList: Definitions.tStudentsList);
+procedure listStudentsAlphabeticallyAndSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
+procedure listStudentsByDescendingSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
 
 end;
 
 
 procedure listStudentsAlphabetically;
-var list: Definitions.tStudentsList;
-    s: Definitions.tStudent;
+var s: Definitions.tStudent;
     i: integer;
 begin
-    ListSort.sortStudents(origin, list);
-    for i := 1 to StudentsListModel.getCount(list) do begin
-        if StudentsListModel.get(list, i, s)
+    ListSort.sortStudents(studentsList);
+    for i := 1 to StudentsListModel.getCount(studentsList) do begin
+        if StudentsListModel.get(studentsList, i, s)
         then StudentView.print(StudentModel.getFirstName(s),
                                StudentModel.getLastName(s),
                                StudentModel.getLogin(s)
@@ -44,25 +43,23 @@ begin
     end;
 end;
 
-
 procedure listStudentsAlphabeticallyAndSeasonGrades;
-var list: Definitions.tStudentsList;
-    term: integer;
+var term: integer;
     s: Definitions.tStudent;
     g: Definitions.tGrades;
     i: integer;    
 begin
     term := GradesView.getTerm;
-    ListSort.sortStudents(students, list);
-    for i := 1 to StudentsListModel.getCount(list) do begin
-        if StudentsListModel.get(list, i, s)
+    ListSort.sortStudents(studentsList);
+    for i := 1 to StudentsListModel.getCount(studentsList) do begin
+        if StudentsListModel.get(studentsList, i, s)
         then begin
             StudentView.print(StudentModel.getFirstName(s),
                                StudentModel.getLastName(s),
                                StudentModel.getLogin(s)
                               );
-            if GradesListModel.get(grades, 
-                                   GradesListModel.find(grades, StudentModel.getLogin(s)),
+            if GradesListModel.get(gradesList, 
+                                   GradesListModel.find(gradesList, StudentModel.getLogin(s)),
                                    g)
             then begin
                 GradesView.printTheoryGrade(GradesModel.getTheoryGrade(g, term));
@@ -73,23 +70,20 @@ begin
     end;
 end;
 
-
-
 procedure listStudentsByDescendingSeasonGrades;
-var list: Definitions.tGradesList;
-    term, part: integer;
+var term, part: integer;
     s: Definitions.tStudent;
     g: Definitions.tGrades;
     i: integer;    
 begin
     term := GradesView.getTerm;
     part := GradesView.getPart;
-    ListSort.sortGradesDesc(grades, list, term, part);
-    for i := GradesListModel.getCount(list) downto 1 do begin
-        if GradesListModel.get(list, i, g)
+    ListSort.sortGradesDesc(gradesList, term, part);
+    for i := GradesListModel.getCount(gradesList) downto 1 do begin
+        if GradesListModel.get(gradesList, i, g)
         then begin
-            if StudentsListModel.get(students, 
-                                       StudentsListModel.find(students, GradesModel.getLogin(g)),
+            if StudentsListModel.get(studentsList, 
+                                       StudentsListModel.find(studentsList, GradesModel.getLogin(g)),
                                        s
                                       )
             then StudentView.print(StudentModel.getFirstName(s),

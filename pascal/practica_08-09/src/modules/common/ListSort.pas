@@ -16,8 +16,8 @@ import  Definitions qualified;
         StudentsListModel qualified;
         GradesListModel qualified;
 
-procedure sortStudents(var origin, target: Definitions.tStudentsList);
-procedure sortGradesDesc(var origin, target: Definitions.tGradesList; term, part: integer);
+procedure sortStudents(var list: Definitions.tStudentsList);
+procedure sortGradesDesc(var list: Definitions.tGradesList; term, part: integer);
 
 end;
 
@@ -101,19 +101,17 @@ end;
 procedure sortStudents;
 var size: integer;
 begin
-    size := StudentsListModel.getCount(origin);
-    StudentsListModel.clone(origin, target);
+    size := StudentsListModel.getCount(list);
     if size > 1
-    then quicksortStudents(target, 1, size);
+    then quicksortStudents(list, 1, size);
 end;
 
 procedure sortGradesDesc;
 var size: integer;
 begin
-    size := GradesListModel.getCount(origin);
-    GradesListModel.clone(origin, target);
+    size := GradesListModel.getCount(list);
     if size > 1
-    then quicksortGradesDesc(target, 1, size, term, part);
+    then quicksortGradesDesc(list, 1, size, term, part);
 end;
 
 end.
