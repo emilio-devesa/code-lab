@@ -97,7 +97,6 @@ begin
                     else writeln('Login not found in grades list, no update made.');
                 end;
             end;
-            writeln;
             if StudentsListModel.put(studentsList, idx, student)
             then writeln('Student updated successfully.')
             else writeln('Could not update student.');

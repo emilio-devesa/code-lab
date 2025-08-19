@@ -72,33 +72,36 @@ end;
 
 procedure setGrades;
 var login: Definitions.tPersonalInfo;
-    grades: Definitions.tGrades;
     idx: integer;
+    preexistingGrades: boolean value false;
+    grades: Definitions.tGrades;
 begin
     if StudentService.checkStudentByLogin(studentsList, login)
     then begin
         idx := GradesListModel.find(gradesList, login);
-        if (idx = 0) and (GradesListModel.getCount(gradesList) < Definitions.MAX_ITEMS)
+        if idx > 0
+        then preexistingGrades := GradesListModel.get(gradesList, idx, grades);
+        
+        if preexistingGrades
+        then writeln('Updating grades for student: ', login)
+        else writeln('Setting grades for new student: ', login);
+
+        inputGradesLoop(grades);
+        GradesModel.setLogin(grades, login);
+        if (preexistingGrades)
         then begin
-            inputGradesLoop(grades);
-            if GradesListModel.add(gradesList, grades)
-            then writeln ('Grades saved successfully.')
-            else writeln ('Error when saving new grades.');
+            if GradesListModel.put(gradesList, idx, grades)
+            then writeln('Grades updated successfully.');
         end
-        else begin
-            if GradesListModel.get(gradesList, idx, grades)
-            then begin
-                inputGradesLoop(grades);
-                if GradesListModel.put(gradesList, idx, grades)
-                then writeln ('Grades updated successfully.')
-                else writeln ('Error when saving updated grades.');
-            end
-            else writeln ('Error obtaining grades for this student.');
+        else begin 
+            if GradesListModel.add(gradesList, grades)
+            then writeln('Grades saved successfully.');
         end;
     end
-    else begin
-        writeln('Student not found.');
-    end;    
+    else writeln('Student not found.');
+    if GradesPersistence.saveToFile(gradesList)
+    then writeln('Grades saved to file.')
+    else writeln('Grades could not be saved to file.');
 end;
 
 

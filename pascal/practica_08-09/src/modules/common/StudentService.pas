@@ -17,7 +17,7 @@ import  Definitions qualified;
         StudentView qualified;
 
 
-function checkStudentByLogin (var list: Definitions.tStudentsList; login: Definitions.tPersonalInfo): boolean;
+function checkStudentByLogin (var list: Definitions.tStudentsList; var login: Definitions.tPersonalInfo): boolean;
 function promptAndCheckStudentByLogin(var list: Definitions.tStudentsList): boolean;
 
 end;

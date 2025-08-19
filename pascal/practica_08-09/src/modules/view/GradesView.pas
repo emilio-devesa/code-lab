@@ -16,7 +16,8 @@ export  GradesView = (
             getGlobalGrade,
             printTheoryGrade,
             printPracticeGrade,
-            printGlobalGrade
+            printGlobalGrade,
+            printGradesOfTerm
 );
 
 import  StandardInput;
@@ -32,6 +33,7 @@ function getGlobalGrade: real;
 procedure printTheoryGrade(grade: Definitions.tGrade);
 procedure printPracticeGrade(grade: Definitions.tGrade);
 procedure printGlobalGrade(grade: real);
+procedure printGradesOfTerm(grades: Definitions.tGrades; t: integer);
 
 
 end;
@@ -114,17 +116,33 @@ end;
 
 procedure printTheoryGrade;
 begin
-    writeln('Theory: ', grade.val:0:1, grade.passedIn);
+    write(grade.val:9:1, grade.passedIn);
 end;
 
 procedure printPracticeGrade;
 begin
-    writeln('Practice: ', grade.val:0:1, grade.passedIn);
+    write(grade.val:10:1, grade.passedIn);
 end;
 
 procedure printGlobalGrade;
 begin
-    writeln('Global: ', grade:0:1);
+    write(grade:10:1);
+end;
+
+procedure printGradesOfTerm;
+var i: integer;
+begin
+    writeln('   Theory | Practice |   Global');
+    if grades.term[t].theory.val >= 0 then
+        printTheoryGrade(grades.term[t].theory);
+        
+    if grades.term[t].practice.val >= 0 then
+        printPracticeGrade(grades.term[t].practice);
+        
+    if grades.term[t].global >= 0 then
+        printGlobalGrade(grades.term[t].global);
+    writeln;
+    writeln('--------------------------------');
 end;
 
 

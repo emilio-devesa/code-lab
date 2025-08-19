@@ -21,6 +21,7 @@ import  Definitions qualified;
         GradesModel qualified;
         GradesView qualified;
         ListSort qualified;
+        StandardOutput;
 
 procedure listStudentsAlphabetically(var studentsList: Definitions.tStudentsList);
 procedure listStudentsAlphabeticallyAndSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
@@ -43,28 +44,34 @@ begin
     end;
 end;
 
+procedure debugPrintGradesList(var list: Definitions.tGradesList);
+var i: integer;
+begin
+    writeln('grades count: ', list.count);
+    for i := 1 to list.count do
+        writeln(i, ': "', list.item[i].login, '"');
+end;
+
 procedure listStudentsAlphabeticallyAndSeasonGrades;
 var term: integer;
     s: Definitions.tStudent;
+    login: Definitions.tPersonalInfo;
     g: Definitions.tGrades;
-    i: integer;    
+    i, j: integer;
 begin
     term := GradesView.getTerm;
     ListSort.sortStudents(studentsList);
     for i := 1 to StudentsListModel.getCount(studentsList) do begin
         if StudentsListModel.get(studentsList, i, s)
         then begin
-            StudentView.print(StudentModel.getFirstName(s),
-                               StudentModel.getLastName(s),
-                               StudentModel.getLogin(s)
-                              );
-            if GradesListModel.get(gradesList, 
-                                   GradesListModel.find(gradesList, StudentModel.getLogin(s)),
-                                   g)
+            s := studentsList.item[i];
+            login := StudentModel.getLogin(s);
+            StudentView.print(s.firstName, s.lastName, s.login);
+            j := GradesListModel.find(gradesList, login);
+            if (j>0) and_then (GradesListModel.get(gradesList, j, g))
             then begin
-                GradesView.printTheoryGrade(GradesModel.getTheoryGrade(g, term));
-                GradesView.printPracticeGrade(GradesModel.getPracticeGrade(g, term));
-                GradesView.printGlobalGrade(GradesModel.getGlobalGrade(g, term));
+                GradesView.printGradesOfTerm(g, term);
+                writeln;
             end;
         end;
     end;
