@@ -7,33 +7,26 @@ module StudentService;
 }
 
 export  StudentService = (
-            checkStudentByLogin,
-            promptAndCheckStudentByLogin
+            checkStudentByLogin
 );
 
 import  Definitions qualified;
-        StudentController qualified;
         StudentsListModel qualified;
         StudentView qualified;
 
 
-function checkStudentByLogin (var list: Definitions.tStudentsList; var login: Definitions.tPersonalInfo): boolean;
-function promptAndCheckStudentByLogin(var list: Definitions.tStudentsList): boolean;
+function checkStudentByLogin(var list: Definitions.tStudentsList; var login: Definitions.tPersonalInfo): boolean;
+
 
 end;
+
 
 function checkStudentByLogin;
 begin
     StudentView.getLogin(login);
-    checkStudentByLogin := (StudentsListModel.find(list, login) <> 0)
+    checkStudentByLogin := StudentsListModel.find(list, login) <> 0;
 end;
 
-function promptAndCheckStudentByLogin;
-var login: Definitions.tPersonalInfo;
-begin
-    StudentView.getLogin(login);
-    promptAndCheckStudentByLogin := checkStudentByLogin(list, login);
-end;
 
 end.
 

@@ -26,6 +26,7 @@ var studentsList: Definitions.tStudentsList;
 function mainMenu: integer;
 var option: integer value 0;
 begin
+    mainMenu := 0;
     repeat
         writeln;
         writeln('-------------------------');
@@ -48,6 +49,7 @@ end;
 function submenuLists: integer;
 var option: integer value 0;
 begin
+    submenuLists := 0;
     repeat
         writeln;
         writeln('-------------------------');

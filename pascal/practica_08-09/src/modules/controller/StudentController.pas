@@ -67,10 +67,14 @@ var idx: integer;
     key, aux: Definitions.tPersonalInfo;
     student: Definitions.tStudent;
 begin
+    writeln;
+    writeln('Update student: Enter student login or leave blank to go back to Main Menu');
     StudentView.getLogin(key);
     idx := StudentsListModel.find(studentsList, key);
     if idx = 0
-    then writeln('Student not found.')
+    then begin
+        if trim(key) <> '' then writeln('Student not found.');
+    end
     else begin
         if StudentsListModel.get(studentsList, idx, student)
         then begin
@@ -96,6 +100,7 @@ begin
                     then writeln('Login updated in grades list.')
                     else writeln('Login not found in grades list, no update made.');
                 end;
+                0: { Go Back to Main Menu };
             end;
             if StudentsListModel.put(studentsList, idx, student)
             then writeln('Student updated successfully.')

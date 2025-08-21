@@ -44,6 +44,8 @@ end;
 procedure inputGradesLoop(var element: Definitions.tGrades);
 var term: Definitions.tTerm;
     part: Definitions.tPart;
+    val: real value 0.0;
+    pass: Definitions.tTerm value Definitions.NoTerm;
 begin
     repeat
         term := GradesView.getTerm;
@@ -52,8 +54,10 @@ begin
             part := GradesView.getPart;
             if part <> Definitions.NoPart
             then begin
-                writeln('Previous grade: ', element.grades[term, part].val:3:2, Definitions.TermToChar(element.grades[term, part].passedIn));
-                element.grades[term, part].val := GradesView.getGrade(part);
+                val := GradesModel.getGrade(element, term, part, pass);
+                writeln('Previous grade: ', val:3:1, Definitions.TermToChar(pass));
+                val := GradesView.getGrade(part);
+                GradesModel.setGrade(element, term, part, val, pass);
             end;
         end;
     until (term = Definitions.NoTerm);
@@ -65,6 +69,8 @@ var login: Definitions.tPersonalInfo;
     preexistingGrades: boolean value false;
     grades: Definitions.tGrades;
 begin
+    writeln;
+    writeln('Update grades: Enter student login or leave blank to go back to Main Menu');
     if StudentService.checkStudentByLogin(studentsList, login)
     then begin
         idx := GradesListModel.find(gradesList, login);
@@ -73,7 +79,7 @@ begin
         
         if preexistingGrades
         then writeln('Updating grades for student: ', login)
-        else writeln('Setting grades for new student: ', login);
+        else writeln('Setting grades for student: ', login);
 
         inputGradesLoop(grades);
         GradesModel.setLogin(grades, login);
@@ -86,11 +92,13 @@ begin
             if GradesListModel.add(gradesList, grades)
             then writeln('Grades saved successfully.');
         end;
+        if GradesPersistence.saveToFile(gradesList)
+        then writeln('Grades saved to file.')
+        else writeln('Grades could not be saved to file.');
     end
-    else writeln('Student not found.');
-    if GradesPersistence.saveToFile(gradesList)
-    then writeln('Grades saved to file.')
-    else writeln('Grades could not be saved to file.');
+    else begin
+        if trim(login) <> '' then writeln('Student not found.');
+    end;
 end;
 
 

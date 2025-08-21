@@ -33,6 +33,7 @@ end;
 function getTerm;
 var option: integer value 0;
 begin
+    getTerm := Definitions.NoTerm;
     repeat
         writeln;
         writeln('Select Term: ');
@@ -60,6 +61,7 @@ end;
 function getPart;
 var option: integer value 0;
 begin
+    getPart := Definitions.NoPart;
     repeat
         writeln;
         writeln('Select Part: ');
@@ -122,6 +124,7 @@ begin
     
     writeln;
     writeln('--------------------------------');
+    writeln;
 end;
 
 

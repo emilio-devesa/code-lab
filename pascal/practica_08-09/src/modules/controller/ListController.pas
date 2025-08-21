@@ -21,7 +21,6 @@ import  Definitions qualified;
         GradesModel qualified;
         GradesView qualified;
         ListSort qualified;
-        StandardOutput;
 
 procedure listStudentsAlphabetically(var studentsList: Definitions.tStudentsList);
 procedure listStudentsAlphabeticallyAndSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
@@ -46,7 +45,6 @@ end;
 
 procedure listStudentsAlphabeticallyAndSeasonGrades;
 var s: Definitions.tStudent;
-    login: Definitions.tPersonalInfo;
     g: Definitions.tGrades;
     term: Definitions.tTerm;
     i, j: integer;
@@ -56,14 +54,13 @@ begin
     for i := 1 to StudentsListModel.getCount(studentsList) do begin
         if StudentsListModel.get(studentsList, i, s)
         then begin
-            login := StudentModel.getLogin(s);
-            StudentView.print(s.firstName, s.lastName, s.login);
-            j := GradesListModel.find(gradesList, login);
+            StudentView.print(StudentModel.getFirstName(s),
+                              StudentModel.getLastName(s),
+                              StudentModel.getLogin(s)
+                             );
+            j := GradesListModel.find(gradesList, StudentModel.getLogin(s));
             if (j>0) and_then (GradesListModel.get(gradesList, j, g))
-            then begin
-                GradesView.printGradesOfTerm(g, term);
-                writeln;
-            end;
+            then GradesView.printGradesOfTerm(g, term);
         end;
     end;
 end;
@@ -90,7 +87,6 @@ begin
                                    StudentModel.getLogin(s)
                                   );
             GradesView.printGradesOfTerm(g, term);
-            writeln;
         end;
     end;
 end;
