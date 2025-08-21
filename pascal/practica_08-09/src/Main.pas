@@ -24,7 +24,7 @@ var studentsList: Definitions.tStudentsList;
 {** Menus' logics **}
 
 function mainMenu: integer;
-var option: integer;
+var option: integer value 0;
 begin
     repeat
         writeln;
@@ -39,14 +39,14 @@ begin
         writeln('0. Quit');
         write('Option?: ');
         readln(option);
-        if (option < 0) or (5 < option)
-        then writeln('Invalid option');
-        mainMenu := option;
-    until (0 <= option) and (option <= 5);
+        if option in [0 .. 5]
+        then mainMenu := option
+        else writeln('Invalid option');        
+    until option in [0 .. 5];
 end;
 
 function submenuLists: integer;
-var option: integer;
+var option: integer value 0;
 begin
     repeat
         writeln;
@@ -59,10 +59,10 @@ begin
         writeln('0. Back');
         write('Option?: ');
         readln(option);
-        if (option < 0) or (3 < option)
-        then writeln('Invalid option');
-        submenuLists := option;
-    until (0 <= option) and (option <= 3);
+        if option in [0 .. 3]
+        then submenuLists := option
+        else writeln('Invalid option');
+    until option in [0 .. 3];
 end;
 
 

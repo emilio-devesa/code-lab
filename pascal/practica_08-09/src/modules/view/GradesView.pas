@@ -11,12 +11,8 @@ module GradesView;
 export  GradesView = (
             getTerm,
             getPart,
-            getTheoryGrade,
-            getPracticeGrade,
-            getGlobalGrade,
-            printTheoryGrade,
-            printPracticeGrade,
-            printGlobalGrade,
+            getGrade,
+            printGrade,
             printGradesOfTerm
 );
 
@@ -25,21 +21,17 @@ import  StandardInput;
         Definitions qualified;
 
 
-function getTerm: integer;
-function getPart: integer;
-function getTheoryGrade: real;
-function getPracticeGrade: real;
-function getGlobalGrade: real;
-procedure printTheoryGrade(grade: Definitions.tGrade);
-procedure printPracticeGrade(grade: Definitions.tGrade);
-procedure printGlobalGrade(grade: real);
-procedure printGradesOfTerm(grades: Definitions.tGrades; t: integer);
+function getTerm: Definitions.tTerm;
+function getPart: Definitions.tPart;
+function getGrade(part: Definitions.tPart): real;
+procedure printGrade(grade: real; passedIn: Definitions.tTerm);
+procedure printGradesOfTerm(element: Definitions.tGrades; t: Definitions.tTerm);
 
 
 end;
 
 function getTerm;
-var option: integer;
+var option: integer value 0;
 begin
     repeat
         writeln;
@@ -51,14 +43,22 @@ begin
         writeln('0. Back');
         write('Option?: ');
         readln(option);
-        if (option < 0) or (4 < option)
-        then writeln('Invalid option');
-        getTerm := option;
-    until (0 <= option) and (option <= 4);
+        if option in [0 .. 4]
+        then begin
+            case option of
+                1: getTerm := Definitions.February;
+                2: getTerm := Definitions.June;
+                3: getTerm := Definitions.September;
+                4: getTerm := Definitions.December;
+                0: getTerm := Definitions.NoTerm;
+            end;
+        end
+        else writeln('Invalid option')
+    until option in [0 .. 4];
 end;
 
 function getPart;
-var option: integer;
+var option: integer value 0;
 begin
     repeat
         writeln;
@@ -69,10 +69,17 @@ begin
         writeln('0. Back');
         write('Option?: ');
         readln(option);
-        if (option < 0) or (3 < option)
-        then writeln('Invalid option');
-        getPart := option;
-    until (0 <= option) and (option <= 3);
+        if option in [0 .. 3]
+        then begin
+            case option of
+                1: getPart := Definitions.Theory;
+                2: getPart := Definitions.Practice;
+                3: getPart := Definitions.Global;
+                0: getPart := Definitions.NoPart;
+            end;
+        end
+        else writeln('Invalid option');
+    until option in [0 .. 3];
 end;
 
 function validateGrade(g: real): boolean;
@@ -84,63 +91,35 @@ begin
     validateGrade := isValid;
 end;
 
-function getTheoryGrade;
+function getGrade;
 var grade: real;
 begin
     repeat
-        write('Enter theory grade (0.0 - 10.0): ');
+        write('Enter ', Definitions.PartToString(part),' grade (0.0 - 10.0): ');
         readln(grade);
     until validateGrade(grade);
-    getTheoryGrade := grade;
+    getGrade := grade;
 end;
 
-function getPracticeGrade;
-var grade: real;
+procedure printGrade;
 begin
-    repeat
-        write('Enter practice grade (0.0 - 10.0): ');
-        readln(grade);
-    until validateGrade(grade);
-    getPracticeGrade := grade;
-end;
-
-function getGlobalGrade;
-var grade: real;
-begin
-    repeat
-        write('Enter global grade (0.0 - 10.0): ');
-        readln(grade);
-    until validateGrade(grade);
-    getGlobalGrade := grade;
-end;
-
-procedure printTheoryGrade;
-begin
-    write(grade.val:9:1, grade.passedIn);
-end;
-
-procedure printPracticeGrade;
-begin
-    write(grade.val:10:1, grade.passedIn);
-end;
-
-procedure printGlobalGrade;
-begin
-    write(grade:10:1);
+    if passedIn = Definitions.NoTerm 
+    then write(grade:9:1, '  ')
+    else write(grade:9:1, Definitions.TermToChar(passedIn), ' ');
 end;
 
 procedure printGradesOfTerm;
-var i: integer;
 begin
     writeln('   Theory | Practice |   Global');
-    if grades.term[t].theory.val >= 0 then
-        printTheoryGrade(grades.term[t].theory);
+    if element.grades[t, Definitions.Theory].val >= 0
+    then printGrade(element.grades[t, Definitions.Theory].val, element.grades[t, Definitions.Theory].passedIn);
         
-    if grades.term[t].practice.val >= 0 then
-        printPracticeGrade(grades.term[t].practice);
+    if element.grades[t, Definitions.Practice].val >= 0
+    then printGrade(element.grades[t, Definitions.Practice].val, element.grades[t, Definitions.Practice].passedIn);
         
-    if grades.term[t].global >= 0 then
-        printGlobalGrade(grades.term[t].global);
+    if element.grades[t, Definitions.Global].val >= 0
+    then printGrade(element.grades[t, Definitions.Global].val, element.grades[t, Definitions.Global].passedIn);
+    
     writeln;
     writeln('--------------------------------');
 end;

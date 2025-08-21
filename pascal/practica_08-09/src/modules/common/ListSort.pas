@@ -17,7 +17,7 @@ import  Definitions qualified;
         GradesListModel qualified;
 
 procedure sortStudents(var list: Definitions.tStudentsList);
-procedure sortGradesDesc(var list: Definitions.tGradesList; term, part: integer);
+procedure sortGradesDesc(var list: Definitions.tGradesList; term: Definitions.tTerm; part: Definitions.tPart);
 
 end;
 
@@ -52,7 +52,7 @@ begin
     end;
 end;
 
-procedure quicksortGradesDesc(var l: Definitions.tGradesList; low, high: integer; t, p: integer);
+procedure quicksortGradesDesc(var l: Definitions.tGradesList; low, high: integer; term: Definitions.tTerm; part: Definitions.tPart);
 var i, j: integer;
     pivot, aux: Definitions.tGrades;
 begin
@@ -64,23 +64,9 @@ begin
         j := high;
         { Partition the array into two halves }
         repeat
-            case p of
-                1: begin
-                    { Sort by theory grade}
-                    while l.item[i].term[t].theory.val < pivot.term[t].theory.val do i := i + 1;
-                    while l.item[j].term[t].theory.val > pivot.term[t].theory.val do j := j - 1;
-                end;
-                2: begin
-                    { Sort by practice grade }
-                    while l.item[i].term[t].practice.val < pivot.term[t].practice.val do i := i + 1;
-                    while l.item[j].term[t].practice.val > pivot.term[t].practice.val do j := j - 1;
-                end;
-                3: begin
-                    { Sort by global grade }
-                    while l.item[i].term[t].global < pivot.term[t].global do i := i + 1;
-                    while l.item[j].term[t].global > pivot.term[t].global do j := j - 1;
-                end;
-            end;
+            { Compare grades based on the specified term and part }
+            while l.item[i].grades[term, part].val < pivot.grades[term, part].val do i := i + 1;
+            while l.item[j].grades[term, part].val > pivot.grades[term, part].val do j := j - 1;
             if i <= j
             then begin
                 { Swap elements and move indices }
@@ -92,8 +78,8 @@ begin
             end;
         until i > j;
         { Recursively sort the sub-lists }
-        quicksortGradesDesc(l, low, j, t, p);
-        quicksortGradesDesc(l, i, high, t, p);
+        quicksortGradesDesc(l, low, j, term, part);
+        quicksortGradesDesc(l, i, high, term, part);
     end;
 end;
 

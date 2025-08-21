@@ -4,30 +4,22 @@ module GradesModel;
     More info: README.md
 
     GradesModel.pas
-    Provides the model for the grades
+    Provides the model for the element
 }
 
 export	GradesModel = (
             setLogin,
-            setTheoryGrade,
-            setPracticeGrade,
-            setGlobalGrade,
             getLogin,
-            getTheoryGrade,
-            getPracticeGrade,
-            getGlobalGrade
+            setGrade,
+            getGrade
 );
 
 import  Definitions qualified;
 
-procedure setLogin(var grades: Definitions.tGrades; login: Definitions.tPersonalInfo);
-procedure setTheoryGrade(var grades: Definitions.tGrades; i: integer; grade: Definitions.tGrade);
-procedure setPracticeGrade(var grades: Definitions.tGrades; i: integer; grade: Definitions.tGrade);
-procedure setGlobalGrade(var grades: Definitions.tGrades; i: integer; grade: real);
-function getLogin(grades: Definitions.tGrades): Definitions.tPersonalInfo;
-function getTheoryGrade(grades: Definitions.tGrades; i: integer): Definitions.tGrade;
-function getPracticeGrade(grades: Definitions.tGrades; i: integer): Definitions.tGrade;
-function getGlobalGrade(grades: Definitions.tGrades; i: integer): real;
+procedure setLogin(var element: Definitions.tGrades; login: Definitions.tPersonalInfo);
+function getLogin(element: Definitions.tGrades): Definitions.tPersonalInfo;
+procedure setGrade(var element: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; grade: real; passed: Definitions.tTerm);
+function getGrade(element: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; var passed: Definitions.tTerm): real;
 
 
 end;
@@ -35,42 +27,24 @@ end;
 
 procedure setLogin;
 begin
-	grades.login := login;
-end;
-
-procedure setTheoryGrade;
-begin
-    grades.term[i].theory := grade;
-end;
-
-procedure setPracticeGrade;
-begin
-    grades.term[i].practice := grade;
-end;
-
-procedure setGlobalGrade;
-begin
-    grades.term[i].global := grade;
+	element.login := login;
 end;
 
 function getLogin;
 begin
-	getLogin := grades.login;
+	getLogin := element.login;
 end;
 
-function getTheoryGrade;
+procedure setGrade;
 begin
-    getTheoryGrade := grades.term[i].theory;
+    element.grades[term, part].val := grade;
+    element.grades[term, part].passedIn := passed;
 end;
 
-function getPracticeGrade;
+function getGrade;
 begin
-    getPracticeGrade := grades.term[i].practice;
-end;
-
-function getGlobalGrade;
-begin
-    getGlobalGrade := grades.term[i].global;
+    getGrade := element.grades[term, part].val;
+    passed := element.grades[term, part].passedIn;
 end;
 
 

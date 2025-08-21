@@ -41,33 +41,22 @@ begin
     else writeln('Grades could not be saved.');
 end;
 
-procedure inputGradesLoop(var grades: Definitions.tGrades);
-var term, part: integer;
+procedure inputGradesLoop(var element: Definitions.tGrades);
+var term: Definitions.tTerm;
+    part: Definitions.tPart;
 begin
     repeat
         term := GradesView.getTerm;
-        if term <> 0
+        if term <> Definitions.NoTerm
         then begin
             part := GradesView.getPart;
-            if part <> 0
+            if part <> Definitions.NoPart
             then begin
-                case part of
-                    1: begin
-                        writeln ('Previous grade: ', grades.term[term].theory.val:3:2, grades.term[term].theory.passedIn);
-                        grades.term[term].theory.val := GradesView.getTheoryGrade;
-                    end;
-                    2: begin
-                        writeln ('Previous grade: ', grades.term[term].practice.val:3:2, grades.term[term].practice.passedIn);
-                        grades.term[term].practice.val := GradesView.getPracticeGrade;
-                    end;
-                    3: begin
-                        writeln ('Previous grade: ', grades.term[term].global:3:2);
-                        grades.term[term].global := GradesView.getGlobalGrade;
-                    end;
-                end;
+                writeln('Previous grade: ', element.grades[term, part].val:3:2, Definitions.TermToChar(element.grades[term, part].passedIn));
+                element.grades[term, part].val := GradesView.getGrade(part);
             end;
         end;
-    until (term = 0);
+    until (term = Definitions.NoTerm);
 end;
 
 procedure setGrades;

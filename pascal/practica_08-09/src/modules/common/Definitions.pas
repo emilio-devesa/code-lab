@@ -9,13 +9,16 @@ module Definitions;
 
 export  Definitions = (
             MAX_ITEMS,
+            TAB,
+            LF,
             tPersonalInfo,
             tStudent,
-            tGrade,
-            tTermGrades,
+            tTerm, NoTerm, February, June, September, December,
+            tPart, NoPart, Theory, Practice, Global,
             tGrades,
             tStudentsList,
-            tGradesList
+            tGradesList,
+            TermToChar, TermToString, PartToString
 );
 
 const   MAX_ITEMS = 100;
@@ -30,20 +33,18 @@ type    tPersonalInfo = String (50);
 			login: tPersonalInfo;
 		end;
 
-        tGrade = record
-            val: real value 0.0;
-            passedIn: char value ' ';  { 'f', 'j', 's', 'd', ' ' }
-        end;
+        tEnumToString = String (12);
 
-        tTermGrades = record
-            theory: tGrade;
-            practice: tGrade;
-            global: real value 0.0;
-        end;
+        tTerm = (NoTerm, February, June, September, December);
+
+        tPart = (NoPart, Theory, Practice, Global);
 
         tGrades = record
             login: tPersonalInfo;
-            term: array [1 .. 4] of tTermGrades;
+            grades: array [February .. December, Theory .. Global] of record
+                val: real value 0.0;
+                passedIn: tTerm value NoTerm;
+            end;
         end;
 
         { LISTS }
@@ -58,7 +59,44 @@ type    tPersonalInfo = String (50);
             count: integer value 0;
         end;
 
+function TermToChar(t: tTerm): char;
+function TermToString(t: tTerm): tEnumToString;
+function PartToString(p: tPart): tEnumToString;
 
+end;
+
+
+function TermToChar;
+begin
+    case t of
+        February:  TermToChar := 'f';
+        June:      TermToChar := 'j';
+        September: TermToChar := 's';
+        December:  TermToChar := 'd';
+        NoTerm:    TermToChar := ' ';
+    end;
+end;
+
+function TermToString;
+begin
+    case t of
+        NoTerm:    TermToString := 'None';
+        February:  TermToString := 'February';
+        June:      TermToString := 'June';
+        September: TermToString := 'September';
+        December:  TermToString := 'December';
+    end;
+end;
+
+
+function PartToString;
+begin
+    case p of
+        NoPart:     PartToString := '';
+        Theory:     PartToString := 'Theory';
+        Practice:   PartToString := 'Practice';
+        Global:     PartToString := 'Global';
+    end;
 end;
 
 

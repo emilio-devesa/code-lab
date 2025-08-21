@@ -44,19 +44,11 @@ begin
     end;
 end;
 
-procedure debugPrintGradesList(var list: Definitions.tGradesList);
-var i: integer;
-begin
-    writeln('grades count: ', list.count);
-    for i := 1 to list.count do
-        writeln(i, ': "', list.item[i].login, '"');
-end;
-
 procedure listStudentsAlphabeticallyAndSeasonGrades;
-var term: integer;
-    s: Definitions.tStudent;
+var s: Definitions.tStudent;
     login: Definitions.tPersonalInfo;
     g: Definitions.tGrades;
+    term: Definitions.tTerm;
     i, j: integer;
 begin
     term := GradesView.getTerm;
@@ -64,7 +56,6 @@ begin
     for i := 1 to StudentsListModel.getCount(studentsList) do begin
         if StudentsListModel.get(studentsList, i, s)
         then begin
-            s := studentsList.item[i];
             login := StudentModel.getLogin(s);
             StudentView.print(s.firstName, s.lastName, s.login);
             j := GradesListModel.find(gradesList, login);
@@ -78,7 +69,8 @@ begin
 end;
 
 procedure listStudentsByDescendingSeasonGrades;
-var term, part: integer;
+var term: Definitions.tTerm;
+    part: Definitions.tPart;
     s: Definitions.tStudent;
     g: Definitions.tGrades;
     i: integer;    
@@ -102,7 +94,6 @@ begin
         end;
     end;
 end;
-
 
 
 end.
