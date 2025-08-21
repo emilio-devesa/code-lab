@@ -34,8 +34,8 @@ begin
         j := high;
         { Partition the array into two halves }
         repeat
-            while l.item[i].firstName < pivot.firstName do i := i + 1;
-            while l.item[j].firstName > pivot.firstName do j := j - 1;
+            while l.item[i].lastName < pivot.lastName do i := i + 1;
+            while l.item[j].lastName > pivot.lastName do j := j - 1;
             if i <= j
             then begin
                 { Swap elements and move indices }
