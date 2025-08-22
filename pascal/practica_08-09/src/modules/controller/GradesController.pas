@@ -70,7 +70,10 @@ var login: Definitions.tPersonalInfo;
     grades: Definitions.tGrades;
 begin
     writeln;
-    writeln('Update grades: Enter student login or leave blank to go back to Main Menu');
+    writeln('-------------------------');
+    writeln('Update grades');
+    writeln('Enter student login or leave blank to go back to Main Menu');
+    writeln('-------------------------');
     if StudentService.checkStudentByLogin(studentsList, login)
     then begin
         idx := GradesListModel.find(gradesList, login);

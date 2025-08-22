@@ -68,7 +68,10 @@ var idx: integer;
     student: Definitions.tStudent;
 begin
     writeln;
-    writeln('Update student: Enter student login or leave blank to go back to Main Menu');
+    writeln('-------------------------');
+    writeln('Update student');
+    writeln('Enter student login or leave blank to go back to Main Menu');
+    writeln('-------------------------');
     StudentView.getLogin(key);
     idx := StudentsListModel.find(studentsList, key);
     if idx = 0

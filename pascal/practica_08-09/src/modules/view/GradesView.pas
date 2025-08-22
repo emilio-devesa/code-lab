@@ -112,6 +112,7 @@ end;
 
 procedure printGradesOfTerm;
 begin
+    writeln('--------------------------------');
     writeln('   Theory | Practice |   Global');
     if element.grades[t, Definitions.Theory].val >= 0
     then printGrade(element.grades[t, Definitions.Theory].val, element.grades[t, Definitions.Theory].passedIn);
@@ -122,8 +123,6 @@ begin
     if element.grades[t, Definitions.Global].val >= 0
     then printGrade(element.grades[t, Definitions.Global].val, element.grades[t, Definitions.Global].passedIn);
     
-    writeln;
-    writeln('--------------------------------');
     writeln;
 end;
 

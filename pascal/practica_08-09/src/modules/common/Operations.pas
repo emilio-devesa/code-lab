@@ -7,23 +7,22 @@ module Operations;
     Provides common operations
 }
 
-
 export  Operations = (
             ClearScreen,
-            WaitForEnter
+            WaitForEnter,
+            askToContinue
 );
-
 
 import  StandardInput;
         StandardOutput;
 
-
 procedure ClearScreen;
 procedure WaitForEnter;
+function askToContinue: char;
+
+
 end;
 
-
-{** Output text user interface operations **}
 
 { Clears screen using ANSI escape code }
 procedure ClearScreen;
@@ -38,5 +37,20 @@ begin
     write('Press ENTER to continue...');
     readln;
 end;
+
+function askToContinue;
+var input: String(1);
+    key: char;
+begin
+    repeat
+        write('Press SPACE to continue, Q to quit: ');
+        readln(input);
+        if length(input) = 0
+        then key := chr(0)   { ningún carácter introducido }
+        else key := input[1];
+    until (key in [' ','q','Q']);
+    askToContinue := key;
+end;
+
 
 end.

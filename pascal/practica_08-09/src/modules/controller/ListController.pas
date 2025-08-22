@@ -13,7 +13,9 @@ export	ListController = (
             listStudentsByDescendingSeasonGrades
 );
 
-import  Definitions qualified;
+import  StandardOutput;
+        Definitions qualified;
+        Operations qualified;
         StudentsListModel qualified;
         StudentModel qualified;
         StudentView qualified;
@@ -21,37 +23,71 @@ import  Definitions qualified;
         GradesModel qualified;
         GradesView qualified;
         ListSort qualified;
+        ListPager qualified;
+        ListView qualified;
 
 procedure listStudentsAlphabetically(var studentsList: Definitions.tStudentsList);
 procedure listStudentsAlphabeticallyAndSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
 procedure listStudentsByDescendingSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
+
+const PAGE_SIZE = 22;
 
 end;
 
 
 procedure listStudentsAlphabetically;
 var s: Definitions.tStudent;
-    i: integer;
+    i, cnt, res: integer;
+    pager: ListPager.tPager;
+    aborted: boolean value false;
 begin
     ListSort.sortStudents(studentsList);
-    for i := 1 to StudentsListModel.getCount(studentsList) do begin
+    cnt := StudentsListModel.getCount(studentsList);
+    ListPager.PagerInit(pager, PAGE_SIZE);
+    { first page header }
+    ListView.printPageHeader('Students List', ListPager.PagerPageNumber(pager));
+    i := 1;
+    while (i <=cnt) and (not aborted) do begin
         if StudentsListModel.get(studentsList, i, s)
-        then StudentView.print(StudentModel.getFirstName(s),
+        then begin
+            StudentView.print(StudentModel.getFirstName(s),
                                StudentModel.getLastName(s),
                                StudentModel.getLogin(s)
                               );
+            writeln;
+            res := ListPager.PagerConsume(pager, 4);
+            if res = -1 
+            then aborted := true
+            else begin
+                if res = 1 
+                then ListView.printPageHeader('Students List', ListPager.PagerPageNumber(pager));
+            end;
+        end;
+        i := i + 1;
     end;
+    if aborted
+    then writeln('Aborted by user.');
+    Operations.WaitForEnter;
+    Operations.ClearScreen;
 end;
 
 procedure listStudentsAlphabeticallyAndSeasonGrades;
 var s: Definitions.tStudent;
     g: Definitions.tGrades;
     term: Definitions.tTerm;
-    i, j: integer;
+    i, j, cnt, res: integer;
+    pager: ListPager.tPager;
+    aborted: boolean value false;
 begin
     term := GradesView.getTerm;
     ListSort.sortStudents(studentsList);
-    for i := 1 to StudentsListModel.getCount(studentsList) do begin
+    cnt := StudentsListModel.getCount(studentsList);
+    ListPager.PagerInit(pager, PAGE_SIZE);
+    { first page header }
+    ListView.printPageHeader('Students List for '+Definitions.TermToString(term), ListPager.PagerPageNumber(pager));
+    
+    i := 1;
+    while (i <=cnt) and (not aborted) do begin
         if StudentsListModel.get(studentsList, i, s)
         then begin
             StudentView.print(StudentModel.getFirstName(s),
@@ -61,8 +97,21 @@ begin
             j := GradesListModel.find(gradesList, StudentModel.getLogin(s));
             if (j>0) and_then (GradesListModel.get(gradesList, j, g))
             then GradesView.printGradesOfTerm(g, term);
+            writeln;
+            res := ListPager.PagerConsume(pager, 6);
+            if res = -1 
+            then aborted := true
+            else begin
+                if res = 1 
+                then ListView.printPageHeader('Students List for '+Definitions.TermToString(term), ListPager.PagerPageNumber(pager));
+            end;
         end;
+        i := i + 1;
     end;
+    if aborted
+    then writeln('Aborted by user.');
+    Operations.WaitForEnter;
+    Operations.ClearScreen;
 end;
 
 procedure listStudentsByDescendingSeasonGrades;
@@ -70,12 +119,20 @@ var term: Definitions.tTerm;
     part: Definitions.tPart;
     s: Definitions.tStudent;
     g: Definitions.tGrades;
-    i: integer;    
+    i, cnt, res: integer;
+    pager: ListPager.tPager;
+    aborted: boolean value false;
 begin
     term := GradesView.getTerm;
     part := GradesView.getPart;
     ListSort.sortGradesDesc(gradesList, term, part);
-    for i := GradesListModel.getCount(gradesList) downto 1 do begin
+    cnt := StudentsListModel.getCount(studentsList);
+    ListPager.PagerInit(pager, PAGE_SIZE);
+    { first page header }
+    ListView.printPageHeader('Students List for '+Definitions.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
+    
+    i := cnt;
+    while (i >= 1) and (not aborted) do begin
         if GradesListModel.get(gradesList, i, g)
         then begin
             if StudentsListModel.get(studentsList, 
@@ -87,8 +144,21 @@ begin
                                    StudentModel.getLogin(s)
                                   );
             GradesView.printGradesOfTerm(g, term);
+            writeln;
+            res := ListPager.PagerConsume(pager, 6);
+            if res = -1 
+            then aborted := true
+            else begin
+                if res = 1 
+                then ListView.printPageHeader('Students List for '+Definitions.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
+            end;
         end;
+        i := i - 1;
     end;
+    if aborted
+    then writeln('Aborted by user.');
+    Operations.WaitForEnter;
+    Operations.ClearScreen;
 end;
 
 
