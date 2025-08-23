@@ -65,8 +65,8 @@ begin
         { Partition the array into two halves }
         repeat
             { Compare grades based on the specified term and part }
-            while l.item[i].grades[term, part].val < pivot.grades[term, part].val do i := i + 1;
-            while l.item[j].grades[term, part].val > pivot.grades[term, part].val do j := j - 1;
+            while l.item[i].grades[term, part].val > pivot.grades[term, part].val do i := i + 1;
+            while l.item[j].grades[term, part].val < pivot.grades[term, part].val do j := j - 1;
             if i <= j
             then begin
                 { Swap elements and move indices }

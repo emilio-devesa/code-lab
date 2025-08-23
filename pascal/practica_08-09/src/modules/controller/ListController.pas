@@ -126,20 +126,16 @@ begin
     term := GradesView.getTerm;
     part := GradesView.getPart;
     ListSort.sortGradesDesc(gradesList, term, part);
-    cnt := StudentsListModel.getCount(studentsList);
+    cnt := GradesListModel.getCount(gradesList);
     ListPager.PagerInit(pager, PAGE_SIZE);
     { first page header }
     ListView.printPageHeader('Students List for '+Definitions.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
     
-    i := cnt;
-    while (i >= 1) and (not aborted) do begin
-        if GradesListModel.get(gradesList, i, g)
+    i := 1;
+    while (i <= cnt) and (not aborted) do begin
+        if GradesListModel.get(gradesList, i, g) and_then StudentsListModel.get(studentsList, StudentsListModel.find(studentsList, GradesModel.getLogin(g)), s)
         then begin
-            if StudentsListModel.get(studentsList, 
-                                       StudentsListModel.find(studentsList, GradesModel.getLogin(g)),
-                                       s
-                                      )
-            then StudentView.print(StudentModel.getFirstName(s),
+            StudentView.print(StudentModel.getFirstName(s),
                                    StudentModel.getLastName(s),
                                    StudentModel.getLogin(s)
                                   );
@@ -153,7 +149,7 @@ begin
                 then ListView.printPageHeader('Students List for '+Definitions.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
             end;
         end;
-        i := i - 1;
+        i := i + 1;
     end;
     if aborted
     then writeln('Aborted by user.');
