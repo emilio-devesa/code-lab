@@ -105,6 +105,7 @@ begin
     else begin
         if trim(login) <> '' then writeln('Student not found.');
     end;
+    Operations.WaitForEnter;
     Operations.ClearScreen;
 end;
 

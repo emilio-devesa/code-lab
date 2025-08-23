@@ -16,6 +16,7 @@ export	StudentController = (
 
 import  StandardOutput;
         Definitions qualified;
+        Operations qualified;
         StudentModel qualified;
         StudentsListModel qualified;
         StudentView qualified;
@@ -56,8 +57,13 @@ begin
     StudentView.getLogin(s);
     StudentModel.setLogin(student, s);
     if StudentsListModel.add(studentsList, student)
-    then writeln('Student added successfully.')
-    else writeln('Could not add new student.');
+    then begin
+        writeln('Student created.');
+        saveStudents(studentsList);
+    end
+    else writeln('Could not create new student.');
+    Operations.WaitForEnter;
+    Operations.ClearScreen;
 end;
 
 procedure updateStudent;
@@ -99,18 +105,26 @@ begin
                     aux := StudentModel.getLogin(student);
                     StudentView.getLogin(key);
                     StudentModel.setLogin(student, key);
-                    if GradesService.loginExists(gradesList, aux) and_then GradesService.updateLogin(gradesList, aux, key)
-                    then writeln('Login updated in grades list.')
+                    if GradesService.loginExists(gradesList, aux) 
+                    then begin
+                        writeln('Updating login in grades list.');
+                        GradesService.updateLogin(gradesList, aux, key);
+                    end
                     else writeln('Login not found in grades list, no update made.');
                 end;
                 0: { Go Back to Main Menu };
             end;
             if StudentsListModel.put(studentsList, idx, student)
-            then writeln('Student updated successfully.')
+            then begin
+                writeln('Student updated successfully.');
+                saveStudents(studentsList);
+            end
             else writeln('Could not update student.');
         end
         else writeln('Student could not be retrieved.');
     end;
+    Operations.WaitForEnter;
+    Operations.ClearScreen;
 end;
 
 end.

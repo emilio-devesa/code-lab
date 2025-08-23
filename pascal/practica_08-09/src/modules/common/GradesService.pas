@@ -13,37 +13,34 @@ export  GradesService = (
 );
 
 import  Definitions qualified;
+        GradesModel qualified;
+        GradesListModel qualified;
+        GradesController qualified;
 
 
 function loginExists(var list: Definitions.tGradesList; login: Definitions.tPersonalInfo): boolean;
-function updateLogin(var list: Definitions.tGradesList; oldLogin, newLogin: Definitions.tPersonalInfo): boolean;
+procedure updateLogin(var list: Definitions.tGradesList; oldLogin, newLogin: Definitions.tPersonalInfo);
 
 end;
 
 
 function loginExists;
-var i: integer;
 begin
-    loginExists := false;
-    for i := 1 to list.count do
-        if list.item[i].login = login
-        then begin
-            loginExists := true;
-        end;
+    loginExists := GradesListModel.find(list, login) > 0;
 end;
 
 
-function updateLogin;
-var i: integer;
-    updated: boolean value false;
+procedure updateLogin;
+var idx: integer;
+    grades: Definitions.tGrades;
 begin
-    for i := 1 to list.count do
-        if list.item[i].login = oldLogin
-        then begin
-            list.item[i].login := newLogin;
-            updated := true;
-        end;
-    updateLogin := updated;
+    idx := GradesListModel.find(list, oldLogin);
+    if (idx > 0) and_then (GradesListModel.get(list, idx, grades))
+    then begin
+        GradesModel.setLogin(grades, newLogin);
+        if GradesListModel.put(list, idx, grades)
+        then GradesController.saveGrades(list);
+    end;
 end;
 
 
