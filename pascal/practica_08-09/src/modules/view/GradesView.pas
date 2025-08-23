@@ -20,6 +20,7 @@ import  StandardInput;
         StandardOutput;
         Definitions qualified;
 
+type    tReadStr = String (3);
 
 function getTerm: Definitions.tTerm;
 function getPart: Definitions.tPart;
@@ -84,22 +85,54 @@ begin
     until option in [0 .. 3];
 end;
 
-function validateGrade(g: real): boolean;
-var isValid: boolean;
+function validateGrade(input: tReadStr; var val: real): boolean;
+var isValid: boolean value true;
+    i, decimalPos, decimalCount: integer value -1;
 begin
-    isValid := (g >= 0.0) and (g <= 10.0);
-    if not isValid
-    then writeln('Invalid grade. Please enter a value between 0.0 and 10.0, with at most one decimal.');
-    validateGrade := isValid;
+    val := -1.0;
+    decimalPos := -1;
+    { Check valid digits }
+    for i := 1 to Length(input) do isValid := isValid and (input[i] in ['0'..'9', '.']);
+    { Check decimal point }
+    for i := 1 to Length(input) do begin
+        if (input[i] = '.')
+        then begin
+            if (decimalPos < 0)
+            then decimalPos := i
+            else isValid := false; { More than one decimal point }
+        end;
+    end;
+    { Check decimals }
+    if (isValid)
+    then begin
+        if (decimalPos in [0 .. (Length(input))])
+        then decimalCount := Length(input) - decimalPos;
+        if decimalCount > 1
+        then isValid := false; { More than one decimal number }
+    end;
+    { Read String as real }
+    if (isValid)
+    then readstr(input, val);
+    { Return }
+    validateGrade := (isValid) and ((val >= 0.0) and (val <= 10.0));
 end;
 
 function getGrade;
-var grade: real;
+var input: tReadStr;
+    grade: real;
+    isValid, abort: boolean value false;
 begin
     repeat
-        write('Enter ', Definitions.PartToString(part),' grade (0.0 - 10.0): ');
-        readln(grade);
-    until validateGrade(grade);
+        write('Enter ', Definitions.PartToString(part),' grade (0.0 - 10.0) or leave blank to go back: ');
+        readln(input);
+        if (eq(input, ''))
+        then abort := true
+        else begin
+            isValid := validateGrade(input, grade);
+            if not isValid
+            then writeln('Invalid grade. Please enter a value between 0.0 and 10.0, with at most one decimal.');
+        end;
+    until isValid or abort;
     getGrade := grade;
 end;
 
