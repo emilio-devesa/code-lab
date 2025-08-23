@@ -137,10 +137,19 @@ begin
 end;
 
 procedure printGrade;
+var msg: String (12);
 begin
+    if (round(grade) = grade)
+    then writeStr(msg, grade:9:0)
+    else writeStr(msg, grade:9:1);
     if passedIn = Definitions.NoTerm 
-    then write(grade:9:1, '  ')
-    else write(grade:9:1, Definitions.TermToChar(passedIn), ' ');
+    then writeStr(msg, msg+'  ')
+    else begin
+        writeStr(msg, grade:9:1);
+        writeStr(msg, msg+(Definitions.TermToChar(passedIn)));
+        writeStr(msg, msg+' ');
+    end;
+    write(msg);
 end;
 
 procedure printGradesOfTerm;
