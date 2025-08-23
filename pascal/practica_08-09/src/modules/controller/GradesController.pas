@@ -14,6 +14,7 @@ export	GradesController = (
 
 import  StandardOutput;
         Definitions qualified;
+        Operations qualified;
         GradesModel qualified;
         GradesListModel qualified;
         GradesView qualified;
@@ -41,11 +42,12 @@ begin
     else writeln('Grades could not be saved.');
 end;
 
-procedure inputGradesLoop(var element: Definitions.tGrades);
+procedure readGrades(var gradesList: Definitions.tGradesList; var grades: Definitions.tGrades; idx: integer; login: Definitions.tPersonalInfo; preexistingGrades: boolean);
 var term: Definitions.tTerm;
     part: Definitions.tPart;
     val: real value 0.0;
     pass: Definitions.tTerm value Definitions.NoTerm;
+    save: boolean;
 begin
     repeat
         term := GradesView.getTerm;
@@ -54,10 +56,26 @@ begin
             part := GradesView.getPart;
             if part <> Definitions.NoPart
             then begin
-                val := GradesModel.getGrade(element, term, part, pass);
-                writeln('Previous grade: ', val:3:1, Definitions.TermToChar(pass));
-                val := GradesView.getGrade(part);
-                GradesModel.setGrade(element, term, part, val, pass);
+                writeln;
+                { Retrieve previous information }
+                val := GradesModel.getGrade(grades, term, part, pass);
+                { Get new information }
+                GradesView.getGrade(part, preexistingGrades, val, pass, save);
+                if save
+                then begin
+                    GradesModel.setLogin(grades, login);
+                    GradesModel.setGrade(grades, term, part, val, pass);
+                    if preexistingGrades
+                    then begin
+                        if GradesListModel.put(gradesList, idx, grades)
+                        then writeln('Grades for ', login, ' have been updated.');
+                    end
+                    else begin
+                        if GradesListModel.add(gradesList, grades)
+                        then writeln('Grades for ', login, ' have been added.');
+                    end;
+                    saveGrades(gradesList);
+                end;
             end;
         end;
     until (term = Definitions.NoTerm);
@@ -79,29 +97,15 @@ begin
         idx := GradesListModel.find(gradesList, login);
         if idx > 0
         then preexistingGrades := GradesListModel.get(gradesList, idx, grades);
-        
         if preexistingGrades
         then writeln('Updating grades for student: ', login)
         else writeln('Setting grades for student: ', login);
-
-        inputGradesLoop(grades);
-        GradesModel.setLogin(grades, login);
-        if (preexistingGrades)
-        then begin
-            if GradesListModel.put(gradesList, idx, grades)
-            then writeln('Grades updated successfully.');
-        end
-        else begin 
-            if GradesListModel.add(gradesList, grades)
-            then writeln('Grades saved successfully.');
-        end;
-        if GradesPersistence.saveToFile(gradesList)
-        then writeln('Grades saved to file.')
-        else writeln('Grades could not be saved to file.');
+        readGrades(gradesList, grades, idx, login, preexistingGrades);
     end
     else begin
         if trim(login) <> '' then writeln('Student not found.');
     end;
+    Operations.ClearScreen;
 end;
 
 

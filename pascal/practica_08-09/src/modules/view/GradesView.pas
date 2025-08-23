@@ -13,6 +13,7 @@ export  GradesView = (
             getPart,
             getGrade,
             printGrade,
+            printPreviousGrade,
             printGradesOfTerm
 );
 
@@ -24,8 +25,9 @@ type    tReadStr = String (3);
 
 function getTerm: Definitions.tTerm;
 function getPart: Definitions.tPart;
-function getGrade(part: Definitions.tPart): real;
 procedure printGrade(grade: real; passedIn: Definitions.tTerm);
+procedure printPreviousGrade(val: real; isPassed: Definitions.tTerm);
+procedure getGrade(part: Definitions.tPart; preexisting: boolean; var val: real; term: Definitions.tTerm; var save: boolean);
 procedure printGradesOfTerm(element: Definitions.tGrades; t: Definitions.tTerm);
 
 
@@ -117,25 +119,6 @@ begin
     validateGrade := (isValid) and ((val >= 0.0) and (val <= 10.0));
 end;
 
-function getGrade;
-var input: tReadStr;
-    grade: real;
-    isValid, abort: boolean value false;
-begin
-    repeat
-        write('Enter ', Definitions.PartToString(part),' grade (0.0 - 10.0) or leave blank to go back: ');
-        readln(input);
-        if (eq(input, ''))
-        then abort := true
-        else begin
-            isValid := validateGrade(input, grade);
-            if not isValid
-            then writeln('Invalid grade. Please enter a value between 0.0 and 10.0, with at most one decimal.');
-        end;
-    until isValid or abort;
-    getGrade := grade;
-end;
-
 procedure printGrade;
 var msg: String (12);
 begin
@@ -150,6 +133,31 @@ begin
         writeStr(msg, msg+' ');
     end;
     write(msg);
+end;
+
+procedure printPreviousGrade;
+begin
+    writeln('Previous grade: ', val:3:1, Definitions.TermToChar(isPassed));
+end;
+
+procedure getGrade;
+var input: tReadStr;
+    isValid: boolean value false;
+begin
+    if preexisting
+    then printPreviousGrade(val, term);
+    repeat
+        write('Enter ', Definitions.PartToString(part),' grade (0.0 - 10.0) or leave blank to go back: ');
+        readln(input);
+        if (eq(input, ''))
+        then save := false
+        else begin
+            isValid := validateGrade(input, val);
+            save := true;
+            if not isValid
+            then writeln('Invalid grade. Please enter a value between 0.0 and 10.0, with at most one decimal.');
+        end;
+    until isValid or (not save);
 end;
 
 procedure printGradesOfTerm;
