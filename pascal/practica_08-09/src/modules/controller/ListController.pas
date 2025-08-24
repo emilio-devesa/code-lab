@@ -98,7 +98,7 @@ begin
             if (j>0) and_then (GradesListModel.get(gradesList, j, g))
             then GradesView.printGradesOfTerm(g, term);
             writeln;
-            res := ListPager.PagerConsume(pager, 6);
+            res := ListPager.PagerConsume(pager, 7);
             if res = -1 
             then aborted := true
             else begin
@@ -141,7 +141,7 @@ begin
                                   );
             GradesView.printGradesOfTerm(g, term);
             writeln;
-            res := ListPager.PagerConsume(pager, 6);
+            res := ListPager.PagerConsume(pager, 8);
             if res = -1 
             then aborted := true
             else begin
