@@ -18,8 +18,8 @@ import  Definitions qualified;
 
 procedure setLogin(var element: Definitions.tGrades; login: Definitions.tPersonalInfo);
 function getLogin(element: Definitions.tGrades): Definitions.tPersonalInfo;
-procedure setGrade(var element: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; grade: real; passed: Definitions.tTerm);
-function getGrade(element: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; var passed: Definitions.tTerm): real;
+procedure setGrade(var element: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; val: real; passedIn: Definitions.tTerm; hasValue: boolean);
+function getGrade(element: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; var passedIn: Definitions.tTerm; var hasValue: boolean): real;
 
 
 end;
@@ -37,14 +37,16 @@ end;
 
 procedure setGrade;
 begin
-    element.grades[term, part].val := grade;
-    element.grades[term, part].passedIn := passed;
+    element.grades[term, part].val := val;
+    element.grades[term, part].passedIn := passedIn;
+    element.grades[term, part].hasValue := true;
 end;
 
 function getGrade;
 begin
     getGrade := element.grades[term, part].val;
-    passed := element.grades[term, part].passedIn;
+    passedIn := element.grades[term, part].passedIn;
+    hasValue := element.grades[term, part].hasValue;
 end;
 
 

@@ -11,6 +11,7 @@ export  Definitions = (
             MAX_ITEMS,
             TAB,
             LF,
+            THEORY_PASSED_MINIMUM, PRACTICE_PASSED_MINIMUM,
             tPersonalInfo,
             tStudent,
             tTerm, NoTerm, February, June, September, December,
@@ -24,6 +25,8 @@ export  Definitions = (
 const   MAX_ITEMS = 100;
         TAB = chr(9);
         LF = chr(10);
+        THEORY_PASSED_MINIMUM = 5.0;
+        PRACTICE_PASSED_MINIMUM = 5.0;
 
 type    tPersonalInfo = String (50);
 
@@ -44,6 +47,7 @@ type    tPersonalInfo = String (50);
             grades: array [February .. December, Theory .. Global] of record
                 val: real value 0.0;
                 passedIn: tTerm value NoTerm;
+                hasValue: boolean value false;
             end;
         end;
 

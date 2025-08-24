@@ -20,6 +20,7 @@ import  StandardOutput;
         GradesView qualified;
         GradesPersistence qualified;
         StudentService qualified;
+        ConfigurationService qualified;
 
 procedure loadGrades(var gradesList: Definitions.tGradesList);
 procedure saveGrades(var gradesList: Definitions.tGradesList);
@@ -42,50 +43,45 @@ begin
     else writeln('Grades could not be saved.');
 end;
 
-procedure readGrades(var gradesList: Definitions.tGradesList; var grades: Definitions.tGrades; idx: integer; login: Definitions.tPersonalInfo; preexistingGrades: boolean);
+procedure propagateFurther(var grades: Definitions.tGrades; termPassed: Definitions.tTerm; part: Definitions.tPart; val: real);
 var term: Definitions.tTerm;
-    part: Definitions.tPart;
-    val: real value 0.0;
-    pass: Definitions.tTerm value Definitions.NoTerm;
-    save: boolean;
 begin
-    repeat
-        term := GradesView.getTerm;
-        if term <> Definitions.NoTerm
-        then begin
-            part := GradesView.getPart;
-            if part <> Definitions.NoPart
-            then begin
-                writeln;
-                { Retrieve previous information }
-                val := GradesModel.getGrade(grades, term, part, pass);
-                { Get new information }
-                GradesView.getGrade(part, preexistingGrades, val, pass, save);
-                if save
-                then begin
-                    GradesModel.setLogin(grades, login);
-                    GradesModel.setGrade(grades, term, part, val, pass);
-                    if preexistingGrades
-                    then begin
-                        if GradesListModel.put(gradesList, idx, grades)
-                        then writeln('Grades for ', login, ' have been updated.');
-                    end
-                    else begin
-                        if GradesListModel.add(gradesList, grades)
-                        then writeln('Grades for ', login, ' have been added.');
-                    end;
-                    saveGrades(gradesList);
-                end;
-            end;
-        end;
-    until (term = Definitions.NoTerm);
+    for term := termPassed to Definitions.December do begin
+        GradesModel.setGrade(grades, term, part, val, termPassed, true);
+    end;
+end;
+
+procedure readGrades(var grades: Definitions.tGrades; login: Definitions.tPersonalInfo; term: Definitions.tTerm; part: Definitions.tPart; var hasValue: boolean);
+var val: real value 0.0;
+    passedIn: Definitions.tTerm value Definitions.NoTerm;
+begin
+    writeln;
+    val := GradesModel.getGrade(grades, term, part, passedIn, hasValue);
+    GradesView.getGrade(term, part, val, passedIn, hasValue);
+    { Grades saving logic should be now here resolved }
+    case part of
+        Definitions.Theory:     if (ConfigurationService.checkIsTheorySaved) and_then (val >= Definitions.THEORY_PASSED_MINIMUM)
+                                then passedIn := term;
+        Definitions.Practice:   if (ConfigurationService.checkIsPracticeSaved) and_then (val >= Definitions.PRACTICE_PASSED_MINIMUM)
+                                then passedIn := term;
+        otherwise ;
+    end;
+    if (passedIn <> Definitions.NoTerm)
+    then propagateFurther(grades, term, part, val);
+    if hasValue
+    then begin
+        GradesModel.setLogin(grades, login);
+        GradesModel.setGrade(grades, term, part, val, passedIn, hasValue);
+    end;
 end;
 
 procedure setGrades;
 var login: Definitions.tPersonalInfo;
     idx: integer;
-    preexistingGrades: boolean value false;
+    term: Definitions.tTerm;
+    part: Definitions.tPart;
     grades: Definitions.tGrades;
+    hasValue: boolean value false;
 begin
     writeln;
     writeln('-------------------------');
@@ -94,13 +90,35 @@ begin
     writeln('-------------------------');
     if StudentService.checkStudentByLogin(studentsList, login)
     then begin
-        idx := GradesListModel.find(gradesList, login);
-        if idx > 0
-        then preexistingGrades := GradesListModel.get(gradesList, idx, grades);
-        if preexistingGrades
-        then writeln('Updating grades for student: ', login)
-        else writeln('Setting grades for student: ', login);
-        readGrades(gradesList, grades, idx, login, preexistingGrades);
+        repeat
+            term := GradesView.getTerm;
+            if term <> Definitions.NoTerm
+            then begin
+                part := GradesView.getPart;
+                if part <> Definitions.NoPart
+                then begin
+                    idx := GradesListModel.find(gradesList, login);
+                    if (idx <> 0) and_then GradesListModel.get(gradesList, idx, grades)
+                    then writeln('Please introduce existing student grades')
+                    else writeln('Please introduce new student grades');
+                    readGrades(grades, login, term, part, hasValue);
+                    if hasValue
+                    then begin
+                        if idx = 0
+                        then begin
+                            if GradesListModel.add(gradesList, grades)
+                            then writeln('Grades for ', login, ' have been added.');
+                        end
+                        else begin
+                            if GradesListModel.put(gradesList, idx, grades)
+                            then writeln('Grades for ', login, ' have been updated.');
+                        end;
+                        saveGrades(gradesList);
+                    end;
+                end
+                else writeln;
+            end;
+        until (term = Definitions.NoTerm);
     end
     else begin
         if trim(login) <> '' then writeln('Student not found.');

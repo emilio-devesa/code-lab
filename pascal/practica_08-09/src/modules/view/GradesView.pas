@@ -25,9 +25,9 @@ type    tReadStr = String (3);
 
 function getTerm: Definitions.tTerm;
 function getPart: Definitions.tPart;
-procedure printGrade(grade: real; passedIn: Definitions.tTerm);
+procedure printGrade(grade: real; passedIn: Definitions.tTerm; hasValue: boolean);
 procedure printPreviousGrade(val: real; isPassed: Definitions.tTerm);
-procedure getGrade(part: Definitions.tPart; preexisting: boolean; var val: real; term: Definitions.tTerm; var save: boolean);
+procedure getGrade(term: Definitions.tTerm; part: Definitions.tPart; var val: real; var passedIn: Definitions.tTerm; var hasValue: boolean);
 procedure printGradesOfTerm(element: Definitions.tGrades; t: Definitions.tTerm);
 
 
@@ -121,17 +121,22 @@ end;
 
 procedure printGrade;
 var msg: String (12);
+    padding: integer value 9;
 begin
-    if (round(grade) = grade)
-    then writeStr(msg, grade:9:0)
-    else writeStr(msg, grade:9:1);
-    if passedIn = Definitions.NoTerm 
-    then writeStr(msg, msg+'  ')
-    else begin
-        writeStr(msg, grade:9:1);
-        writeStr(msg, msg+(Definitions.TermToChar(passedIn)));
-        writeStr(msg, msg+' ');
-    end;
+    if hasValue
+    then begin
+        if (round(grade) = grade)
+        then writeStr(msg, grade:padding:0)
+        else writeStr(msg, grade:padding:1);
+        if passedIn = Definitions.NoTerm 
+        then writeStr(msg, msg+'  ')
+        else begin
+            writeStr(msg, grade:padding-1:1);
+            writeStr(msg, msg+(Definitions.TermToChar(passedIn)));
+            writeStr(msg, msg+'  ');
+        end;
+    end
+    else msg := '       --  ';
     write(msg);
 end;
 
@@ -144,35 +149,50 @@ procedure getGrade;
 var input: tReadStr;
     isValid: boolean value false;
 begin
-    if preexisting
+    if hasValue
     then printPreviousGrade(val, term);
     repeat
         write('Enter ', Definitions.PartToString(part),' grade (0.0 - 10.0) or leave blank to go back: ');
         readln(input);
         if (eq(input, ''))
-        then save := false
+        then hasValue := false
         else begin
+            hasValue := true;
             isValid := validateGrade(input, val);
-            save := true;
             if not isValid
             then writeln('Invalid grade. Please enter a value between 0.0 and 10.0, with at most one decimal.');
         end;
-    until isValid or (not save);
+    until isValid or (not hasValue);
 end;
 
 procedure printGradesOfTerm;
 begin
     writeln('--------------------------------');
     writeln('   Theory | Practice |   Global');
+
+    with element.grades[t, Definitions.Theory] do begin
+        if (val >= 0)
+        then printGrade(val, passedIn, hasValue)
+    end;
+    with element.grades[t, Definitions.Practice] do begin
+        if (val >= 0)
+        then printGrade(val, passedIn, hasValue)
+    end;
+    with element.grades[t, Definitions.Global] do begin
+        if (val >= 0)
+        then printGrade(val, passedIn, hasValue)
+    end;
+    {
     if element.grades[t, Definitions.Theory].val >= 0
     then printGrade(element.grades[t, Definitions.Theory].val, element.grades[t, Definitions.Theory].passedIn);
-        
+    }
+    {    
     if element.grades[t, Definitions.Practice].val >= 0
-    then printGrade(element.grades[t, Definitions.Practice].val, element.grades[t, Definitions.Practice].passedIn);
+    then printGrade(element.grades[t, Definitions.Practice].val, element.grades[t, Definitions.Practice].passedIn, false);
         
     if element.grades[t, Definitions.Global].val >= 0
-    then printGrade(element.grades[t, Definitions.Global].val, element.grades[t, Definitions.Global].passedIn);
-    
+    then printGrade(element.grades[t, Definitions.Global].val, element.grades[t, Definitions.Global].passedIn, false);
+    }
     writeln;
 end;
 

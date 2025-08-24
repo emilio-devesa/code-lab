@@ -49,7 +49,7 @@ begin
         s := list.item[i];
         get := true;
     end
-    else get := false;;
+    else get := false;
 end;
 
 function put;
