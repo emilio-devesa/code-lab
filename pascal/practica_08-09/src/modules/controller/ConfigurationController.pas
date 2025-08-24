@@ -17,6 +17,7 @@ export  ConfigurationController = (
 
 import  StandardInput;
         StandardOutput;
+        Operations qualified;
         ConfigurationModel qualified;
         ConfigurationView qualified;
         ConfigurationPersistence qualified;
@@ -51,6 +52,9 @@ begin
     ConfigurationModel.setSaveTheory(saveTheory);
     ConfigurationModel.setSavePractice(savePractice);
     save;
+    writeln;
+    Operations.WaitForEnter;
+    Operations.ClearScreen;
 end;
 
 function getSaveTheory;
