@@ -56,12 +56,16 @@ begin
     StudentModel.setLastName(student, s);
     StudentView.getLogin(s);
     StudentModel.setLogin(student, s);
-    if StudentsListModel.add(studentsList, student)
-    then begin
-        writeln('Student created.');
-        saveStudents(studentsList);
-    end
-    else writeln('Could not create new student.');
+    if StudentsListModel.find(studentsList, s) > 0
+    then writeln('Student can not be added: There is already an student with this login.')
+    else begin
+        if StudentsListModel.add(studentsList, student)
+        then begin
+            writeln('Student created.');
+            saveStudents(studentsList);
+        end
+        else writeln('Could not create new student.');
+    end;
     Operations.WaitForEnter;
     Operations.ClearScreen;
 end;
