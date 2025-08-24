@@ -20,14 +20,13 @@ export  GradesView = (
 import  StandardInput;
         StandardOutput;
         Definitions qualified;
-
-type    tReadStr = String (3);
+        Operations qualified;
 
 function getTerm: Definitions.tTerm;
 function getPart: Definitions.tPart;
 procedure printGrade(grade: real; passedIn: Definitions.tTerm; hasValue: boolean);
 procedure printPreviousGrade(val: real; isPassed: Definitions.tTerm);
-procedure getGrade(term: Definitions.tTerm; part: Definitions.tPart; var val: real; var passedIn: Definitions.tTerm; var hasValue: boolean);
+function getGrade(part: Definitions.tPart): Definitions.tGradeString;
 procedure printGradesOfTerm(element: Definitions.tGrades; t: Definitions.tTerm);
 
 
@@ -87,38 +86,6 @@ begin
     until option in [0 .. 3];
 end;
 
-function validateGrade(input: tReadStr; var val: real): boolean;
-var isValid: boolean value true;
-    i, decimalPos, decimalCount: integer value -1;
-begin
-    val := -1.0;
-    decimalPos := -1;
-    { Check valid digits }
-    for i := 1 to Length(input) do isValid := isValid and (input[i] in ['0'..'9', '.']);
-    { Check decimal point }
-    for i := 1 to Length(input) do begin
-        if (input[i] = '.')
-        then begin
-            if (decimalPos < 0)
-            then decimalPos := i
-            else isValid := false; { More than one decimal point }
-        end;
-    end;
-    { Check decimals }
-    if (isValid)
-    then begin
-        if (decimalPos in [0 .. (Length(input))])
-        then decimalCount := Length(input) - decimalPos;
-        if decimalCount > 1
-        then isValid := false; { More than one decimal number }
-    end;
-    { Read String as real }
-    if (isValid)
-    then readstr(input, val);
-    { Return }
-    validateGrade := (isValid) and ((val >= 0.0) and (val <= 10.0));
-end;
-
 procedure printGrade;
 var msg: String (12);
     padding: integer value 9;
@@ -132,7 +99,7 @@ begin
         then writeStr(msg, msg+'  ')
         else begin
             writeStr(msg, grade:padding-1:1);
-            writeStr(msg, msg+(Definitions.TermToChar(passedIn)));
+            writeStr(msg, msg+(Operations.TermToChar(passedIn)));
             writeStr(msg, msg+'  ');
         end;
     end
@@ -142,27 +109,15 @@ end;
 
 procedure printPreviousGrade;
 begin
-    writeln('Previous grade: ', val:3:1, Definitions.TermToChar(isPassed));
+    writeln('Previous grade: ', val:3:1, Operations.TermToChar(isPassed));
 end;
 
-procedure getGrade;
-var input: tReadStr;
-    isValid: boolean value false;
+function getGrade;
+var input: String(4);
 begin
-    if hasValue
-    then printPreviousGrade(val, term);
-    repeat
-        write('Enter ', Definitions.PartToString(part),' grade (0.0 - 10.0) or leave blank to go back: ');
-        readln(input);
-        if (eq(input, ''))
-        then hasValue := false
-        else begin
-            hasValue := true;
-            isValid := validateGrade(input, val);
-            if not isValid
-            then writeln('Invalid grade. Please enter a value between 0.0 and 10.0, with at most one decimal.');
-        end;
-    until isValid or (not hasValue);
+    write('Enter ', Operations.PartToString(part),' grade (0.0 - 10.0) or leave blank to go back: ');
+    readln(input);
+    getGrade := input;
 end;
 
 procedure printGradesOfTerm;
@@ -182,17 +137,6 @@ begin
         if (val >= 0)
         then printGrade(val, passedIn, hasValue)
     end;
-    {
-    if element.grades[t, Definitions.Theory].val >= 0
-    then printGrade(element.grades[t, Definitions.Theory].val, element.grades[t, Definitions.Theory].passedIn);
-    }
-    {    
-    if element.grades[t, Definitions.Practice].val >= 0
-    then printGrade(element.grades[t, Definitions.Practice].val, element.grades[t, Definitions.Practice].passedIn, false);
-        
-    if element.grades[t, Definitions.Global].val >= 0
-    then printGrade(element.grades[t, Definitions.Global].val, element.grades[t, Definitions.Global].passedIn, false);
-    }
     writeln;
 end;
 

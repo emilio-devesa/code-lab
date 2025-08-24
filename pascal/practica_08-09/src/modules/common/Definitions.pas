@@ -14,12 +14,13 @@ export  Definitions = (
             THEORY_PASSED_MINIMUM, PRACTICE_PASSED_MINIMUM,
             tPersonalInfo,
             tStudent,
+            tEnumToString,
             tTerm, NoTerm, February, June, September, December,
             tPart, NoPart, Theory, Practice, Global,
+            tGradeString,
             tGrades,
             tStudentsList,
-            tGradesList,
-            TermToChar, TermToString, PartToString
+            tGradesList
 );
 
 const   MAX_ITEMS = 100;
@@ -42,6 +43,8 @@ type    tPersonalInfo = String (50);
 
         tPart = (NoPart, Theory, Practice, Global);
 
+        tGradeString = String (4);
+
         tGrades = record
             login: tPersonalInfo;
             grades: array [February .. December, Theory .. Global] of record
@@ -63,44 +66,7 @@ type    tPersonalInfo = String (50);
             count: integer value 0;
         end;
 
-function TermToChar(t: tTerm): char;
-function TermToString(t: tTerm): tEnumToString;
-function PartToString(p: tPart): tEnumToString;
 
-end;
-
-
-function TermToChar;
-begin
-    case t of
-        February:  TermToChar := 'f';
-        June:      TermToChar := 'j';
-        September: TermToChar := 's';
-        December:  TermToChar := 'd';
-        NoTerm:    TermToChar := ' ';
-    end;
-end;
-
-function TermToString;
-begin
-    case t of
-        NoTerm:    TermToString := 'None';
-        February:  TermToString := 'February';
-        June:      TermToString := 'June';
-        September: TermToString := 'September';
-        December:  TermToString := 'December';
-    end;
-end;
-
-
-function PartToString;
-begin
-    case p of
-        NoPart:     PartToString := '';
-        Theory:     PartToString := 'Theory';
-        Practice:   PartToString := 'Practice';
-        Global:     PartToString := 'Global';
-    end;
 end;
 
 

@@ -10,15 +10,22 @@ module Operations;
 export  Operations = (
             ClearScreen,
             WaitForEnter,
-            askToContinue
+            askToContinue,
+            TermToChar,
+            TermToString,
+            PartToString
 );
 
 import  StandardInput;
         StandardOutput;
+        Definitions qualified;
 
 procedure ClearScreen;
 procedure WaitForEnter;
 function askToContinue: char;
+function TermToChar(t: Definitions.tTerm): char;
+function TermToString(t: Definitions.tTerm): Definitions.tEnumToString;
+function PartToString(p: Definitions.tPart): Definitions.tEnumToString;
 
 
 end;
@@ -50,6 +57,38 @@ begin
         else key := input[1];
     until (key in [' ','q','Q']);
     askToContinue := key;
+end;
+
+function TermToChar;
+begin
+    case t of
+        Definitions.February:  TermToChar := 'f';
+        Definitions.June:      TermToChar := 'j';
+        Definitions.September: TermToChar := 's';
+        Definitions.December:  TermToChar := 'd';
+        Definitions.NoTerm:    TermToChar := ' ';
+    end;
+end;
+
+function TermToString;
+begin
+    case t of
+        Definitions.NoTerm:    TermToString := 'None';
+        Definitions.February:  TermToString := 'February';
+        Definitions.June:      TermToString := 'June';
+        Definitions.September: TermToString := 'September';
+        Definitions.December:  TermToString := 'December';
+    end;
+end;
+
+function PartToString;
+begin
+    case p of
+        Definitions.NoPart:     PartToString := '';
+        Definitions.Theory:     PartToString := 'Theory';
+        Definitions.Practice:   PartToString := 'Practice';
+        Definitions.Global:     PartToString := 'Global';
+    end;
 end;
 
 

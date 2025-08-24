@@ -84,7 +84,7 @@ begin
     cnt := StudentsListModel.getCount(studentsList);
     ListPager.PagerInit(pager, PAGE_SIZE);
     { first page header }
-    ListView.printPageHeader('Students List for '+Definitions.TermToString(term), ListPager.PagerPageNumber(pager));
+    ListView.printPageHeader('Students List for '+Operations.TermToString(term), ListPager.PagerPageNumber(pager));
     
     i := 1;
     while (i <=cnt) and (not aborted) do begin
@@ -103,7 +103,7 @@ begin
             then aborted := true
             else begin
                 if res = 1 
-                then ListView.printPageHeader('Students List for '+Definitions.TermToString(term), ListPager.PagerPageNumber(pager));
+                then ListView.printPageHeader('Students List for '+Operations.TermToString(term), ListPager.PagerPageNumber(pager));
             end;
         end;
         i := i + 1;
@@ -129,7 +129,7 @@ begin
     cnt := GradesListModel.getCount(gradesList);
     ListPager.PagerInit(pager, PAGE_SIZE);
     { first page header }
-    ListView.printPageHeader('Students List for '+Definitions.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
+    ListView.printPageHeader('Students List for '+Operations.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
     
     i := 1;
     while (i <= cnt) and (not aborted) do begin
@@ -146,7 +146,7 @@ begin
             then aborted := true
             else begin
                 if res = 1 
-                then ListView.printPageHeader('Students List for '+Definitions.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
+                then ListView.printPageHeader('Students List for '+Operations.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
             end;
         end;
         i := i + 1;

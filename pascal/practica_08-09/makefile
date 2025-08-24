@@ -1,6 +1,6 @@
 GPC=gpc
 
-UNIT_PATH=src/modules:src/modules/common:src/modules/model:src/modules/view:src/modules/controller:src/modules/persistence
+UNIT_PATH=src/modules:src/modules/common:src/modules/model:src/modules/view:src/modules/controller:src/modules/persistence:src/modules/service
 UNIT_DESTINATION=build/modules
 OBJECT_DESTINATION=build
 EXECUTABLE_PATH=bin

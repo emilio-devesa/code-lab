@@ -17,9 +17,9 @@ import  Definitions qualified;
         GradesListModel qualified;
         GradesController qualified;
 
-
 function loginExists(var list: Definitions.tGradesList; login: Definitions.tPersonalInfo): boolean;
 procedure updateLogin(var list: Definitions.tGradesList; oldLogin, newLogin: Definitions.tPersonalInfo);
+
 
 end;
 
@@ -28,7 +28,6 @@ function loginExists;
 begin
     loginExists := GradesListModel.find(list, login) > 0;
 end;
-
 
 procedure updateLogin;
 var idx: integer;

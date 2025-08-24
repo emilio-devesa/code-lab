@@ -21,6 +21,7 @@ import  StandardOutput;
         GradesPersistence qualified;
         StudentService qualified;
         ConfigurationService qualified;
+        GradesValidatorService qualified;
 
 procedure loadGrades(var gradesList: Definitions.tGradesList);
 procedure saveGrades(var gradesList: Definitions.tGradesList);
@@ -43,35 +44,46 @@ begin
     else writeln('Grades could not be saved.');
 end;
 
-procedure propagateFurther(var grades: Definitions.tGrades; termPassed: Definitions.tTerm; part: Definitions.tPart; val: real);
-var term: Definitions.tTerm;
+procedure furtherGradePropagation(var grades: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; val: real);
+var passedInTerm, t: Definitions.tTerm;
 begin
-    for term := termPassed to Definitions.December do begin
-        GradesModel.setGrade(grades, term, part, val, termPassed, true);
+    case part of
+        Definitions.Theory:     if (ConfigurationService.checkIsTheorySaved) and_then (val >= Definitions.THEORY_PASSED_MINIMUM)
+                                then passedInTerm := term;
+        Definitions.Practice:   if (ConfigurationService.checkIsPracticeSaved) and_then (val >= Definitions.PRACTICE_PASSED_MINIMUM)
+                                then passedInTerm := term;
+        otherwise ;
+    end;
+    if (passedInTerm <> Definitions.NoTerm)
+    then begin
+        for t := passedInTerm to Definitions.December do begin
+            GradesModel.setGrade(grades, term, part, val, passedInTerm, true);
+        end;
     end;
 end;
 
 procedure readGrades(var grades: Definitions.tGrades; login: Definitions.tPersonalInfo; term: Definitions.tTerm; part: Definitions.tPart; var hasValue: boolean);
 var val: real value 0.0;
+    isValid: boolean value false;
     passedIn: Definitions.tTerm value Definitions.NoTerm;
+    input: Definitions.tGradeString;
 begin
     writeln;
     val := GradesModel.getGrade(grades, term, part, passedIn, hasValue);
-    GradesView.getGrade(term, part, val, passedIn, hasValue);
-    { Grades saving logic should be now here resolved }
-    case part of
-        Definitions.Theory:     if (ConfigurationService.checkIsTheorySaved) and_then (val >= Definitions.THEORY_PASSED_MINIMUM)
-                                then passedIn := term;
-        Definitions.Practice:   if (ConfigurationService.checkIsPracticeSaved) and_then (val >= Definitions.PRACTICE_PASSED_MINIMUM)
-                                then passedIn := term;
-        otherwise ;
-    end;
-    if (passedIn <> Definitions.NoTerm)
-    then propagateFurther(grades, term, part, val);
     if hasValue
+    then GradesView.printPreviousGrade(val, term);
+    repeat
+        input := GradesView.getGrade(part);
+        hasValue := not eq(input, '');
+        isValid := GradesValidatorService.validate(input, val);
+        if not isValid
+        then writeln('Invalid grade. Please enter a value between 0.0 and 10.0, with at most one decimal.');
+    until isValid or hasValue;
+    if isValid
     then begin
         GradesModel.setLogin(grades, login);
         GradesModel.setGrade(grades, term, part, val, passedIn, hasValue);
+        furtherGradePropagation(grades, term, part, val);
     end;
 end;
 
