@@ -21,7 +21,9 @@ function getSavePractice: boolean;
 procedure setSaveTheory(val: boolean);
 procedure setSavePractice(val: boolean);
 
+
 end;
+
 
 function getSaveTheory;
 begin
@@ -42,5 +44,6 @@ procedure setSavePractice;
 begin
     savePractice := val;
 end;
+
 
 end.

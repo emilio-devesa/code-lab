@@ -30,7 +30,6 @@ procedure listStudentsAlphabetically(var studentsList: Definitions.tStudentsList
 procedure listStudentsAlphabeticallyAndSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
 procedure listStudentsByDescendingSeasonGrades(var studentsList: Definitions.tStudentsList; var gradesList: Definitions.tGradesList);
 
-const PAGE_SIZE = 22;
 
 end;
 
@@ -43,17 +42,14 @@ var s: Definitions.tStudent;
 begin
     ListSort.sortStudents(studentsList);
     cnt := StudentsListModel.getCount(studentsList);
-    ListPager.PagerInit(pager, PAGE_SIZE);
+    ListPager.PagerInit(pager, Definitions.SHELL_PAGE_SIZE);
     { first page header }
     ListView.printPageHeader('Students List', ListPager.PagerPageNumber(pager));
     i := 1;
     while (i <=cnt) and (not aborted) do begin
         if StudentsListModel.get(studentsList, i, s)
         then begin
-            StudentView.print(StudentModel.getFirstName(s),
-                               StudentModel.getLastName(s),
-                               StudentModel.getLogin(s)
-                              );
+            StudentView.print(StudentModel.getFirstName(s), StudentModel.getLastName(s), StudentModel.getLogin(s));
             writeln;
             res := ListPager.PagerConsume(pager, 4);
             if res = -1 
@@ -80,20 +76,16 @@ var s: Definitions.tStudent;
     aborted: boolean value false;
 begin
     term := GradesView.getTerm;
+    aborted := term = Definitions.NoTerm;
     ListSort.sortStudents(studentsList);
     cnt := StudentsListModel.getCount(studentsList);
-    ListPager.PagerInit(pager, PAGE_SIZE);
-    { first page header }
+    ListPager.PagerInit(pager, Definitions.SHELL_PAGE_SIZE);
     ListView.printPageHeader('Students List for '+Operations.TermToString(term), ListPager.PagerPageNumber(pager));
-    
     i := 1;
     while (i <=cnt) and (not aborted) do begin
         if StudentsListModel.get(studentsList, i, s)
         then begin
-            StudentView.print(StudentModel.getFirstName(s),
-                              StudentModel.getLastName(s),
-                              StudentModel.getLogin(s)
-                             );
+            StudentView.print(StudentModel.getFirstName(s), StudentModel.getLastName(s), StudentModel.getLogin(s));
             j := GradesListModel.find(gradesList, StudentModel.getLogin(s));
             if (j>0) and_then (GradesListModel.get(gradesList, j, g))
             then GradesView.printGradesOfTerm(g, term);
@@ -119,26 +111,30 @@ var term: Definitions.tTerm;
     part: Definitions.tPart;
     s: Definitions.tStudent;
     g: Definitions.tGrades;
-    i, cnt, res: integer;
+    i, cnt, res: integer value 0;
     pager: ListPager.tPager;
     aborted: boolean value false;
 begin
     term := GradesView.getTerm;
-    part := GradesView.getPart;
-    ListSort.sortGradesDesc(gradesList, term, part);
-    cnt := GradesListModel.getCount(gradesList);
-    ListPager.PagerInit(pager, PAGE_SIZE);
-    { first page header }
-    ListView.printPageHeader('Students List for '+Operations.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
-    
+    aborted := term = Definitions.NoTerm;
+    if not aborted 
+    then begin
+        part := GradesView.getPart;
+        aborted := part = Definitions.NoPart;
+    end;
+    if not aborted
+    then begin
+        ListSort.sortGradesDesc(gradesList, term, part);
+        cnt := GradesListModel.getCount(gradesList);
+        ListPager.PagerInit(pager, Definitions.SHELL_PAGE_SIZE);
+        { first page header }
+        ListView.printPageHeader('Students List for '+Operations.TermToString(term)+' (sort by descending grades)', ListPager.PagerPageNumber(pager));
+    end;
     i := 1;
     while (i <= cnt) and (not aborted) do begin
         if GradesListModel.get(gradesList, i, g) and_then StudentsListModel.get(studentsList, StudentsListModel.find(studentsList, GradesModel.getLogin(g)), s)
         then begin
-            StudentView.print(StudentModel.getFirstName(s),
-                                   StudentModel.getLastName(s),
-                                   StudentModel.getLogin(s)
-                                  );
+            StudentView.print(StudentModel.getFirstName(s), StudentModel.getLastName(s), StudentModel.getLogin(s));
             GradesView.printGradesOfTerm(g, term);
             writeln;
             res := ListPager.PagerConsume(pager, 8);

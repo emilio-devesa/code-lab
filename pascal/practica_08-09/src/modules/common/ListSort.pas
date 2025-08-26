@@ -19,6 +19,7 @@ import  Definitions qualified;
 procedure sortStudents(var list: Definitions.tStudentsList);
 procedure sortGradesDesc(var list: Definitions.tGradesList; term: Definitions.tTerm; part: Definitions.tPart);
 
+
 end;
 
 
@@ -83,7 +84,6 @@ begin
     end;
 end;
 
-
 procedure sortStudents;
 var size: integer;
 begin
@@ -99,5 +99,6 @@ begin
     if size > 1
     then quicksortGradesDesc(list, 1, size, term, part);
 end;
+
 
 end.

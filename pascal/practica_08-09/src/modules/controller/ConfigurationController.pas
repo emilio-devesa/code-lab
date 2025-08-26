@@ -28,6 +28,7 @@ procedure change;
 function getSaveTheory: boolean;
 function getSavePractice: boolean;
 
+
 end;
 
 

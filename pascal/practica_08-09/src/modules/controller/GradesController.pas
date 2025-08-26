@@ -1,6 +1,7 @@
 module GradesController;
 {   Práctica 2008-2009
     Command Line program written in Pascal ISO 10206 (Extended Pascal).
+    More info: README.md
 
     GradesController.pas
     Provides the controller for the grades model
@@ -30,6 +31,7 @@ procedure setGrades(var studentsList: Definitions.tStudentsList; var gradesList:
 
 end;
 
+
 procedure loadGrades;
 begin
     if GradesPersistence.loadFromFile(gradesList)
@@ -45,7 +47,7 @@ begin
 end;
 
 procedure furtherGradePropagation(var grades: Definitions.tGrades; term: Definitions.tTerm; part: Definitions.tPart; val: real);
-var passedInTerm, t: Definitions.tTerm;
+var passedInTerm, t: Definitions.tTerm value Definitions.NoTerm;
 begin
     case part of
         Definitions.Theory:     if (ConfigurationService.checkIsTheorySaved) and_then (val >= Definitions.THEORY_PASSED_MINIMUM)

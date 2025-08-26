@@ -13,7 +13,8 @@ export  Operations = (
             askToContinue,
             TermToChar,
             TermToString,
-            PartToString
+            PartToString,
+            StringToInteger
 );
 
 import  StandardInput;
@@ -26,6 +27,7 @@ function askToContinue: char;
 function TermToChar(t: Definitions.tTerm): char;
 function TermToString(t: Definitions.tTerm): Definitions.tEnumToString;
 function PartToString(p: Definitions.tPart): Definitions.tEnumToString;
+function StringToInteger(input: String; var ok: boolean): integer;
 
 
 end;
@@ -88,6 +90,37 @@ begin
         Definitions.Theory:     PartToString := 'Theory';
         Definitions.Practice:   PartToString := 'Practice';
         Definitions.Global:     PartToString := 'Global';
+    end;
+end;
+
+function StringToInteger;
+var
+    i, sign, val: integer;
+    ch: char;
+begin
+    val := 0;
+    sign := 1;
+    ok := false;
+    StringToInteger := -1;
+    i := 1;
+    { Check sign }
+    if (length(input) > 0) then if (input[i] = '-') then
+    begin
+        sign := -1;
+        i := i + 1;
+    end
+    else if input[i] = '+' then
+        i := i + 1;
+    { Parse characters and calculate the number }
+    while i <= length(input) do
+    begin
+        ch := input[i];
+        val := val * 10 + (ord(ch) - ord('0'));
+        i := i + 1;
+    end;
+    if (length(input) > 0) then begin
+        StringToInteger := sign * val;
+        ok := true;
     end;
 end;
 

@@ -7,7 +7,6 @@ module GradesView;
     Provides a view for introducing and validating grades
 }
 
-
 export  GradesView = (
             getTerm,
             getPart,
@@ -32,8 +31,11 @@ procedure printGradesOfTerm(element: Definitions.tGrades; t: Definitions.tTerm);
 
 end;
 
+
 function getTerm;
-var option: integer value 0;
+var input: String (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
 begin
     getTerm := Definitions.NoTerm;
     repeat
@@ -45,8 +47,9 @@ begin
         writeln('4. December');
         writeln('0. Back');
         write('Option?: ');
-        readln(option);
-        if option in [0 .. 4]
+        readln(input);
+        option := Operations.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 4])
         then begin
             case option of
                 1: getTerm := Definitions.February;
@@ -61,7 +64,9 @@ begin
 end;
 
 function getPart;
-var option: integer value 0;
+var input: String (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
 begin
     getPart := Definitions.NoPart;
     repeat
@@ -72,8 +77,9 @@ begin
         writeln('3. Global');
         writeln('0. Back');
         write('Option?: ');
-        readln(option);
-        if option in [0 .. 3]
+        readln(input);
+        option := Operations.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 3])
         then begin
             case option of
                 1: getPart := Definitions.Theory;
@@ -124,7 +130,6 @@ procedure printGradesOfTerm;
 begin
     writeln('--------------------------------');
     writeln('   Theory | Practice |   Global');
-
     with element.grades[t, Definitions.Theory] do begin
         if (val >= 0)
         then printGrade(val, passedIn, hasValue)

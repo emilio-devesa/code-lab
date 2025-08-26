@@ -23,7 +23,9 @@ type    tFile = bindable file of boolean;
 function saveToFile: boolean;
 function loadFromFile: boolean;
 
+
 end;
+
 
 function fileExists(var aFile: tFile; aName: String): boolean;
 var b: bindingtype;
@@ -74,5 +76,6 @@ begin
     end
     else loadFromFile := false;
 end;
+
 
 end.

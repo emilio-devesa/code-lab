@@ -14,23 +14,19 @@ import
     GradesController qualified;
     ListController qualified;
 
-
-
 var studentsList: Definitions.tStudentsList;
     gradesList: Definitions.tGradesList;
 
-{** Procedures **}
-
-{** Menus' logics **}
-
 function mainMenu: integer;
-var option: integer value 0;
+var input: String (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
 begin
     mainMenu := 0;
     repeat
         writeln;
         writeln('-------------------------');
-        writeln('MAIN MENU');
+        writeln('  MAIN MENU');
         writeln('-------------------------');
         writeln('1. New student');
         writeln('2. Update student');
@@ -39,36 +35,37 @@ begin
         writeln('5. Change configuration');
         writeln('0. Quit');
         write('Option?: ');
-        readln(option);
-        if option in [0 .. 5]
+        readln(input);
+        option := Operations.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 5])
         then mainMenu := option
         else writeln('Invalid option');        
     until option in [0 .. 5];
 end;
 
 function submenuLists: integer;
-var option: integer value 0;
+var input: String (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
 begin
     submenuLists := 0;
     repeat
         writeln;
         writeln('-------------------------');
-        writeln('LISTS:');
+        writeln('  LISTS:');
         writeln('-------------------------');
         writeln('1. List students alphabetically');
         writeln('2. List students alphabetically and their season grades');
         writeln('3. List students and their season grades in descending order');
         writeln('0. Back');
         write('Option?: ');
-        readln(option);
+        readln(input);
+        option := Operations.StringToInteger(input, ok);
         if option in [0 .. 3]
         then submenuLists := option
         else writeln('Invalid option');
     until option in [0 .. 3];
 end;
-
-
-{** Operations **}
 
 function start(option: integer): integer;
 begin

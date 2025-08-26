@@ -17,13 +17,13 @@ import  StandardInput;
         Definitions qualified;
         GradesListModel qualified;
 
-
 const   dataFileName = '.grades';
 
 type    tFile = bindable file of Definitions.tGradesList;
 
 function loadFromFile (var list: Definitions.tGradesList): boolean;
 function saveToFile (var list: Definitions.tGradesList): boolean;
+
 
 end;
 
@@ -49,7 +49,6 @@ begin
     b := binding(f);
     fileIsBound := b.bound;
 end;
-
 
 function loadFromFile;
 var f: tFile;

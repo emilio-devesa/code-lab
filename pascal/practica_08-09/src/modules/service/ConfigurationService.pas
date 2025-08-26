@@ -1,6 +1,7 @@
 module ConfigurationService;
 {   Práctica 2008-2009
     Command Line program written in Pascal ISO 10206 (Extended Pascal).
+    More info: README.md
 
     ConfigurationService.pas
     Provides functions to check configuration values
@@ -12,7 +13,6 @@ export  ConfigurationService = (
 );
 
 import  ConfigurationModel qualified;
-
 
 function checkIsTheorySaved: boolean;
 function checkIsPracticeSaved: boolean;

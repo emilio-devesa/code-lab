@@ -24,9 +24,6 @@ type    tPager = record
 
 procedure PagerInit(var p: tPager; aPageSize: integer);
 function PagerConsume(var p: tPager; linesPrinted: integer): integer;
-    { returns:  0 = continue, 
-                1 = new page (caller should print header), 
-               -1 = aborted }
 function PagerPageNumber(p: tPager): integer;
 
 
@@ -42,6 +39,11 @@ begin
     p.pageNumber := 1;
 end;
 
+{ PageConsume returns:
+     0 = continue, 
+     1 = new page (caller should print header), 
+    -1 = aborted 
+}
 function PagerConsume;
 begin
     PagerConsume := 0;

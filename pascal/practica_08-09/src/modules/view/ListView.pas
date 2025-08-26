@@ -25,7 +25,7 @@ procedure printPageHeader;
 begin
     Operations.ClearScreen;
     writeln('================================');
-    writeln(message, ' - Page ', page:0);
+    writeln('  ', message, ' - Page ', page:0);
     writeln('================================');
     writeln;
 end;

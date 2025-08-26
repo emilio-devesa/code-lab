@@ -26,6 +26,7 @@ type    tFile = bindable file of Definitions.tStudentsList;
 function loadFromFile (var list: Definitions.tStudentsList): boolean;
 function saveToFile (var list: Definitions.tStudentsList): boolean;
 
+
 end;
 
 
@@ -50,7 +51,6 @@ begin
     b := binding(f);
     fileIsBound := b.bound;
 end;
-
 
 function loadFromFile;
 var f: tFile;

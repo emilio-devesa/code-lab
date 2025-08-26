@@ -76,6 +76,7 @@ procedure updateStudent;
 var idx: integer;
     key, aux: Definitions.tPersonalInfo;
     student: Definitions.tStudent;
+    aborted: boolean value false;
 begin
     writeln;
     writeln('-------------------------');
@@ -86,16 +87,16 @@ begin
     idx := StudentsListModel.find(studentsList, key);
     if idx = 0
     then begin
-        if trim(key) <> '' then writeln('Student not found.');
+        if key = ''
+        then aborted := true
+        else writeln('Student not found.');
     end
     else begin
         if StudentsListModel.get(studentsList, idx, student)
         then begin
             writeln;
             writeln('Updating student:');
-            StudentView.print(StudentModel.getFirstName(student),
-                            StudentModel.getLastName(student),
-                            StudentModel.getLogin(student));
+            StudentView.print(StudentModel.getFirstName(student), StudentModel.getLastName(student), StudentModel.getLogin(student));
             case StudentView.getPersonalInfoField of
                 1: begin
                     StudentView.getFirstName(key);
@@ -116,14 +117,14 @@ begin
                     end
                     else writeln('Login not found in grades list, no update made.');
                 end;
-                0: { Go Back to Main Menu };
+                0: aborted := true;
             end;
-            if StudentsListModel.put(studentsList, idx, student)
+            if (not aborted) and (StudentsListModel.put(studentsList, idx, student))
             then begin
                 writeln('Student updated successfully.');
                 saveStudents(studentsList);
             end
-            else writeln('Could not update student.');
+            else writeln('Student was´t updated.');
         end
         else writeln('Student could not be retrieved.');
     end;

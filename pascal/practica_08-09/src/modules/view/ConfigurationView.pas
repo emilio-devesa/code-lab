@@ -14,6 +14,7 @@ import StandardInput; StandardOutput;
 procedure show(theoryIsSaved, practiceIsSaved: boolean);
 procedure askToSaveGrades(var theoryIsSaved: boolean; var practiceIsSaved: boolean);
 
+
 end;
 
 
@@ -41,5 +42,6 @@ begin
     then writeln('Practice grades are saved.')
     else writeln('Practice grades are not saved.');
 end;
+
 
 end.

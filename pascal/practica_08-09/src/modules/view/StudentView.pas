@@ -18,6 +18,7 @@ export	StudentView = (
 import  StandardInput;
         StandardOutput;
         Definitions qualified;
+        Operations qualified;
 
 function getPersonalInfoField: integer;
 procedure getFirstName(var firstName: Definitions.tPersonalInfo);
@@ -25,12 +26,16 @@ procedure getLastName(var lastName: Definitions.tPersonalInfo);
 procedure getLogin(var login: Definitions.tPersonalInfo);
 procedure print(firstName, lastName, login: Definitions.tPersonalInfo);
 
+
 end;
 
 
 function getPersonalInfoField;
-var option: integer;
+var input: String (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
 begin
+    getPersonalInfoField := 0;
     repeat
         writeln;
         writeln('Select Field: ');
@@ -39,13 +44,13 @@ begin
         writeln('3. Login');
         writeln('0. Back');
         write('Option?: ');
-        readln(option);
-        if (option < 0) or (3 < option)
-        then writeln('Invalid option');
-        getPersonalInfoField := option;
-    until (0 <= option) and (option <= 3);
+        readln(input);
+        option := Operations.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 3])
+        then getPersonalInfoField := option
+        else writeln('Invalid option');
+    until option in [0 .. 3];
 end;
-
 
 procedure getFirstName;
 begin
@@ -70,5 +75,6 @@ begin
     writeln(lastName, ', ', firstName);
     writeln(login);
 end;
+
 
 end.
