@@ -3,9 +3,6 @@ module Strip;
     Command Line program written in Pascal ISO 10206 (Extended Pascal).
     More info: README.md
 
-    Emilio Devesa
-    https://emiliodevesa.wordpress.com/
-
     Strip.pas
     Provides operations to get the number of ocurrences of a word in a text file
     and to write a file without word repetitions

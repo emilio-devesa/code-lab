@@ -3,9 +3,6 @@ module List;
     Command Line program written in Pascal ISO 10206 (Extended Pascal).
     More info: README.md
 
-    Emilio Devesa
-    https://emiliodevesa.wordpress.com/
-
     List.pas
     Provides a Dinamic List data structure and basic operations
 }

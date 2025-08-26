@@ -3,9 +3,6 @@ module Crypt;
     Command Line program written in Pascal ISO 10206 (Extended Pascal).
     More info: README.md
 
-    Emilio Devesa
-    https://emiliodevesa.wordpress.com/
-
     Crypt.pas
     Provides basic operations to crypt and decrypt text
 }

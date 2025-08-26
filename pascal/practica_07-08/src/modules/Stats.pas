@@ -3,9 +3,6 @@ module Stats;
     Command Line program written in Pascal ISO 10206 (Extended Pascal).
     More info: README.md
 
-    Emilio Devesa
-    https://emiliodevesa.wordpress.com/
-
     Stats.pas
     Provides statistic operations to count words, lines and pages.
     This module also extracts first and last word of each line
