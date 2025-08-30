@@ -58,3 +58,4 @@ Mainly **Pascal, C, Java**, and others.
 * 2009.12.17: cuadrado.pas
 * 2010.05.31: factorial.pas, fibonacci.pas
 * 2010.09.19: CalcularNIF.pas
+* practica_07-08: Final assignment. See README.md in this directory for more information.
