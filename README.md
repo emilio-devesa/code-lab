@@ -21,6 +21,11 @@ Mainly **Pascal, C, Java**, and others.
 
 ## 📂 Structure
 
+### c/
+
+* **shell.c** – Basic shell implementation for GNU/Linux
+* **uShell.c** – Basic shell implementation, modified to work with MacOS.
+
 ### java/
 
 * **Ahorcado** – Hangman game implementation.
