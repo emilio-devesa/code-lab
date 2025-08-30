@@ -1,0 +1,80 @@
+module StudentView;
+{   Práctica 2008-2009
+    Command Line program written in Pascal ISO 10206 (Extended Pascal).
+    More info: README.md
+
+    StudentView.pas
+    Provides the view for printing or reading a student's personal information
+}
+
+export	StudentView = (
+            getPersonalInfoField,
+            getFirstName,
+            getLastName,
+            getLogin,
+            print
+);
+
+import  StandardInput;
+        StandardOutput;
+        Definitions qualified;
+        Operations qualified;
+
+function getPersonalInfoField: integer;
+procedure getFirstName(var firstName: Definitions.tPersonalInfo);
+procedure getLastName(var lastName: Definitions.tPersonalInfo);
+procedure getLogin(var login: Definitions.tPersonalInfo);
+procedure print(firstName, lastName, login: Definitions.tPersonalInfo);
+
+
+end;
+
+
+function getPersonalInfoField;
+var input: String (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
+begin
+    getPersonalInfoField := 0;
+    repeat
+        writeln;
+        writeln('Select Field: ');
+        writeln('1. First Name');
+        writeln('2. Last Name');
+        writeln('3. Login');
+        writeln('0. Back');
+        write('Option?: ');
+        readln(input);
+        option := Operations.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 3])
+        then getPersonalInfoField := option
+        else writeln('Invalid option');
+    until option in [0 .. 3];
+end;
+
+procedure getFirstName;
+begin
+    write('Enter first name: ');
+    readln(firstName);
+end;
+
+procedure getLastName;
+begin
+    write('Enter last name: ');
+    readln(lastName);
+end;
+
+procedure getLogin;
+begin
+    write('Enter login: ');
+    readln(login);
+end;
+
+procedure print;
+begin
+    writeln(lastName, ', ', firstName);
+    writeln(login);
+end;
+
+
+end.
