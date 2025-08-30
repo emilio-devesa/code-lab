@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>KOT: Issues</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div class="container-fluid text-center">
+    <h1>KOT: Keep On Track</h1>
+    <a class="m-2" th:href="@{/issue/new}">New Issue</a>
+    <a class="m-2" th:href="@{/issue/list}">Issue List</a>
+</div>
+
+<div th:if="${message}" class="alert alert-success text-center">
+    [[${message}]]
+</div>
+
+<div class="container-fluid text-left">
+    <div><h2>Issues:</h2></div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark"><tr><th>ID</th><th>Author</th><th>Description</th></tr></thead>
+            <tbody>
+                <th:block th:each="issue : ${issueList}">
+                    <tr>
+                        <td>[[${issue.id}]]</td>
+                        <td>[[${issue.author}]]</td>
+                        <td>[[${issue.description}]]</td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
