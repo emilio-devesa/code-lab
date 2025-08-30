@@ -26,6 +26,10 @@ Mainly **Pascal, C, Java**, and others.
 * **shell.c** – Basic shell implementation for GNU/Linux
 * **uShell.c** – Basic shell implementation, modified to work with MacOS.
 
+### dam/pfc/
+
+* **KOT (Keep on Track)** – Final project for the _Multiplatform Application Development_ program (2022). 
+
 ### java/
 
 * **Ahorcado** – Hangman game implementation.
