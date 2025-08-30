@@ -21,6 +21,22 @@ Mainly **Pascal, C, Java**, and others.
 
 ## 📂 Structure
 
+### pascal/
 
-README.md
-
+* 2007.10.15: ascii.pas
+* 2007.10.29: datos.pas
+* 2007.10.30: bisiesto.pas
+* 2007.11.05: rombo.pas, romboConRepeat.pas, triangulo.pas
+* 2007.11.07: descomponerFactoresPrimos.pas, sumaParImpar.pas, multiplos3.pas, triadasPi.pas
+* 2007.11.12: mostrarMenuFiguras.pas
+* 2007.11.21: calendar.pas
+* 2007.11.22: gastosSemana.pas
+* 2007.11.26: carteroAburrido.pas
+* 2007.12.03: alumnoFecha.pas, comentarios.pas
+* 2007.12.13: cribaEratostenes.pas
+* 2007.12.17: ackermann.pas
+* 2008.11.22: moda.pas, VerModa.pas
+* 2009.10.25: etiquetas.pas
+* 2009.12.17: cuadrado.pas
+* 2010.05.31: factorial.pas, fibonacci.pas
+* 2010.09.19: CalcularNIF.pas
