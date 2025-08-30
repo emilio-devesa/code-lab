@@ -21,6 +21,15 @@ Mainly **Pascal, C, Java**, and others.
 
 ## 📂 Structure
 
+### java/
+
+* **Ahorcado** – Hangman game implementation.
+* **TresEnRaya** – Tic-Tac-Toe game.
+* **ProducerConsumer** – Concurrency example (producer–consumer pattern).
+* **ConwaysConstant** – Exploration of Conway’s Constant.
+* **Webserver** – Basic web server implementation.
+* **JavaSQL** – Database-related project.
+
 ### pascal/
 
 * 2007.10.15: ascii.pas
