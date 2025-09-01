@@ -41,6 +41,7 @@ Mainly **Pascal, C, Java**, and others.
 
 ### pascal/
 
+* README.md: Documentation about GNU Pascal compilers, program structure, data types and structures, file handling...
 * 2007.10.15: ascii.pas
 * 2007.10.29: datos.pas
 * 2007.10.30: bisiesto.pas
