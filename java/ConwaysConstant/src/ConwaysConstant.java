@@ -7,9 +7,8 @@ import java.util.Map;
 /**
  * Implementation of the Look-and-Say sequence
  * https://en.wikipedia.org/wiki/Look-and-say_sequence
- * https://emiliodevesa.wordpress.com/2023/08/22/look-and-say-conways-constant/
- *
- * @author Emilio Devesa (http://emiliodevesa.wordpress.com)
+ * 
+ * @author Emilio Devesa
  * @version 0.1
  */
 public class ConwaysConstant {
@@ -139,11 +138,14 @@ public class ConwaysConstant {
             int option=Integer.MIN_VALUE;
             while (option!=0) {
                 try {
-                    System.out.println("\n\t LOOK AND SAY SEQUENCE (CONWAY'S CONSTANT) \n\t ----------------------------------------- ");
+                    System.out.println();
+                    System.out.println("\t LOOK AND SAY SEQUENCE (CONWAY'S CONSTANT)");
+                    System.out.println("\t ----------------------------------------- ");
                     System.out.println("1. Print sequence and the number of characters of each line");
                     System.out.println("2. Print complexity of each line of the sequence");
                     System.out.println("3. Open the Wikipedia article page on the Look-and-Say sequence");
                     System.out.println("0. Exit");
+                    System.out.println();
                     System.out.print("Option? ");
                     option=Integer.parseInt(input.nextLine());
                     if (menuOptions.containsKey(option)) {
