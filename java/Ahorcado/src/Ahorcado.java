@@ -4,10 +4,8 @@ import java.util.Random;
 
 /**
  * Sencilla implementación del juego del ahorcado en Java.
- * <a href="https://emiliodevesa.wordpress.com/2021/01/31/java-el-ahorcado/">Blog
- * post</a>
  *
- * @author Emilio Devesa (http://emiliodevesa.wordpress.com)
+ * @author Emilio Devesa
  * @version 0.1
  */
 public class Ahorcado {
@@ -110,9 +108,9 @@ public class Ahorcado {
      * @param in Un objeto de la clase Scanner para leer la entrada de teclado
      */
     public static boolean partida(Scanner in) {
-        final String palabraSecreta = nuevaPalabra();         // La palabra que hay que adivinar
-        char[] vPalabra = new char[palabraSecreta.length()]; // Las palabra que se muestra al jugador
-        char[] vLetras = new char[maxIntentos];               // Las letras que ya se han introducido
+        final String palabraSecreta = nuevaPalabra();           // La palabra que hay que adivinar
+        char[] vPalabra = new char[palabraSecreta.length()];    // Las palabra que se muestra al jugador
+        char[] vLetras = new char[maxIntentos];                 // Las letras que ya se han introducido
         int fallos = 0;
         char letra;
         boolean fin = false, letraCorrecta;
@@ -126,8 +124,8 @@ public class Ahorcado {
                 // Si la palabra secreta contiene la letra y no ha sido revelada antes, se revela
                 // Si no, se asume como un fallo
                 if (palabraSecreta.charAt(i) == letra && vPalabra[i] != letra) {
-                    vPalabra[i] = letra;  // La hacemos visible
-                    letraCorrecta = true; // Y cuenta como acierto
+                    vPalabra[i] = letra;    // La hacemos visible
+                    letraCorrecta = true;   // Y cuenta como acierto
                 }
             }
             if (letraCorrecta) {
@@ -170,7 +168,7 @@ public class Ahorcado {
             input.nextLine();
             switch (opcion) {
                 case 1:
-                    if (partida(input)) {							// TRUE si victoria 
+                    if (partida(input)) {   // TRUE si victoria 
                         victorias++;
                     } else {
                         derrotas++;

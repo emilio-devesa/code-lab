@@ -41,7 +41,7 @@ class InfoBuffer {
 
     /**
      * Un método que almacena información en el buffer si la variable de control
-     * permite la escritura. En caso contrario, la ejecución se mantiene a la
+     * permite la escritura; y en caso contrario, la ejecución se mantiene a la
      * espera.
      *
      * @param _value El int que queremos almacenar
@@ -56,7 +56,8 @@ class InfoBuffer {
         }
         value = _value;
         isWritable = !isWritable;
-        // Introducimos un pequeño tiempo de espera que haga más legible la salida por consola
+        // Introducimos un pequeño tiempo de espera que haga más legible la
+        // salida por consola
         try {
             Thread.sleep(200);
         } catch (InterruptedException ie) {
@@ -67,7 +68,7 @@ class InfoBuffer {
 
     /**
      * Un método que recupera información del buffer si la variable de control
-     * permite la lectura. En caso contrario, la ejecución se mantiene a la
+     * permite la lectura; y en caso contrario, la ejecución se mantiene a la
      * espera.
      *
      * @return El int que habíamos almacenado
@@ -81,7 +82,8 @@ class InfoBuffer {
             }
         }
         isWritable = !isWritable;
-        // Introducimos un pequeño tiempo de espera que haga más legible la salida por consola
+        // Introducimos un pequeño tiempo de espera que haga más legible la
+        // salida por consola
         try {
             Thread.sleep(200);
         } catch (InterruptedException ie) {

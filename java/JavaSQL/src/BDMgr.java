@@ -7,11 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Cómo acceder a sistemas de BBDD MySQL desde un programa en Java
- * <a href="https://emiliodevesa.wordpress.com/2012/11/16/tutorial-mysql/">Blog
- * post</a>
  *
- * @author Emilio Devesa (http://emiliodevesa.wordpress.com)
+ * @author Emilio Devesa
  * @version 0.1
  */
 public class BDMgr {
