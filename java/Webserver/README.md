@@ -18,7 +18,7 @@ Examinemos el método "_run()_" de la clase "_HiloTrabajo_". Aquí es donde se c
 
 En él se inicializan los flujos de entrada (_input_) y salida (_output_), y se ha de vigilar que, en caso de que algo vaya mal o se alcance el límite de tiempo, los flujos se cierren, así como el socket de la conexión para que vuelva a estar libre. De ahí tanto _try-catch_ anidado. El método _responder_ es el que leerá el contenido de las peticiones, las discriminará según su tipo e irá generando la respuesta. Está muy documentado por ser bastante largo, aclarando además todos los pasos en las partes menos entendibles.
 
-Aclaro que no he incluido ningún tipo de control de errores en la entrada, y el programa es muy poco tolerante con la forma en que le llegan las peticiones, pero se puede probar con facilidad. Si echas a correr el servidor puedes conectarte a él desde una terminal. Para hacer la prueba he creado un archivo "_index.html_" en mi home, que básicamente solo contiene la palabra "_hello_" y un salto de linea. Desde el terminal:
+Aclaro que no he incluido ningún tipo de control de errores en la entrada, y el programa es muy poco tolerante con la forma en que le llegan las peticiones, pero se puede probar con facilidad. Si echas a correr el servidor puedes conectarte a él desde una terminal. Para hacer la prueba he creado un archivo "_index.html_". Desde el terminal:
 ```
 $ nc localhost 8000
 ```
