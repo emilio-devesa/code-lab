@@ -7,6 +7,7 @@ program Main;
 import  StandardInput;
         StandardOutput;
         base qualified;
+        game qualified;
 
 procedure EscribirCabecera;
 {
@@ -44,8 +45,8 @@ begin
         readln (opcion);
         writeln;
         case opcion of
-            '1': { Validar };
-            '2': { Jugar };
+            '1': game.Validar;
+            '2': game.Jugar;
             '0': ;
             otherwise begin
                 write ('Opcion no valida. Pulse INTRO.');
