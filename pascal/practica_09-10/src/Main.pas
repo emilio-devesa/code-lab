@@ -8,6 +8,7 @@ import  StandardInput;
         StandardOutput;
         base qualified;
         game qualified;
+        listados qualified;
 
 procedure EscribirCabecera;
 {
@@ -81,9 +82,9 @@ begin
         readln (opcion);
         writeln;
         case opcion of
-            '1': { Listado 1 };
-            '2': { OrdenarTexto };
-            '3': { Listado 2};
+            '1': listados.Listado1;
+            '2': listados.OrdenarTexto;
+            '3': listados.Listado2;
             '0': ;
             otherwise begin
                 write ('Opcion no valida. Pulse INTRO.');
@@ -120,7 +121,7 @@ begin
         writeln;
         case opcion of
             '1': SubMenuJuego;
-            '2': { OrdenarHistorico };
+            '2': listados.OrdenarHistorico;
             '3': SubMenuVerPalabrasEnPantalla;
             '0': ;
             otherwise begin
