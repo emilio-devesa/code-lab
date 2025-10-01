@@ -26,10 +26,10 @@ export  base = (
 import  StandardInput;
         StandardOutput;
 
-const   F_CASTELAN = 'Castellano';
-        F_GALEGO = 'Gallego';
-        F_INGLES = 'Ingles';
-        F_HISTORICO = 'HistoricodeJugadas';
+const   F_CASTELAN = 'data/Castellano';
+        F_GALEGO = 'data/Gallego';
+        F_INGLES = 'data/Ingles';
+        F_HISTORICO = 'data/HistoricodeJugadas';
         TABULACION = chr(9);
 
 type    tPalabra = string (6);
@@ -42,7 +42,7 @@ type    tPalabra = string (6);
             NumeroIntentos: tNumeroIntentos;
             FechaJugada: tFechaJugada;
         end;
-        tNombreFichero = string (20);
+        tNombreFichero = string (23);
         tFHistorico = bindable file [0..MAXINT] of tRegistroHistorico;
         tFTexto = bindable text;
 
@@ -230,9 +230,9 @@ var opcion: char value 'a';
 begin
   while opcion = 'a' do begin
     writeln ('Seleccionar longitud de palabras:');
-    writeln ('1) Palabras de 4 letras');
-    writeln ('2) Palabras de 5 letras');
-    writeln ('3) Palabras de 6 letras');
+    writeln ('1. Palabras de 4 letras');
+    writeln ('2. Palabras de 5 letras');
+    writeln ('3. Palabras de 6 letras');
     write ('Opcion (1-3): ');
     readln (opcion);
     writeln;
