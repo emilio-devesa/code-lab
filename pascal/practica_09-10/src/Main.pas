@@ -29,10 +29,10 @@ procedure SubMenuJuego;
 var opcion: char value 'a';
 begin
     while opcion = 'a' do begin
-        LimpiarPantalla;
+        base.LimpiarPantalla;
         writeln;
         writeln;
-        CentrarTexto ('Menu Jugar');
+        base.CentrarTexto ('Menu Jugar');
         writeln;
         writeln ('Seleccionar opcion: ');
         writeln;
@@ -64,10 +64,10 @@ procedure SubMenuVerPalabrasEnPantalla;
 var opcion: char value 'a';
 begin
     while opcion = 'a' do begin
-        LimpiarPantalla;
+        base.LimpiarPantalla;
         writeln;
         writeln;
-        CentrarTexto ('Menu Ver Palabras en Pantalla');
+        base.CentrarTexto ('Menu Ver Palabras en Pantalla');
         writeln;
         writeln ('Seleccionar opcion: ');
         writeln;
@@ -101,18 +101,18 @@ procedure Menu;
 var opcion: char value 'a';
 begin
     while opcion <> '0' do begin
-        LimpiarPantalla;
+        base.LimpiarPantalla;
         EscribirCabecera;
         writeln;
         writeln;
-        CentrarTexto ('Menu Principal');
+        base.CentrarTexto ('Menu Principal');
         writeln;
         writeln ('Seleccionar opcion: ');
         writeln;
-        writeln ('1) Jugar o Validar');
-        writeln ('2) Consultar historico de partidas');
-        writeln ('3) Ver palabras en pantalla');
-        writeln ('0) Salir del programa');
+        writeln ('1. Jugar o Validar');
+        writeln ('2. Consultar historico de partidas');
+        writeln ('3. Ver palabras en pantalla');
+        writeln ('0. Salir del programa');
         writeln;
         write ('Opcion (0-3): ');
         readln (opcion);

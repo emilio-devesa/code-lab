@@ -257,9 +257,9 @@ function EnMinuscula;
               una minuscula o un simbolo.
 }
 type tCMayusculas = set of 'A' .. 'Z';
-var cM: tCMayusculas;
+var cMay: tCMayusculas;
 begin
-    if c in cM
+    if c in cMay
     then EnMinuscula := chr(ord(c)+32)
     else EnMinuscula := c;
 end;
@@ -273,9 +273,9 @@ function EnMayuscula;
               una mayuscula o un simbolo.
 }
 type tCMinusculas = set of 'a' .. 'z';
-var cm: tCMinusculas;
+var cmin: tCMinusculas;
 begin
-    if c in cm
+    if c in cmin
     then EnMayuscula := chr(ord(c)-32)
     else EnMayuscula := c;
 end;
