@@ -6,134 +6,149 @@ program Main;
 
 import  StandardInput;
         StandardOutput;
-        base qualified;
+        utils qualified;
         game qualified;
+        highscores qualified;
         listados qualified;
 
-procedure EscribirCabecera;
-{
-    Objetivo:   Muestra el titulo del programa.
-}
-var asteriscos, titulo: string (80); i: integer;
+procedure WriteProgramHeader;
 begin
-    titulo := 'PRACTICA PROGRAMACION: JUEGO << DESCUBRO PALABRAS >>';
-    asteriscos := '';
-    for i := 1 to length (titulo) do asteriscos := asteriscos + '*';
-    base.CentrarTexto (asteriscos);
-    base.CentrarTexto (titulo);
+    writeln;
+    utils.CenterText ('**************************************');
+    utils.CenterText (' Programming Exercise: Guess the Word ');
+    utils.CenterText ('**************************************');
+    writeln;
 end;
 
-procedure SubMenuJuego;
-{
-    Objetivo:   Muestra el submenu correspondiente al juego y lanza las
-                operaciones pertinentes.
-}
-var opcion: char value 'a';
+function mainMenu: integer;
+var input: string (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
 begin
-    while opcion = 'a' do begin
-        base.LimpiarPantalla;
+    mainMenu := 0;
+    repeat
         writeln;
+        writeln('-------------------------');
+        writeln('  MAIN MENU');
+        writeln('-------------------------');
+        writeln ('1. Play / Validate');
+        writeln ('2. Show game highscores');
+        writeln ('3. Print words');
+        writeln ('0. Exit');
         writeln;
-        base.CentrarTexto ('Menu Jugar');
+        write('Option?: ');
+        readln(input);
+        option := utils.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 3])
+        then mainMenu := option
+        else writeln('Invalid option');        
+    until option in [0 .. 3];
+end;
+
+function SubMenuPlayValidate: integer;
+var input: string (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
+begin
+    SubMenuPlayValidate := 0;
+    repeat
         writeln;
-        writeln ('Seleccionar opcion: ');
+        writeln('-------------------------');
+        writeln('  GAME MENU');
+        writeln('-------------------------');
+        writeln ('1. Validate game');
+        writeln ('2. Play');
+        writeln ('0. Back');
         writeln;
-        writeln ('1. Validar juego');
-        writeln ('2. Jugar');
-        writeln ('0. Volver al menu principal');
+        write('Option?: ');
+        readln(input);
+        option := utils.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 2])
+        then SubMenuPlayValidate := option
+        else writeln('Invalid option');        
+    until option in [0 .. 2];
+end;
+
+function SubMenuShowHighscores: integer;
+var input: string (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
+begin
+    SubMenuShowHighscores := 0;
+    repeat
         writeln;
-        write ('Opcion (0-2): ');
-        readln (opcion);
+        writeln('-------------------------');
+        writeln('  SHOW HIGHSCORES');
+        writeln('-------------------------');
+        writeln ('1. Sort by word');
+        writeln ('2. Sort alphabetically by player name');
+        writeln ('3. Sort by number of attempts');
+        writeln ('4. Sort by date, from oldest to newest');
+        writeln ('0. Back');
         writeln;
-        case opcion of
-            '1': game.Validar;
-            '2': game.Jugar;
-            '0': ;
-            otherwise begin
-                write ('Opcion no valida. Pulse INTRO.');
-                readln;
-                opcion := 'a';
+        write('Option?: ');
+        readln(input);
+        option := utils.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 4])
+        then SubMenuShowHighscores := option
+        else writeln('Invalid option');        
+    until option in [0 .. 4];
+end;
+
+function SubMenuPrintWords: integer;
+var input: string (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
+begin
+    SubMenuPrintWords := 0;
+    repeat
+        writeln;
+        writeln('-------------------------');
+        writeln('  PRINT WORDS');
+        writeln('-------------------------');
+        writeln ('1. Print words from dictionary');
+        writeln ('2. Sort words from dictionary');
+        writeln ('3. Print words from dictionary (two at a time)');
+        writeln ('0. Back');
+        writeln;
+        write('Option?: ');
+        readln(input);
+        option := utils.StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 3])
+        then SubMenuPrintWords := option
+        else writeln('Invalid option');        
+    until option in [0 .. 3];
+end;
+
+function start(option: integer): integer;
+begin
+    case (option) of
+        1:  case (SubMenuPlayValidate) of
+                1: { Validate Game } game.Validar;
+                2: { Play Game } game.Jugar;
+                0: { Return };
             end;
-        end;
-    end;
-end;
-
-procedure SubMenuVerPalabrasEnPantalla;
-{
-    Objetivo:   Muestra el submenu correspondiente a los listados de palabras
-                y lanza las operaciones pertinentes.
-}
-var opcion: char value 'a';
-begin
-    while opcion = 'a' do begin
-        base.LimpiarPantalla;
-        writeln;
-        writeln;
-        base.CentrarTexto ('Menu Ver Palabras en Pantalla');
-        writeln;
-        writeln ('Seleccionar opcion: ');
-        writeln;
-        writeln ('1. Ver palabras de n letras de un fichero');
-        writeln ('2. Ordenar palabras de un fichero');
-        writeln ('3. Ver palabras de un fichero de 2 en 2');
-        writeln ('0. Volver al menu principal');
-        writeln;
-        write ('Opcion (0-3): ');
-        readln (opcion);
-        writeln;
-        case opcion of
-            '1': listados.Listado1;
-            '2': listados.OrdenarTexto;
-            '3': listados.Listado2;
-            '0': ;
-            otherwise begin
-                write ('Opcion no valida. Pulse INTRO.');
-                readln;
-                opcion := 'a';
+        2:  case (SubMenuShowHighscores) of
+                1: { Sort by word } highscores.SortByWord;
+                2: { Sort alphabetically by player name } highscores.SortByPlayer;
+                3: { Sort by number of attempts } highscores.SortByAttempts;
+                4: { Sort by date, from oldest to newest } highscores.SortByDate;
+                0: { Return };
             end;
-        end;
-    end;
-end;
-
-procedure Menu;
-{
-    Objetivo:   Arranca el menu principal con las diferentes opciones del
-                juego y de la presentacion de resultados.
-}
-var opcion: char value 'a';
-begin
-    while opcion <> '0' do begin
-        base.LimpiarPantalla;
-        EscribirCabecera;
-        writeln;
-        writeln;
-        base.CentrarTexto ('Menu Principal');
-        writeln;
-        writeln ('Seleccionar opcion: ');
-        writeln;
-        writeln ('1. Jugar o Validar');
-        writeln ('2. Consultar historico de partidas');
-        writeln ('3. Ver palabras en pantalla');
-        writeln ('0. Salir del programa');
-        writeln;
-        write ('Opcion (0-3): ');
-        readln (opcion);
-        writeln;
-        case opcion of
-            '1': SubMenuJuego;
-            '2': listados.OrdenarHistorico;
-            '3': SubMenuVerPalabrasEnPantalla;
-            '0': ;
-            otherwise begin
-                write ('Opcion no valida. Pulse INTRO.');
-                readln;
-                opcion := 'a';
+        3:  case (SubMenuPrintWords) of
+                1: { Print words from dictionary } listados.PrintAllWords;
+                2: { Sort words from dictionary } listados.SortWords;
+                3: { Print words from dictionary (two at a time) } listados.PrintTwoWordsInARow;
+                0: { Return };
             end;
-        end;
+        0: { Exit };
     end;
+    start := option;
 end;
 
 begin
-    Menu;
-    base.LimpiarPantalla;
+    repeat
+        utils.ClearScreen;
+        WriteProgramHeader;
+    until (start(mainMenu) = 0);
 end.

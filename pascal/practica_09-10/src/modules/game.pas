@@ -15,7 +15,9 @@ export  game = (
 
 import  StandardInput;
         StandardOutput;
-        base qualified;
+        types qualified;
+        utils qualified;
+        files qualified;
 
 procedure Validar;
 procedure Jugar;
@@ -36,19 +38,19 @@ begin
     NumeroAleatorio := (semilla * 54321) mod 100;
 end;
 
-function PalabraFichero (var f: base.tFTexto; pos: integer): base.tPalabra;
+function PalabraFichero (var f: files.tTextFile; pos: integer): types.tPalabra;
 {
     Objetivo:   Lee una palabra de un fichero
     PreCD:      El fichero existe y ha sido ligado
 }
-var lineas, i: integer; palabra: base.tPalabra;
+var lineas, i: integer; palabra: types.tPalabra;
 begin
     reset (f);
     lineas := NumeroAleatorio;
     for i := 0 to lineas do readln (f);     {avanzar lineas}
     for i := 1 to pos do begin
         palabra := '';
-        while f^ <> base.TABULACION do begin
+        while f^ <> types.TAB do begin
             palabra := palabra + f^;
             get (f);
         end;
@@ -57,42 +59,42 @@ begin
     end;  
 end;
 
-function PalabraLeida: base.tPalabra;
-{
-    Objetivo:   Liga el fichero correspondiente al idioma seleccionado y
-                llama a la funcion PalabraFichero para extraer una palabra de
-                la longitud deseada.
-                Devuelve una cadena vacia si no se pudo acceder al fichero.
-}
-var idioma, largo: integer; f: base.tFTexto; palabra: base.tPalabra;
+function PalabraLeida: types.tPalabra;
+var idioma, largo: integer; f: files.tTextFile;
 begin
-    idioma := base.IdiomaFichero;
-    largo := base.LongitudPalabra;
-    case idioma of
-        1:  if base.ExisteFTexto (base.F_CASTELAN) and_then base.LigaFTexto (f, base.F_CASTELAN)
-            then PalabraLeida := PalabraFichero (f, largo)
-            else PalabraLeida := '';
-        2:  if base.ExisteFTexto (base.F_GALEGO) and_then base.LigaFTexto (f, base.F_GALEGO)
-            then PalabraLeida := PalabraFichero (f, largo)
-            else PalabraLeida := '';
-        3:  if base.ExisteFTexto (base.F_INGLES) and_then base.LigaFTexto (f, base.F_INGLES)
-            then PalabraLeida := PalabraFichero (f, largo)
-            else PalabraLeida := '';
+    idioma := utils.ChooseLanguage;
+    if idioma > 0
+    then begin
+        largo := utils.ChooseLength;
+        if largo > 0
+        then begin
+            case idioma of
+                1:  if files.TextFileExists (f, files.F_CASTILLAN) and_then files.TextFileIsBound (f, files.F_CASTILLAN)
+                    then PalabraLeida := PalabraFichero (f, largo)
+                    else PalabraLeida := '';
+                2:  if files.TextFileExists (f, files.F_GALICIAN) and_then files.TextFileIsBound (f, files.F_GALICIAN)
+                    then PalabraLeida := PalabraFichero (f, largo)
+                    else PalabraLeida := '';
+                3:  if files.TextFileExists (f, files.F_ENGLISH) and_then files.TextFileIsBound (f, files.F_ENGLISH)
+                    then PalabraLeida := PalabraFichero (f, largo)
+                    else PalabraLeida := '';
+            end;
+        end;
     end;
 end;
 
-function SonIguales (palabra1, palabra2: base.tPalabra): boolean;
+function SonIguales (palabra1, palabra2: types.tPalabra): boolean;
 {
     Objetivo:   Compara si dos palabras son iguales. Si no lo son, escribe
                 las pistas para adivinarla en la salida estandar.
     PosCD:      Devuelve TRUE si son iguales o FALSE en caso contrario.
 }
-var i: integer; p1, p2: base.tPalabra;
+var i: integer; p1, p2: types.tPalabra;
 begin
     p1 := '';
     p2 := '';
-    for i := 1 to length (palabra1) do p1 := p1 + base.EnMinuscula (palabra1[i]);
-    for i := 1 to length (palabra2) do p2 := p2 + base.EnMinuscula (palabra2[i]);
+    for i := 1 to length (palabra1) do p1 := p1 + utils.EnMinuscula (palabra1[i]);
+    for i := 1 to length (palabra2) do p2 := p2 + utils.EnMinuscula (palabra2[i]);
     if p1 = p2
     then SonIguales := true
     else begin
@@ -103,22 +105,22 @@ begin
             if (index(p2, p2[i]) = i) and_then (index(p1, p2[i]) > 0)
             then begin
                 if (index(p1, p2[i]) = i)
-                then write (base.EnMayuscula(p2[i]))
-                else write (base.EnMinuscula(p2[i]))
+                then write (utils.EnMayuscula(p2[i]))
+                else write (utils.EnMinuscula(p2[i]))
             end
             else write ('?');
         end;
     end;
 end;
 
-function DescubrePalabra (palabra1: base.tPalabra): base.tNumeroIntentos;
+function DescubrePalabra (palabra1: types.tPalabra): types.tNumeroIntentos;
 {
     Objetivo:   Comparacion de la palabra original con la palabra introducida
                 por el usuario hasta que se rinda o acierte
     PosCD:      Devuelve el numero de intentos necesarios para adivinar la
                 palabra o 0 si el jugador se ha rendido
 }
-var continuar: boolean; palabra2: base.tPalabra; intentos: base.tNumeroIntentos;
+var continuar: boolean; palabra2: types.tPalabra; intentos: types.tNumeroIntentos;
 begin
     continuar := true;
     intentos := 1;
@@ -129,13 +131,13 @@ begin
         if SonIguales (palabra1, palabra2)
         then begin
             writeln;
-            base.CentrarTexto ('Felicidades! Palabra adivinada!');
+            utils.CenterText ('Felicidades! Palabra adivinada!');
             continuar := false;
         end
         else begin
             writeln;
             write ('Intento fallido. Confirme para continuar. ');
-            if base.PedirConfirmacion
+            if utils.Confirm
             then intentos := intentos + 1
             else begin
                 intentos := 0;
@@ -146,24 +148,24 @@ begin
     DescubrePalabra := intentos;
 end;
 
-procedure GuardarRegistro (var p: base.tPalabra; i: base.tNumeroIntentos);
+procedure GuardarRegistro (var p: types.tPalabra; i: types.tNumeroIntentos);
 {
     Objetivo:   Pide los datos al usuario y los almacena en un fichero de
                 historico externo.
 }
-var pos: integer; nombre: base.tNombreJugador; fecha: base.tFechaJugada;
-    preparado: boolean; f: base.tFHistorico;
+var pos: integer; nombre: types.tNombreJugador; fecha: types.tFechaJugada;
+    preparado: boolean; f: files.tBinFile;
 begin
     write ('Escriba su nombre: ');
     readln (nombre);
     nombre := trim (nombre);
-    fecha := base.ObtenerFechaComoString;
-    writeln ('La fecha es: ', fecha, '.');
+    GetTimeStamp(fecha);
+    writeln ('La fecha es: ', Date(fecha), '.');
     writeln;
     writeln ('Preparando el fichero historico del juego...');
-    if base.ExisteFHistorico (base.F_HISTORICO)
+    if files.BinFileExists (f, files.F_HIGHSCORES)
     then begin
-        if base.LigaFHistorico (f, base.F_HISTORICO)
+        if files.BinFileIsBound (f, files.F_HIGHSCORES)
         then begin
             write ('Ya existe el fichero. Accediendo... ');
             writeln ('OK.');
@@ -177,7 +179,7 @@ begin
         end;
     end
     else begin
-        if base.LigaFHistorico (f, base.F_HISTORICO)
+        if files.BinFileIsBound (f, files.F_HIGHSCORES)
         then begin
             write ('Creando un fichero vacio... ');
             rewrite (f);
@@ -197,18 +199,18 @@ begin
         then pos := 0
         else pos := LastPosition (f);
         seekupdate (f, pos);
-        f^.PalabraPorDescubrir := p;
-        f^.NombreJugador := nombre;
-        f^.NumeroIntentos := i;
-        f^.FechaJugada := fecha;
+        f^.Word := p;
+        f^.Player := nombre;
+        f^.Attemps := i;
+        f^.DateTime := fecha;
         put (f);
         writeln ('OK');
     end
     else begin
-        if base.MostrarError ('El guardado de datos informo de un problema.')
-        then writeln ('Saltando guardado de datos...')
+        if utils.PrintError ('Can not save data')
+        then writeln ('Skipping data save...')
         else begin
-            writeln ('El programa se detendra a continuacion.');
+            writeln ('Execution aborted.');
             halt;
         end;
     end;
@@ -219,19 +221,22 @@ procedure Validar;
     Objetivo:   Proporciona un metodo de validacion del juego, revelando la
                 palabra a descubrir antes de iniciar las preguntas.
 }
-var palabra: base.tPalabra; intentos: base.tNumeroIntentos;
+var palabra: types.tPalabra; intentos: types.tNumeroIntentos;
 begin
-    base.CentrarTexto ('Opcion Validar');
+    writeln;
+    writeln('-------------------------');
+    writeln('  Validate');
+    writeln('-------------------------');
     palabra := PalabraLeida;
     if palabra = ''
     then begin
-        if base.MostrarError ('No se puede acceder al fichero.')
+        if utils.PrintError ('Can not open file.')
         then begin
-            write ('Se volvera al menu principal. Pulse INTRO.');
+            write ('Returning to Main Menu. Press ENTER.');
             readln;
         end
         else begin
-            writeln ('El programa se detendra a continuacion.');
+            writeln ('Execution aborted');
             halt;
         end;
     end
@@ -244,22 +249,25 @@ begin
 end;
 
 procedure Jugar;
-var palabra: base.tPalabra; intentos: base.tNumeroIntentos;
+var palabra: types.tPalabra; intentos: types.tNumeroIntentos;
 {
     Objetivo:   Proporciona la experiencia de juego
 }
 begin
-    base.CentrarTexto ('Opcion Jugar');
+    writeln;
+    writeln('-------------------------');
+    writeln('  Play');
+    writeln('-------------------------');
     palabra := PalabraLeida;
     if palabra = ''
     then begin
-        if base.MostrarError ('No se puede acceder al fichero.')
+        if utils.PrintError ('Can not open the file')
         then begin
-            write ('Se volvera al menu principal. Pulse INTRO.');
+            write ('Returning to Main Menu. Press ENTER.');
             readln;
         end
         else begin
-            writeln ('El programa se detendra a continuacion.');
+            writeln ('Execution aborted');
             halt;
         end;
     end
