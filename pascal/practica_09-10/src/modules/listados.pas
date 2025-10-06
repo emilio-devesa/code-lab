@@ -3,8 +3,9 @@ module listados;
     Command Line program written in Pascal ISO 10206 (Extended Pascal)
     More info: README.md
     
-    base.pas
-    Provides common utilities and definitions for constants and types
+    listados.pas
+    Provides procedures to print word lists with different formatting
+    and sorting criteria
 }
 
 
@@ -33,9 +34,9 @@ procedure PrintAllWords;
     Objetivo:   Muestra por pantalla las palabras de una determinada longitud
                 y un determinado idioma elegidos por el usuario
 }
-var i, j: integer; f: files.tTextFile; accesible: boolean;
+var i, j: integer; f: types.tTextFile; accesible: boolean;
 
-    procedure MuestraPalabras (var f: files.tTextFile; longitud: integer);
+    procedure MuestraPalabras (var f: types.tTextFile; longitud: integer);
     {
         Objetivo:   Del fichero f lee las palabras de longitud i y las envia a
                     la salida estandar.
@@ -70,19 +71,19 @@ begin
     i := utils.ChooseLanguage;
     j := utils.ChooseLength;
     case i of
-        1:  if files.TextFileExists (f, files.F_CASTILLAN) and_then files.TextFileIsBound (f, files.F_CASTILLAN)
+        1:  if files.TextFileExists (f, types.F_CASTILLAN) and_then files.TextFileIsBound (f, types.F_CASTILLAN)
             then begin
                 MuestraPalabras (f, j);
                 accesible := true;
             end
             else accesible := false;
-        2:  if files.TextFileExists (f, files.F_GALICIAN) and_then files.TextFileIsBound (f, files.F_GALICIAN)
+        2:  if files.TextFileExists (f, types.F_GALICIAN) and_then files.TextFileIsBound (f, types.F_GALICIAN)
             then begin
                 MuestraPalabras (f, j);
                 accesible := true;
             end
             else accesible := false;
-        3:  if files.TextFileExists (f, files.F_ENGLISH) and_then files.TextFileIsBound (f, files.F_ENGLISH)
+        3:  if files.TextFileExists (f, types.F_ENGLISH) and_then files.TextFileIsBound (f, types.F_ENGLISH)
             then begin
                 MuestraPalabras (f, j);
                 accesible := true;
@@ -108,9 +109,9 @@ procedure PrintTwoWordsInARow;
     Objetivo:   Muestra por pantalla 2 palabras por linea de una determinada
                 longitud y un determinado idioma elegidos por el usuario
 }
-var i: integer; f: files.tTextFile; accesible: boolean;
+var i: integer; f: types.tTextFile; accesible: boolean;
 
-    procedure MuestraDosPalabras (var f: files.tTextFile);
+    procedure MuestraDosPalabras (var f: types.tTextFile);
     {
         Objetivo:   Del fichero f con nombre n, lee las palabras y las vuelca a
                     la salida estandar de 2 en 2 hasta llenar la pantalla y
@@ -159,19 +160,19 @@ var i: integer; f: files.tTextFile; accesible: boolean;
 begin
     i := utils.ChooseLanguage;
     case i of
-        1:  if files.TextFileExists (f, files.F_CASTILLAN) and_then files.TextFileIsBound (f, files.F_CASTILLAN)
+        1:  if files.TextFileExists (f, types.F_CASTILLAN) and_then files.TextFileIsBound (f, types.F_CASTILLAN)
             then begin
                 MuestraDosPalabras (f);
                 accesible := true;
             end
             else accesible := false;
-        2:  if files.TextFileExists (f, files.F_GALICIAN) and_then files.TextFileIsBound (f, files.F_GALICIAN)
+        2:  if files.TextFileExists (f, types.F_GALICIAN) and_then files.TextFileIsBound (f, types.F_GALICIAN)
             then begin
                 MuestraDosPalabras (f);
                 accesible := true;
             end
             else accesible := false;
-        3:  if files.TextFileExists (f, files.F_ENGLISH) and_then files.TextFileIsBound (f, files.F_ENGLISH)
+        3:  if files.TextFileExists (f, types.F_ENGLISH) and_then files.TextFileIsBound (f, types.F_ENGLISH)
             then begin
                 MuestraDosPalabras (f);
                 accesible := true;
@@ -199,9 +200,9 @@ procedure SortWords;
                 por ser pocos elementos.
 }
 type tVector = array [1..300] of types.tPalabra value [otherwise ''];
-var f: files.tTextFile; vector: tVector; i: integer; accesible: boolean;
+var f: types.tTextFile; vector: tVector; i: integer; accesible: boolean;
 
-    procedure RellenarVector (var f: files.tTextFile; var vector: tVector);
+    procedure RellenarVector (var f: types.tTextFile; var vector: tVector);
     {
         Objetivo:   Lee linea a linea el fichero de texto, extrae las palabras
                     que contenga la linea y las almacena en el vector tVector.
@@ -268,7 +269,7 @@ var f: files.tTextFile; vector: tVector; i: integer; accesible: boolean;
         writeln;
     end;
 
-    procedure OrdenarPalabras (var f: files.tTextFile; var vector: tVector);
+    procedure OrdenarPalabras (var f: types.tTextFile; var vector: tVector);
     begin
         RellenarVector (f, vector);
         OrdenarVector (vector);
@@ -278,19 +279,19 @@ var f: files.tTextFile; vector: tVector; i: integer; accesible: boolean;
 begin
     i := utils.ChooseLanguage;
     case i of
-        1:  if files.TextFileExists (f, files.F_CASTILLAN) and_then files.TextFileIsBound (f, files.F_CASTILLAN)
+        1:  if files.TextFileExists (f, types.F_CASTILLAN) and_then files.TextFileIsBound (f, types.F_CASTILLAN)
             then begin
                 OrdenarPalabras (f, vector);
                 accesible := true;
             end
             else accesible := false;
-        2:  if files.TextFileExists (f, files.F_GALICIAN) and_then files.TextFileIsBound (f, files.F_GALICIAN)
+        2:  if files.TextFileExists (f, types.F_GALICIAN) and_then files.TextFileIsBound (f, types.F_GALICIAN)
             then begin
                 OrdenarPalabras (f, vector);
                 accesible := true;
             end
             else accesible := false;
-        3:  if files.TextFileExists (f, files.F_ENGLISH) and_then files.TextFileIsBound (f, files.F_ENGLISH)
+        3:  if files.TextFileExists (f, types.F_ENGLISH) and_then files.TextFileIsBound (f, types.F_ENGLISH)
             then begin
                 OrdenarPalabras (f, vector);
                 accesible := true;

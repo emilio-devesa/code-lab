@@ -10,14 +10,33 @@ module types;
 
 export  types = (
             TAB,
+            F_CASTILLAN,
+            F_GALICIAN,
+            F_ENGLISH,
+            F_HIGHSCORES,
+            MAX_GAMES,
             tPalabra,
             tNumeroIntentos,
             tNombreJugador,
             tFechaJugada,
-            tGameRecord
+            tGameRecord,
+            tHighscoresList,
+            tCriteria,
+            Word,
+            Player,
+            Attemps,
+            DateTime,
+            tFileName,
+            tBinFile,
+            tTextFile
 );
 
 const   TAB = chr(9);
+        F_CASTILLAN = 'data/Castellano';
+        F_GALICIAN = 'data/Gallego';
+        F_ENGLISH = 'data/Ingles';
+        F_HIGHSCORES = 'data/HistoricodeJugadas';
+        MAX_GAMES = 100;
 
 type    tPalabra = string (6);
         tNumeroIntentos = integer;  
@@ -29,6 +48,14 @@ type    tPalabra = string (6);
             Attemps: tNumeroIntentos;
             DateTime: tFechaJugada;
         end;
+        tHighscoresList = record
+            item: array [1..MAX_GAMES] of tGameRecord;
+            size: integer;
+        end;
+        tCriteria = (Word, Player, Attemps, DateTime);
+        tFileName = string (23);
+        tBinFile = bindable file of tHighscoresList;
+        tTextFile = bindable text;
 
 
 end;

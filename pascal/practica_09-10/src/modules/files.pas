@@ -9,13 +9,6 @@ module files;
 
 
 export  files = (
-            F_CASTILLAN,
-            F_GALICIAN,
-            F_ENGLISH,
-            F_HIGHSCORES,
-            tFileName,
-            tBinFile,
-            tTextFile,
             BinFileExists,
             BinFileIsBound,
             TextFileExists,
@@ -26,19 +19,10 @@ import  StandardInput;
         StandardOutput;
         types qualified;
 
-const   F_CASTILLAN = 'data/Castellano';
-        F_GALICIAN = 'data/Gallego';
-        F_ENGLISH = 'data/Ingles';
-        F_HIGHSCORES = 'data/HistoricodeJugadas';
-
-type    tFileName = string (23);
-        tBinFile = bindable file [0..MAXINT] of types.tGameRecord;
-        tTextFile = bindable text;
-
-function BinFileExists (var aFile: tBinFile; aName: tFileName): boolean;
-function BinFileIsBound (var aFile: tBinFile; aName: tFileName): boolean;
-function TextFileExists (var aFile: tTextFile; aName: tFileName): boolean;
-function TextFileIsBound (var aFile: tTextFile; aName: tFileName): boolean;
+function BinFileExists (var aFile: types.tBinFile; aName: types.tFileName): boolean;
+function BinFileIsBound (var aFile: types.tBinFile; aName: types.tFileName): boolean;
+function TextFileExists (var aFile: types.tTextFile; aName: types.tFileName): boolean;
+function TextFileIsBound (var aFile: types.tTextFile; aName: types.tFileName): boolean;
 
 
 end;

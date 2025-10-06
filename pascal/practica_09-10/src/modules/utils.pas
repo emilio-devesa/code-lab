@@ -9,6 +9,7 @@ module utils;
 
 
 export  utils = (
+            GetRandomInteger,
             Confirm,
             ClearScreen,
             CenterText,
@@ -24,6 +25,7 @@ import  StandardInput;
         StandardOutput;
         types qualified;
 
+function GetRandomInteger (max: integer): integer;
 function Confirm: boolean;
 procedure ClearScreen;
 procedure CenterText (s: string);
@@ -38,6 +40,14 @@ function StringToInteger(input: string; var ok: boolean): integer;
 
 end;
 
+
+function GetRandomInteger;
+var ts: TimeStamp; seed: integer;
+begin
+    GetTimeStamp (ts);
+    seed := (1103515245 * (ts.MicroSecond + ts.Second * 1000000) + 12345) mod 2147483648;
+    GetRandomInteger := (seed) mod max;
+end;
 
 function Confirm;
 var option: char;

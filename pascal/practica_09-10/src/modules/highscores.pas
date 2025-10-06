@@ -9,232 +9,146 @@ module highscores;
 
 
 export  highscores = (
-        SortByWord,
-        SortByPlayer,
-        SortByAttempts,
-        SortByDate
+        Load,
+        Save,
+        Add,
+        Print,
+        SortBy
 );
 
 import  StandardInput;
         StandardOutput;
         types qualified;
         utils qualified;
-        files qualified;
+        files qualified; 
 
-procedure SortByWord;
-procedure SortByPlayer;
-procedure SortByAttempts;
-procedure SortByDate;
-
+procedure Load (var highscoresList: types.tHighscoresList);
+procedure Save (var highscoresList: types.tHighscoresList);
+procedure Add (var highscoresList: types.tHighscoresList; newRecord: types.tGameRecord);
+procedure Print (var highscoresList: types.tHighscoresList);
+procedure SortBy (var highscoresList: types.tHighscoresList; criteria: types.tCriteria);
 
 end;
 
 
-procedure Sort (criteria: integer);
-{
-    Objetivo:   Aglutina las operaciones de ordenación del fichero historico
-                bajo un único procedimiento
-    PosCD:      El fichero f contiene los datos del historico ya ordenados
-}
-type tArchivo = file [0..MAXINT] of types.tGameRecord;
-var f_his: files.tBinFile; f: tArchivo;
-
-    function EsCampoMenor (r1, r2: types.tGameRecord): boolean;
-    begin
-        case criteria of
-            1: EsCampoMenor := r1.Word < r2.Word;
-            2: EsCampoMenor := r1.Player < r2.Player;
-            3: EsCampoMenor := r1.Attemps < r2.Attemps;
-            4: EsCampoMenor := LE(date(r1.DateTime), date(r2.DateTime));
-            {begin
-                fecha1 := utils.ConvertirFechaEnEntero (r1.FechaJugada);
-                fecha2 := utils.ConvertirFechaEnEntero (r2.FechaJugada);
-                EsCampoMenor := fecha1 < fecha2;
-            end;}
-        end;
-    end;
-
-    procedure CopiarRegistro (var de, a: tArchivo; var fin: boolean);
-    {
-        Objetivo:   Copia un registro de "de" hasta "a" y comprueba si el campo
-                    usado como criterio es menor en el registro siguiente que
-                    en el registro copiado.
-    }
-    begin
-        if not eof (de)
-        then begin
-            read (de, a^);
-            if eof (de)
-            then fin := true
-            else fin := EsCampoMenor (de^, a^);
-            put (a);
-        end
-        else fin := true;
-    end;
-
-    procedure CopiarSubFicheros (var de, a: tArchivo; var fin: boolean);
-    {
-        Objetivo:   Copia un subarchivo desde "de" hasta "a".
-    }
-    begin
-        fin := false;
-        while not fin do CopiarRegistro (de, a, fin);
-    end;
-    
-    procedure DividirArchivo (var f, f1, f2: tArchivo);
-    {
-        Objetivo:   Divide un archivo f en los archivos f1 y f2 copiando de
-                    forma natural los subarchivos ordenados de f
-                    alternativamente a f1 y f2.
-    }
-    var num_fichero: 1..2; fin_subf: boolean;
-    begin
-        reset (f);
-        rewrite (f1);
-        rewrite (f2);
-        num_fichero := 1;
-        while not eof (f) do begin
-            case num_fichero of
-                1: CopiarSubFicheros (f, f1, fin_subf);
-                2: CopiarSubFicheros (f, f2, fin_subf);
-            end;
-            num_fichero := 3 - num_fichero;
-        end;
-    end;
-    
-    procedure Mezclar (var f, f1, f2: tArchivo; var n: integer);
-    {
-        Objetivo:   Mezcla los subficheros correspondientes ordenados en f1 y
-                    f2 dentro de un archivo f. n es el numero de subarchivos
-                    ordenados producidos en f.
-    }
-    var fin1, fin2: boolean;
-    begin
-        reset (f1);
-        reset (f2);
-        rewrite (f);
-        n := 0;
-        while not (eof(f1) or eof(f2)) do begin
-            fin1 := false;
-            fin2 := false;
-            repeat
-                if EsCampoMenor (f1^, f2^)
-                then CopiarRegistro (f1, f, fin1)
-                else CopiarRegistro (f2, f, fin2);
-            until fin1 or fin2;
-            if fin1
-            then CopiarSubFicheros (f2, f, fin2)
-            else CopiarSubFicheros (f1, f, fin1);
-            n := n + 1;
-        end;
-        while not eof (f1) do begin
-            CopiarSubFicheros (f1, f, fin1);
-            n := n + 1;
-        end;
-        while not eof (f2) do begin
-            CopiarSubFicheros (f2, f, fin2);
-            n := n + 1;
-        end;
-    end;
-
-    procedure Ordenar (var f: tArchivo);
-    var f1, f2: tArchivo; num_subf: integer;
-    begin
-        num_subf := 0;
-        repeat
-            DividirArchivo (f, f1, f2);
-            Mezclar (f, f1, f2, num_subf);
-        until num_subf = 1;
-    end;
-  
-  
-  
-    
-    procedure CopiarArchivoTemporal (var f1: files.tBinFile; var f2: tArchivo);
-    {
-        Objetivo:   Copia el fichero f1 a un fichero f2 para trabajar
-                    comodamente con archivos temporales durante la ordenacion.
-        PreCD:      f1 esta enlazado y es accesible
-    }
-    begin
-        reset (f1);
-        rewrite (f2);
-        repeat
-            f2^:= f1^;
-            get (f1);
-            put (f2);
-        until eof (f1);
-    end;
-
-    procedure MostrarFicheroOrdenado (var f: tArchivo);
-    {
-        Objetivo:   Muestra el contenido de un archivo binario.
-    }
-    var r: types.tGameRecord; fin, i: integer; cAux: string (80);
-    begin
-        reset (f);
-        if empty (f)
-        then writeln ('El historico esta vacio.')
-        else begin
-            fin := lastposition (f);
-            writeln;
-            writeln ('Word', types.TAB, types.TAB, 'Player', types.TAB, types.TAB, 'Attemps', types.TAB, types.TAB, 'Date');
-            for i := 0 to fin do begin
-                seekread (f, i);
-                r := f^;
-                writestr (cAux, r.Word,  types.TAB, types.TAB, r.Player);
-                if r.Attemps = 0
-                then writestr (cAux, cAux, 'rendido')
-                else writestr (cAux, cAux,  types.TAB, types.TAB, r.Attemps:0);
-                writestr (cAux, cAux,  types.TAB, date(r.DateTime));
-                writeln (cAux);
-            end;
-        end;
-    end;
-
+function Compare (a, b: types.tGameRecord; criteria: types.tCriteria): boolean;
 begin
-    if files.BinFileExists (f_his, files.F_HIGHSCORES) and_then files.BinFileIsBound (f_his, files.F_HIGHSCORES)
+    case criteria of
+        types.Word: Compare := LE(a.Word, b.Word);
+        types.Player: Compare := LE(a.Player, b.Player);
+        types.Attemps: Compare := a.Attemps <= b.Attemps;
+        types.DateTime: Compare := LE(Date(a.DateTime), Date(b.DateTime));
+    end;
+end;
+
+procedure Quicksort (var highscoresList: types.tHighscoresList; low, high: integer; criteria: types.tCriteria);
+var i, j, pivot: integer; aux: types.tGameRecord;
+begin
+    if low < high
     then begin
-        rewrite (f);
-        CopiarArchivoTemporal (f_his, f);
-        Ordenar (f);
-        MostrarFicheroOrdenado (f);
-        writeln;
-        write ('Returning to Main Menu. Press ENTER.');
-        readln;
+        { Choose the pivot (in this case, the middle element) }
+        pivot := (low + high) div 2;
+        i := low;
+        j := high;
+        { Partition the array into two halves }
+        repeat
+            while Compare(highscoresList.item[i], highscoresList.item[pivot], criteria) do i := i + 1;
+            while Compare(highscoresList.item[pivot], highscoresList.item[j], criteria) do j := j - 1;
+            if i <= j
+            then begin
+                { Swap elements and move indices }
+                aux := highscoresList.item[i];
+                highscoresList.item[i] := highscoresList.item[j];
+                highscoresList.item[j] := aux;
+                i := i + 1;
+                j := j - 1;
+            end;
+        until i > j;
+        { Recursively sort the sub-lists }
+        Quicksort(highscoresList, low, j, criteria);
+        Quicksort(highscoresList, i, high, criteria);
+    end;
+end;
+
+procedure Load;
+var f: types.tBinFile;
+begin
+    if (files.BinFileExists(f, types.F_HIGHSCORES) and_then files.BinFileIsBound(f, types.F_HIGHSCORES))
+    then begin
+        reset(f);
+        read(f, highscoresList);
     end
     else begin
-        if utils.PrintError ('Can not open the file.')
+        if utils.PrintError('Can not open the file.')
         then begin
-            write ('Returning to Main Menu. Press ENTER');
+            write('Returning to Main Menu. Press ENTER');
             readln;
         end
         else begin
-            writeln ('Execution aborted');
+            writeln('Execution aborted');
             halt;
         end;
     end;
 end;
 
-
-procedure SortByWord;
+procedure Save;
+var f: types.tBinFile;
 begin
-    Sort(1);
+    if (files.BinFileExists(f, types.F_HIGHSCORES) and_then files.BinFileIsBound(f, types.F_HIGHSCORES))
+    then begin
+        rewrite(f);
+        write(f, highscoresList);
+    end
+    else begin
+        if utils.PrintError('Can not open the file.')
+        then begin
+            write('Returning to Main Menu. Press ENTER');
+            readln;
+        end
+        else begin
+            writeln('Execution aborted');
+            halt;
+        end;
+    end;
 end;
 
-procedure SortByPlayer;
+procedure Add;
 begin
-    Sort(2);
+    if highscoresList.size < MAXINT
+    then begin
+        highscoresList.size := highscoresList.size + 1;
+        highscoresList.item[highscoresList.size] := newRecord;
+    end
+    else begin
+        writeln ('Highscores list is full. New record not added.');
+        write ('Returning to Main Menu. Press ENTER.');
+        readln;
+    end;
 end;
 
-procedure SortByAttempts;
+procedure Print;
+var gameRecord: types.tGameRecord; i: integer; aux: string (80);
 begin
-    Sort(3);
+    writeln;
+    writeln ('Word', types.TAB, types.TAB, 'Player', types.TAB, types.TAB, 'Attemps', types.TAB, types.TAB, 'Date');
+    for i := 1 to highscoresList.size do begin
+        gameRecord := highscoresList.item[i];
+        writestr (aux, gameRecord.Word,  types.TAB, types.TAB, gameRecord.Player);
+        if gameRecord.Attemps = 0
+        then writestr (aux, aux, 'surrendered')
+        else writestr (aux, aux,  types.TAB, types.TAB, gameRecord.Attemps:0);
+        writestr (aux, aux,  types.TAB, Date(gameRecord.DateTime));
+        writeln (aux);
+    end;
 end;
 
-procedure SortByDate;
+procedure SortBy;
 begin
-    Sort(4);
+    Quicksort (highscoresList, 1, highscoresList.size, criteria);
+    Print(highscoresList);
+    writeln;
+    write ('Returning to Main Menu. Press ENTER.');
+    readln;
 end;
 
 

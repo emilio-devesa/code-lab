@@ -6,10 +6,13 @@ program Main;
 
 import  StandardInput;
         StandardOutput;
+        types qualified;
         utils qualified;
         game qualified;
         highscores qualified;
         listados qualified;
+
+var highscoresList: types.tHighscoresList;
 
 procedure WriteProgramHeader;
 begin
@@ -124,15 +127,15 @@ function start(option: integer): integer;
 begin
     case (option) of
         1:  case (SubMenuPlayValidate) of
-                1: { Validate Game } game.Validar;
-                2: { Play Game } game.Jugar;
+                1: { Validate Game } game.Validar(highscoresList);
+                2: { Play Game } game.Jugar(highscoresList);
                 0: { Return };
             end;
         2:  case (SubMenuShowHighscores) of
-                1: { Sort by word } highscores.SortByWord;
-                2: { Sort alphabetically by player name } highscores.SortByPlayer;
-                3: { Sort by number of attempts } highscores.SortByAttempts;
-                4: { Sort by date, from oldest to newest } highscores.SortByDate;
+                1: { Sort by word } highscores.SortBy(highscoresList, types.Word);
+                2: { Sort alphabetically by player name } highscores.SortBy(highscoresList, types.Player);
+                3: { Sort by number of attempts } highscores.SortBy(highscoresList, types.Attemps);
+                4: { Sort by date, from oldest to newest } highscores.SortBy(highscoresList, types.DateTime);
                 0: { Return };
             end;
         3:  case (SubMenuPrintWords) of
@@ -147,8 +150,11 @@ begin
 end;
 
 begin
+    highscores.Load(highscoresList);
     repeat
         utils.ClearScreen;
         WriteProgramHeader;
     until (start(mainMenu) = 0);
+    highscores.Save(highscoresList);
+    writeln;
 end.

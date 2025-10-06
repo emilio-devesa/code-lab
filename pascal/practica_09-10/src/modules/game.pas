@@ -18,27 +18,16 @@ import  StandardInput;
         types qualified;
         utils qualified;
         files qualified;
+        highscores qualified;
 
-procedure Validar;
-procedure Jugar;
+procedure Validar (highscoresList: types.tHighscoresList);
+procedure Jugar (highscoresList: types.tHighscoresList);
 
 
 end;
 
 
-function NumeroAleatorio: integer;
-{
-    Objetivo:   Genera un numero aleatorio positivo de 2 cifras
-    PosCD:      El resultado siempre es n >= 0 y n <= 99
-}
-var tiempo: TimeStamp; semilla: integer;
-begin
-    GetTimeStamp (tiempo);
-    semilla := tiempo.MicroSecond;
-    NumeroAleatorio := (semilla * 54321) mod 100;
-end;
-
-function PalabraFichero (var f: files.tTextFile; pos: integer): types.tPalabra;
+function PalabraFichero (var f: types.tTextFile; pos: integer): types.tPalabra;
 {
     Objetivo:   Lee una palabra de un fichero
     PreCD:      El fichero existe y ha sido ligado
@@ -46,7 +35,7 @@ function PalabraFichero (var f: files.tTextFile; pos: integer): types.tPalabra;
 var lineas, i: integer; palabra: types.tPalabra;
 begin
     reset (f);
-    lineas := NumeroAleatorio;
+    lineas := utils.GetRandomInteger(100);
     for i := 0 to lineas do readln (f);     {avanzar lineas}
     for i := 1 to pos do begin
         palabra := '';
@@ -60,7 +49,7 @@ begin
 end;
 
 function PalabraLeida: types.tPalabra;
-var idioma, largo: integer; f: files.tTextFile;
+var idioma, largo: integer; f: types.tTextFile;
 begin
     idioma := utils.ChooseLanguage;
     if idioma > 0
@@ -69,13 +58,13 @@ begin
         if largo > 0
         then begin
             case idioma of
-                1:  if files.TextFileExists (f, files.F_CASTILLAN) and_then files.TextFileIsBound (f, files.F_CASTILLAN)
+                1:  if files.TextFileExists (f, types.F_CASTILLAN) and_then files.TextFileIsBound (f, types.F_CASTILLAN)
                     then PalabraLeida := PalabraFichero (f, largo)
                     else PalabraLeida := '';
-                2:  if files.TextFileExists (f, files.F_GALICIAN) and_then files.TextFileIsBound (f, files.F_GALICIAN)
+                2:  if files.TextFileExists (f, types.F_GALICIAN) and_then files.TextFileIsBound (f, types.F_GALICIAN)
                     then PalabraLeida := PalabraFichero (f, largo)
                     else PalabraLeida := '';
-                3:  if files.TextFileExists (f, files.F_ENGLISH) and_then files.TextFileIsBound (f, files.F_ENGLISH)
+                3:  if files.TextFileExists (f, types.F_ENGLISH) and_then files.TextFileIsBound (f, types.F_ENGLISH)
                     then PalabraLeida := PalabraFichero (f, largo)
                     else PalabraLeida := '';
             end;
@@ -148,24 +137,28 @@ begin
     DescubrePalabra := intentos;
 end;
 
-procedure GuardarRegistro (var p: types.tPalabra; i: types.tNumeroIntentos);
+procedure GuardarRegistro (var highscoresList: types.tHighscoresList; p: types.tPalabra; i: types.tNumeroIntentos);
 {
     Objetivo:   Pide los datos al usuario y los almacena en un fichero de
                 historico externo.
 }
 var pos: integer; nombre: types.tNombreJugador; fecha: types.tFechaJugada;
-    preparado: boolean; f: files.tBinFile;
+    {preparado: boolean; f: types.tBinFile;}
+    newRecord: types.tGameRecord;
 begin
+    newRecord.Word := p;
+    newRecord.Attemps := i;
     write ('Escriba su nombre: ');
     readln (nombre);
-    nombre := trim (nombre);
+    newRecord.Player := trim (nombre);
     GetTimeStamp(fecha);
     writeln ('La fecha es: ', Date(fecha), '.');
+    newRecord.DateTime := fecha;
+    highscores.Add(highscoresList, newRecord);
+    highscores.Save(highscoresList);
     writeln;
-    writeln ('Preparando el fichero historico del juego...');
-    if files.BinFileExists (f, files.F_HIGHSCORES)
-    then begin
-        if files.BinFileIsBound (f, files.F_HIGHSCORES)
+    {writeln ('Preparando el fichero historico del juego...');
+    if files.BinFileExists (f, files.F_HIGHSCORES) and_then files.BinFileIsBound (f, files.F_HIGHSCORES)
         then begin
             write ('Ya existe el fichero. Accediendo... ');
             writeln ('OK.');
@@ -213,7 +206,7 @@ begin
             writeln ('Execution aborted.');
             halt;
         end;
-    end;
+    end;}
 end;
 
 procedure Validar;
@@ -244,7 +237,7 @@ begin
         writeln ('Palabra a descubrir: ', palabra);
         writeln;
         intentos := DescubrePalabra (palabra);
-        GuardarRegistro (palabra, intentos);
+        GuardarRegistro (highscoresList, palabra, intentos);
     end;
 end;
 
@@ -274,7 +267,7 @@ begin
     else begin
         writeln;
         intentos := DescubrePalabra (palabra);
-        GuardarRegistro (palabra, intentos);
+        GuardarRegistro (highscoresList, palabra, intentos);
     end;
 end;
 
