@@ -9,6 +9,7 @@ module highscores;
 
 
 export  highscores = (
+        Init,
         Load,
         Save,
         Add,
@@ -22,16 +23,18 @@ import  StandardInput;
         utils qualified;
         files qualified; 
 
-procedure Load (var highscoresList: types.tHighscoresList);
-procedure Save (var highscoresList: types.tHighscoresList);
-procedure Add (var highscoresList: types.tHighscoresList; newRecord: types.tGameRecord);
+procedure Init;
+function Load (var highscoresList: types.tHighscoresList): boolean;
+function Save (var highscoresList: types.tHighscoresList): boolean;
+procedure Add (var highscoresList: types.tHighscoresList; var newRecord: types.tGameRecord);
 procedure Print (var highscoresList: types.tHighscoresList);
 procedure SortBy (var highscoresList: types.tHighscoresList; criteria: types.tCriteria);
+
 
 end;
 
 
-function Compare (a, b: types.tGameRecord; criteria: types.tCriteria): boolean;
+function Compare (var a, b: types.tGameRecord; criteria: types.tCriteria): boolean;
 begin
     case criteria of
         types.Word: Compare := LE(a.Word, b.Word);
@@ -70,51 +73,40 @@ begin
     end;
 end;
 
-procedure Load;
+procedure Init;
+var f: types.tBinFile;
+begin
+    if files.BinFileIsBound(f, types.F_HIGHSCORES)
+    then rewrite(f);
+end;
+
+function Load;
 var f: types.tBinFile;
 begin
     if (files.BinFileExists(f, types.F_HIGHSCORES) and_then files.BinFileIsBound(f, types.F_HIGHSCORES))
     then begin
         reset(f);
         read(f, highscoresList);
+        Load := true;
     end
-    else begin
-        if utils.PrintError('Can not open the file.')
-        then begin
-            write('Returning to Main Menu. Press ENTER');
-            readln;
-        end
-        else begin
-            writeln('Execution aborted');
-            halt;
-        end;
-    end;
+    else Load := false;
 end;
 
-procedure Save;
+function Save;
 var f: types.tBinFile;
 begin
     if (files.BinFileExists(f, types.F_HIGHSCORES) and_then files.BinFileIsBound(f, types.F_HIGHSCORES))
     then begin
         rewrite(f);
         write(f, highscoresList);
+        Save := true;
     end
-    else begin
-        if utils.PrintError('Can not open the file.')
-        then begin
-            write('Returning to Main Menu. Press ENTER');
-            readln;
-        end
-        else begin
-            writeln('Execution aborted');
-            halt;
-        end;
-    end;
+    else Save := false;
 end;
 
 procedure Add;
 begin
-    if highscoresList.size < MAXINT
+    if highscoresList.size < types.MAX_GAMES
     then begin
         highscoresList.size := highscoresList.size + 1;
         highscoresList.item[highscoresList.size] := newRecord;
@@ -127,17 +119,16 @@ begin
 end;
 
 procedure Print;
-var gameRecord: types.tGameRecord; i: integer; aux: string (80);
+var i: integer; aux: string (80);
 begin
     writeln;
     writeln ('Word', types.TAB, types.TAB, 'Player', types.TAB, types.TAB, 'Attemps', types.TAB, types.TAB, 'Date');
     for i := 1 to highscoresList.size do begin
-        gameRecord := highscoresList.item[i];
-        writestr (aux, gameRecord.Word,  types.TAB, types.TAB, gameRecord.Player);
-        if gameRecord.Attemps = 0
+        writestr (aux, highscoresList.item[i].Word,  types.TAB, types.TAB, highscoresList.item[i].Player);
+        if highscoresList.item[i].Attemps = 0
         then writestr (aux, aux, 'surrendered')
-        else writestr (aux, aux,  types.TAB, types.TAB, gameRecord.Attemps:0);
-        writestr (aux, aux,  types.TAB, Date(gameRecord.DateTime));
+        else writestr (aux, aux,  types.TAB, types.TAB, highscoresList.item[i].Attemps:0);
+        writestr (aux, aux,  types.TAB, Date(highscoresList.item[i].DateTime));
         writeln (aux);
     end;
 end;

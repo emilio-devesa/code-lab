@@ -10,7 +10,7 @@ import  StandardInput;
         utils qualified;
         game qualified;
         highscores qualified;
-        listados qualified;
+        dictionary qualified;
 
 var highscoresList: types.tHighscoresList;
 
@@ -127,8 +127,8 @@ function start(option: integer): integer;
 begin
     case (option) of
         1:  case (SubMenuPlayValidate) of
-                1: { Validate Game } game.Validar(highscoresList);
-                2: { Play Game } game.Jugar(highscoresList);
+                1: { Validate Game } game.PlayGame(highscoresList, true);
+                2: { Play Game } game.PlayGame(highscoresList, false);
                 0: { Return };
             end;
         2:  case (SubMenuShowHighscores) of
@@ -139,9 +139,9 @@ begin
                 0: { Return };
             end;
         3:  case (SubMenuPrintWords) of
-                1: { Print words from dictionary } listados.PrintAllWords;
-                2: { Sort words from dictionary } listados.SortWords;
-                3: { Print words from dictionary (two at a time) } listados.PrintTwoWordsInARow;
+                1: { Print words from dictionary } dictionary.PrintAllWords;
+                2: { Sort words from dictionary } dictionary.PrintAllWordsSorted;
+                3: { Print words from dictionary (two at a time) } dictionary.PrintTwoWordsInARow;
                 0: { Return };
             end;
         0: { Exit };
@@ -150,11 +150,20 @@ begin
 end;
 
 begin
-    highscores.Load(highscoresList);
+    if highscores.Load(highscoresList)
+    then writeln('Highscores loaded successfully')
+    else begin
+        writeln('No highscores file found, starting with an empty list');
+        write('Press ENTER to continue.');
+        readln;
+        highscores.Init;
+    end;
     repeat
         utils.ClearScreen;
         WriteProgramHeader;
     until (start(mainMenu) = 0);
-    highscores.Save(highscoresList);
+    if highscores.Save(highscoresList)
+    then writeln('Highscores saved successfully')
+    else writeln('Error saving highscores');
     writeln;
 end.

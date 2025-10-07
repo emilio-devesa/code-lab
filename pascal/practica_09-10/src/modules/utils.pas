@@ -15,10 +15,11 @@ export  utils = (
             CenterText,
             PrintError, 
             PrintFatalError,
+            EnMinuscula, EnMayuscula,
+            StringToInteger,
             ChooseLanguage,
             ChooseLength,
-            EnMinuscula, EnMayuscula,
-            StringToInteger
+            LanguageToInteger
 );
 
 import  StandardInput;
@@ -31,11 +32,12 @@ procedure ClearScreen;
 procedure CenterText (s: string);
 function PrintError (error: string): boolean;
 procedure PrintFatalError (error: string);
-function ChooseLanguage: integer;
-function ChooseLength: integer;
 function EnMinuscula (c: char): char;
 function EnMayuscula (c: char): char;
 function StringToInteger(input: string; var ok: boolean): integer;
+function ChooseLanguage: types.tLanguage;
+function ChooseLength: integer;
+function LanguageToInteger (language: types.tLanguage): integer;
 
 
 end;
@@ -91,52 +93,6 @@ begin
     halt;
 end;
 
-function ChooseLanguage;
-var input: string (255) value '';
-    option: integer value 0;
-    ok: boolean value false;
-begin
-    ChooseLanguage := 0;
-    repeat
-        writeln;
-        writeln ('Choose language:');
-        writeln ('1. Castillian');
-        writeln ('2. Galician');
-        writeln ('3. English');
-        writeln ('0. Back');
-        writeln;
-        write ('Option?: ');
-        readln (input);
-        option := StringToInteger(input, ok);
-        if ok and_then (option in [0 .. 3])
-        then ChooseLanguage := option
-        else writeln('Invalid option');        
-    until option in [0 .. 3];
-end;
-
-function ChooseLength;
-var input: string (255) value '';
-    option: integer value 0;
-    ok: boolean value false;
-begin
-    ChooseLength := 0;
-    repeat
-        writeln;
-        writeln ('Choose word length:');
-        writeln ('1. 4 letters');
-        writeln ('2. 5 letters');
-        writeln ('3. 6 letters');
-        writeln ('0. Back');
-        writeln;
-        write ('Option?: ');
-        readln (input);
-        option := StringToInteger(input, ok);
-        if ok and_then (option in [0 .. 3])
-        then ChooseLength := option
-        else writeln('Invalid option');        
-    until option in [0 .. 3];
-end;
-
 function EnMinuscula;
 type tCMayusculas = set of 'A' .. 'Z';
 var cMay: tCMayusculas;
@@ -183,6 +139,76 @@ begin
     if (length(input) > 0) then begin
         StringToInteger := sign * val;
         ok := true;
+    end;
+end;
+
+function ChooseLanguage;
+var input: string (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
+begin
+    ChooseLanguage := types.NoLang;
+    repeat
+        writeln;
+        writeln ('Choose language:');
+        writeln ('1. Castillian');
+        writeln ('2. Galician');
+        writeln ('3. English');
+        writeln ('0. Back');
+        writeln;
+        write ('Option?: ');
+        readln (input);
+        option := StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 3])
+        then begin
+            case option of
+                0: ChooseLanguage := types.NoLang;
+                1: ChooseLanguage := types.Castillian;
+                2: ChooseLanguage := types.Galician;
+                3: ChooseLanguage := types.English;
+            end;
+        end
+        else writeln('Invalid option');        
+    until option in [0 .. 3];
+end;
+
+function ChooseLength;
+var input: string (255) value '';
+    option: integer value 0;
+    ok: boolean value false;
+begin
+    ChooseLength := 0;
+    repeat
+        writeln;
+        writeln ('Choose word length:');
+        writeln ('1. 4 letters');
+        writeln ('2. 5 letters');
+        writeln ('3. 6 letters');
+        writeln ('0. Back');
+        writeln;
+        write ('Option?: ');
+        readln (input);
+        option := StringToInteger(input, ok);
+        if ok and_then (option in [0 .. 3])
+        then begin
+            case option of
+                1: ChooseLength := 4;
+                2: ChooseLength := 5;
+                3: ChooseLength := 6;
+                0: ChooseLength := 0;
+            end;
+        end
+        else writeln('Invalid option');        
+    until option in [0 .. 3];
+end;
+
+function LanguageToInteger;
+begin
+    case language of
+        types.NoLang: LanguageToInteger := 0;
+        types.Castillian: LanguageToInteger := 1;
+        types.Galician: LanguageToInteger := 2;
+        types.English: LanguageToInteger := 3;
     end;
 end;
 
