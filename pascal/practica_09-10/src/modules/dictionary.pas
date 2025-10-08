@@ -72,13 +72,16 @@ begin
 end;
 
 function GetWord;
-var f: types.tTextFile; lineNumber: integer; aux: string (17); i: integer;
+var f: types.tTextFile; lineNumber, i: integer value 0; aux: string (17);
 begin
     if OpenDictionary(f, language)
     then begin
         reset (f);
         lineNumber := utils.GetRandomInteger(100);
-        for i := 0 to lineNumber do readln (f, aux);
+        while not eof (f) and_then (i <= lineNumber) do begin
+            readln (f, aux);
+            i := i + 1;
+        end;
         case long of
             4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then aux := substr(aux, 1, 4);
             5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then aux := substr(aux, 6, 5);
