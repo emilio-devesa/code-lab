@@ -21,7 +21,7 @@ import  StandardInput;
         utils qualified;
         files qualified;
 
-function GetWord (language: types.tLanguage; length: integer): types.tWord;
+function GetWord (language: types.tLanguage; long: integer): types.tWord;
 procedure PrintAllWords;
 procedure PrintTwoWordsInARow;
 procedure PrintAllWordsSorted;
@@ -43,18 +43,18 @@ begin
 end;
 
 procedure Quicksort(var list: types.tWordList; low, high: integer);
-var i, j, pivot: integer; aux: types.tWord;
+var i, j: integer; pivot: types.tWord; aux: types.tWord;
 begin
     if low < high
     then begin
         { Choose the pivot (in this case, the middle element) }
-        pivot := (low + high) div 2;
+        pivot := list.item[(low + high) div 2];
         i := low;
         j := high;
         { Partition the array into two halves }
         repeat
-            while list.item[i] < list.item[pivot] do i := i + 1;
-            while list.item[pivot] > list.item[j] do j := j - 1;
+            while list.item[i] < pivot do i := i + 1;
+            while list.item[j] > pivot do j := j - 1;
             if i <= j
             then begin
                 { Swap elements and move indices }
@@ -79,10 +79,10 @@ begin
         reset (f);
         lineNumber := utils.GetRandomInteger(100);
         for i := 0 to lineNumber do readln (f, aux);
-        case length of
-            4: aux := substr(aux, 1, 4);
-            5: aux := substr(aux, 6, 5);
-            6: aux := substr(aux, 12, 6);
+        case long of
+            4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then aux := substr(aux, 1, 4);
+            5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then aux := substr(aux, 6, 5);
+            6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then aux := substr(aux, 12, 6);
         end;
         GetWord := aux;
     end
@@ -90,23 +90,23 @@ begin
 end;
 
 procedure PrintAllWords;
-var language: types.tLanguage; length: integer; f: types.tTextFile; aux: string (17);
+var language: types.tLanguage; long: integer; f: types.tTextFile; aux: string (17);
 begin
     language := utils.ChooseLanguage;
     if language <> types.NoLang
     then begin
-        length := utils.ChooseLength;
-        if length in [4..6]
+        long := utils.ChooseLength;
+        if long in [4..6]
         then begin
             if OpenDictionary(f, language)
             then begin
                 reset (f);
                 while not eof (f) do begin
                     readln (f, aux);
-                    case length of
-                        4: writeln (substr (aux,  1, 4));
-                        5: writeln (substr (aux,  6, 5));
-                        6: writeln (substr (aux, 12, 6));
+                    case long of
+                        4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then writeln (substr (aux,  1, 4));
+                        5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then writeln (substr (aux,  6, 5));
+                        6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then writeln (substr (aux, 12, 6));
                     end;
                 end;
             end;
@@ -133,20 +133,21 @@ begin
                     if EQ(buffer, '')
                     then begin
                         case long of
-                            4: buffer := substr (aux, 1, 4);
-                            5: buffer := substr (aux, 6, 5);
-                            6: buffer := substr (aux, 12, 6);
+                            4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then buffer := substr (aux, 1, 4);
+                            5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then buffer := substr (aux, 6, 5);
+                            6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then buffer := substr (aux, 12, 6);
                         end;
                     end
                     else begin
                         case long of
-                            4: writeln(buffer, types.TAB, substr (aux, 1, 4));
-                            5: writeln(buffer, types.TAB, substr (aux, 6, 5));
-                            6: writeln(buffer, types.TAB, substr (aux, 12, 6));
+                            4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then writeln(buffer, types.TAB, substr (aux, 1, 4));
+                            5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then writeln(buffer, types.TAB, substr (aux, 6, 5));
+                            6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then writeln(buffer, types.TAB, substr (aux, 12, 6));
                         end;
                         buffer := '';
                     end;
                 end;
+                if buffer <> '' then writeln(buffer);
             end;
         end;
     end;
@@ -166,20 +167,20 @@ begin
             then begin
                 reset (f);
                 i := 0;
-                while not eof (f) do begin
+                while not eof (f) and_then (i < 100) do begin
                     readln (f, aux);
                     case long of
-                        4:  if substr (aux,  1, 4) <> ''
+                        4:  if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '')
                             then begin
                                 i := i + 1;
                                 list.item[i] := substr (aux,  1, 4);
                             end;
-                        5:  if substr (aux,  6, 5) <> ''
+                        5:  if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '')
                             then begin
                                 i := i + 1;
                                 list.item[i] := substr (aux,  6, 5);
                             end;
-                        6:  if substr (aux, 12, 6) <> ''
+                        6:  if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '')
                             then begin
                                 i := i + 1;
                                 list.item[i] := substr (aux, 12, 6);
@@ -187,14 +188,18 @@ begin
                     end;
                 end;
                 list.size := i;
-                writeln ('Sorting ', list.size:0, ' words...');
-                Quicksort (list, 1, list.size);
-                writeln ('Sorted words:');
-                for i := 1 to list.size do begin
-                    write (list.item[i], types.TAB);
-                    if (i mod 5 = 0)
-                    then writeln;
-                end;
+                if list.size > 0
+                then begin
+                    writeln ('Sorting ', list.size:0, ' words...');
+                    Quicksort (list, 1, list.size);
+                    writeln ('Sorted words:');
+                    for i := 1 to list.size do begin
+                        write (list.item[i], types.TAB);
+                        if (i mod 5 = 0)
+                        then writeln;
+                    end;
+                end
+                else writeln('No words found.');
             end;
         end;
     end;
