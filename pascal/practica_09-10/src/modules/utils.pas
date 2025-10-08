@@ -16,7 +16,8 @@ export  utils = (
             CenterText,
             PrintError, 
             PrintFatalError,
-            EnMinuscula, EnMayuscula,
+            ToLowercase,
+            ToUppercase,
             StringToInteger,
             ChooseLanguage,
             ChooseLength,
@@ -34,8 +35,8 @@ procedure WaitForEnter;
 procedure CenterText (s: string);
 function PrintError (error: string): boolean;
 procedure PrintFatalError (error: string);
-function EnMinuscula (c: char): char;
-function EnMayuscula (c: char): char;
+function ToLowercase (c: char): char;
+function ToUppercase (c: char): char;
 function StringToInteger(input: string; var ok: boolean): integer;
 function ChooseLanguage: types.tLanguage;
 function ChooseLength: integer;
@@ -102,22 +103,22 @@ begin
     halt;
 end;
 
-function EnMinuscula;
-type tCMayusculas = set of 'A' .. 'Z';
-var cMay: tCMayusculas;
+function ToLowercase;
+type tUppercaseLetters = set of 'a' .. 'z' value ['A' .. 'Z'];
+var uppercaseLetters: tUppercaseLetters;
 begin
-    if c in cMay
-    then EnMinuscula := chr(ord(c)+32)
-    else EnMinuscula := c;
+    if c in uppercaseLetters
+    then ToLowercase := chr(ord(c)+32)
+    else ToLowercase := c;
 end;
 
-function EnMayuscula;
-type tCMinusculas = set of 'a' .. 'z';
-var cmin: tCMinusculas;
+function ToUppercase;
+type tLowercaseLetters = set of 'a' .. 'z' value ['a' .. 'z'];
+var lowercaseLetters: tLowercaseLetters;
 begin
-    if c in cmin
-    then EnMayuscula := chr(ord(c)-32)
-    else EnMayuscula := c;
+    if c in lowercaseLetters
+    then ToUppercase := chr(ord(c)-32)
+    else ToUppercase := c;
 end;
 
 function StringToInteger;

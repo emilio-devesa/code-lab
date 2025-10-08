@@ -25,25 +25,25 @@ procedure PlayGame (highscoresList: types.tHighscoresList; withValidation: boole
 
 end;
 
-function Equals (palabra1, palabra2: types.tWord): boolean;
-var i: integer; p1, p2: types.tWord;
+function Equals (a, b: types.tWord): boolean;
+var i: integer; aux1, aux2: types.tWord;
 begin
-    p1 := '';
-    p2 := '';
-    for i := 1 to length (palabra1) do p1 := p1 + utils.EnMinuscula (palabra1[i]);
-    for i := 1 to length (palabra2) do p2 := p2 + utils.EnMinuscula (palabra2[i]);
-    if p1 = p2
+    aux1 := '';
+    aux2 := '';
+    for i := 1 to length (a) do aux1 := aux1 + utils.ToLowercase (a[i]);
+    for i := 1 to length (b) do aux2 := aux2 + utils.ToLowercase (b[i]);
+    if EQ(aux1, aux2)
     then Equals := true
     else begin
         Equals := false;
         writeln ('Wrong guess');
         write ('New clues: ');
-        for i := 1 to length (p2) do begin
-            if (index(p2, p2[i]) = i) and_then (index(p1, p2[i]) > 0)
+        for i := 1 to length (aux2) do begin
+            if (index(aux2, aux2[i]) = i) and_then (index(aux1, aux2[i]) > 0)
             then begin
-                if (index(p1, p2[i]) = i)
-                then write (utils.EnMayuscula(p2[i]))
-                else write (utils.EnMinuscula(p2[i]))
+                if (index(aux1, aux2[i]) = i)
+                then write (utils.ToUppercase(aux2[i]))
+                else write (utils.ToLowercase(aux2[i]))
             end
             else write ('?');
         end;
