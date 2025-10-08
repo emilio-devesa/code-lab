@@ -12,6 +12,7 @@ export  utils = (
             GetRandomInteger,
             Confirm,
             ClearScreen,
+            WaitForEnter,
             CenterText,
             PrintError, 
             PrintFatalError,
@@ -29,6 +30,7 @@ import  StandardInput;
 function GetRandomInteger (max: integer): integer;
 function Confirm: boolean;
 procedure ClearScreen;
+procedure WaitForEnter;
 procedure CenterText (s: string);
 function PrintError (error: string): boolean;
 procedure PrintFatalError (error: string);
@@ -66,6 +68,13 @@ procedure ClearScreen;
 begin
     write(chr(27)+'[2J');  (* Clear screen *)
     write(chr(27)+'[H');   (* Move cursor to top-left *)
+end;
+
+procedure WaitForEnter;
+begin
+    writeln;
+    write('Press ENTER to continue...');
+    readln;
 end;
 
 procedure CenterText;

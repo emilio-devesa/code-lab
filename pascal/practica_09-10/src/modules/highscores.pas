@@ -23,7 +23,7 @@ import  StandardInput;
         utils qualified;
         files qualified; 
 
-procedure Init;
+procedure Init (var highscoresList: types.tHighscoresList);
 function Load (var highscoresList: types.tHighscoresList): boolean;
 function Save (var highscoresList: types.tHighscoresList): boolean;
 procedure Add (var highscoresList: types.tHighscoresList; var newRecord: types.tGameRecord);
@@ -76,8 +76,14 @@ end;
 procedure Init;
 var f: types.tBinFile;
 begin
-    if files.BinFileIsBound(f, types.F_HIGHSCORES)
-    then rewrite(f);
+    if Load(highscoresList)
+    then writeln('Highscores loaded successfully')
+    else begin
+        writeln('No highscores file found, starting with an empty list');
+        if files.BinFileIsBound(f, types.F_HIGHSCORES)
+        then rewrite(f);
+        utils.WaitForEnter;
+    end;
 end;
 
 function Load;
@@ -116,9 +122,9 @@ begin
     end
     else begin
         writeln ('Highscores list is full. New record not added.');
-        write ('Returning to Main Menu. Press ENTER.');
-        readln;
+        writeln ('Returning to Main Menu.');
     end;
+    utils.WaitForEnter;
 end;
 
 procedure Print;
@@ -140,9 +146,7 @@ procedure SortBy;
 begin
     Quicksort (highscoresList, 1, highscoresList.size, criteria);
     Print(highscoresList);
-    writeln;
-    write ('Returning to Main Menu. Press ENTER.');
-    readln;
+    utils.WaitForEnter;
 end;
 
 

@@ -150,20 +150,10 @@ begin
 end;
 
 begin
-    if highscores.Load(highscoresList)
-    then writeln('Highscores loaded successfully')
-    else begin
-        writeln('No highscores file found, starting with an empty list');
-        write('Press ENTER to continue.');
-        readln;
-        highscores.Init;
-    end;
+    highscores.Init(highscoresList);
     repeat
         utils.ClearScreen;
         WriteProgramHeader;
     until (start(mainMenu) = 0);
-    if highscores.Save(highscoresList)
-    then writeln('Highscores saved successfully')
-    else writeln('Error saving highscores');
     writeln;
 end.

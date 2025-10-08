@@ -89,10 +89,6 @@ begin
     GetTimeStamp(DateTime);
     newGame.DateTime := DateTime;
     highscores.Add(highscoresList, newGame);
-    if highscores.Save(highscoresList)
-    then writeln('Highscores saved successfully')
-    else writeln('Error saving highscores');
-    writeln;
 end;
 
 procedure PlayGame;
@@ -120,8 +116,8 @@ begin
         then begin
             if utils.PrintError ('Can not open the file')
             then begin
-                write ('Returning to Main Menu. Press ENTER.');
-                readln;
+                writeln ('Returning to Main Menu.');
+                utils.WaitForEnter;
             end
             else begin
                 writeln ('Execution aborted');
