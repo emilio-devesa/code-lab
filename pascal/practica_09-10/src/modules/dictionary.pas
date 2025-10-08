@@ -42,7 +42,7 @@ begin
     end;
 end;
 
-procedure Quicksort(var l: types.tWordList; low, high: integer);
+procedure Quicksort(var list: types.tWordList; low, high: integer);
 var i, j, pivot: integer; aux: types.tWord;
 begin
     if low < high
@@ -53,21 +53,21 @@ begin
         j := high;
         { Partition the array into two halves }
         repeat
-            while (l.item[i] <= l.item[pivot]) do i := i + 1;
-            while (l.item[pivot] <= l.item[j]) do j := j - 1;
+            while list.item[i] < list.item[pivot] do i := i + 1;
+            while list.item[pivot] > list.item[j] do j := j - 1;
             if i <= j
             then begin
                 { Swap elements and move indices }
-                aux := l.item[i];
-                l.item[i] := l.item[j];
-                l.item[j] := aux;
+                aux := list.item[i];
+                list.item[i] := list.item[j];
+                list.item[j] := aux;
                 i := i + 1;
                 j := j - 1;
             end;
         until i > j;
         { Recursively sort the sub-lists }
-        Quicksort(l, low, j);
-        Quicksort(l, i, high);
+        Quicksort(list, low, j);
+        Quicksort(list, i, high);
     end;
 end;
 
@@ -112,69 +112,93 @@ begin
             end;
         end;
     end;
-    writeln;
-    write ('Press ENTER to return to Main Menu.');
-    readln;
+    utils.WaitForEnter;
 end;
 
 procedure PrintTwoWordsInARow;
-var language: types.tLanguage; f: types.tTextFile; aux: string (17); a, b, c: types.tWord; buffer: string (17);
+var language: types.tLanguage; long: integer; f: types.tTextFile; buffer: string (17); aux: string (17);
 begin
     language := utils.ChooseLanguage;
     if language <> types.NoLang
     then begin
-        if OpenDictionary(f, language)
+        long := utils.ChooseLength;
+        if long in [4..6]
         then begin
-            reset (f);
-            buffer := '';
-            while not eof (f) do begin
-                readln (f, aux);
-                a := substr (aux,  1, 4);
-                b := substr (aux,  6, 5);
-                c := substr (aux, 12, 6);
-                if EQ(buffer, '')
-                then begin
-                    writeln(a, types.TAB, b);
-                    buffer := c;
-                end
-                else begin
-                    writeln(buffer, types.TAB, a);
-                    writeln(b, types.TAB, c);
-                    buffer := '';
+            if OpenDictionary(f, language)
+            then begin
+                reset (f);
+                buffer := '';
+                while not eof (f) do begin
+                    readln (f, aux);
+                    if EQ(buffer, '')
+                    then begin
+                        case long of
+                            4: buffer := substr (aux, 1, 4);
+                            5: buffer := substr (aux, 6, 5);
+                            6: buffer := substr (aux, 12, 6);
+                        end;
+                    end
+                    else begin
+                        case long of
+                            4: writeln(buffer, types.TAB, substr (aux, 1, 4));
+                            5: writeln(buffer, types.TAB, substr (aux, 6, 5));
+                            6: writeln(buffer, types.TAB, substr (aux, 12, 6));
+                        end;
+                        buffer := '';
+                    end;
                 end;
             end;
         end;
     end;
-    writeln;
-    write ('Press ENTER to return to Main Menu.');
-    readln;
+    utils.WaitForEnter;
 end;
 
 procedure PrintAllWordsSorted;
-var language: types.tLanguage; f: types.tTextFile; list: types.tWordList; aux: string (17); i: integer;
+var language: types.tLanguage; long: integer; f: types.tTextFile; list: types.tWordList; aux: string (17); i: integer;
 begin
     language := utils.ChooseLanguage;
     if language <> types.NoLang
     then begin
-        if OpenDictionary(f, language)    
+        long := utils.ChooseLength;
+        if long in [4..6]
         then begin
-            reset (f);
-            i := 0;
-            while not eof (f) do begin
-                readln (f, aux);
-                list.item[i + 1] := substr (aux,  1, 4);
-                list.item[i + 2] := substr (aux,  6, 5);
-                list.item[i + 3] := substr (aux, 12, 6);
-                i := i + 3;
+            if OpenDictionary(f, language)    
+            then begin
+                reset (f);
+                i := 0;
+                while not eof (f) do begin
+                    readln (f, aux);
+                    case long of
+                        4:  if substr (aux,  1, 4) <> ''
+                            then begin
+                                i := i + 1;
+                                list.item[i] := substr (aux,  1, 4);
+                            end;
+                        5:  if substr (aux,  6, 5) <> ''
+                            then begin
+                                i := i + 1;
+                                list.item[i] := substr (aux,  6, 5);
+                            end;
+                        6:  if substr (aux, 12, 6) <> ''
+                            then begin
+                                i := i + 1;
+                                list.item[i] := substr (aux, 12, 6);
+                            end;
+                    end;
+                end;
+                list.size := i;
+                writeln ('Sorting ', list.size:0, ' words...');
+                Quicksort (list, 1, list.size);
+                writeln ('Sorted words:');
+                for i := 1 to list.size do begin
+                    write (list.item[i], types.TAB);
+                    if (i mod 5 = 0)
+                    then writeln;
+                end;
             end;
-            list.size := i;
-            Quicksort (list, 1, list.size);
-            for i := 1 to list.size do write (list.item[i], types.TAB);
         end;
     end;
-    writeln;
-    write ('Press ENTER to return to Main Menu.');
-    readln;
+    utils.WaitForEnter;
 end;
 
 

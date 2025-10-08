@@ -46,7 +46,7 @@ const   TAB = chr(9);
 
 type    tLanguage = (NoLang, Castillian, Galician, English);
         tWord = string (6);
-        tAttemps = integer;  
+        tAttemps = integer value 0;  
         tPlayer = string (30);
         tDateTime = TimeStamp;
         tGameRecord = record
@@ -61,7 +61,7 @@ type    tLanguage = (NoLang, Castillian, Galician, English);
         end;
         tCriteria = (Word, Player, Attemps, DateTime);
         tWordList = record
-            item: array [1..300] of tWord;
+            item: array [1..100] of tWord;
             size: integer value 0;
         end;
         tFileName = string (23);
