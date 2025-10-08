@@ -110,6 +110,9 @@ begin
     then begin
         highscoresList.size := highscoresList.size + 1;
         highscoresList.item[highscoresList.size] := newRecord;
+        if Save(highscoresList)
+        then writeln ('New record added successfully.')
+        else writeln ('Error saving new record to file.');
     end
     else begin
         writeln ('Highscores list is full. New record not added.');

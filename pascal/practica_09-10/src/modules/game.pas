@@ -36,8 +36,8 @@ begin
     then Equals := true
     else begin
         Equals := false;
-        writeln ('No es correcta');
-        write ('Nuevas pistas: ');
+        writeln ('Wrong guess');
+        write ('New clues: ');
         for i := 1 to length (p2) do begin
             if (index(p2, p2[i]) = i) and_then (index(p1, p2[i]) > 0)
             then begin
