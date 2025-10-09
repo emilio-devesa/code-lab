@@ -10,6 +10,7 @@ module types;
 
 export  types = (
             TAB,
+            PAGE_SIZE,
             F_CASTILLIAN,
             F_GALICIAN,
             F_ENGLISH,
@@ -38,6 +39,7 @@ export  types = (
 );
 
 const   TAB = chr(9);
+        PAGE_SIZE = 18;
         F_CASTILLIAN = 'data/Castellano';
         F_GALICIAN = 'data/Gallego';
         F_ENGLISH = 'data/Ingles';
