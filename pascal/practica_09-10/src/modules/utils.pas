@@ -54,6 +54,7 @@ function Confirm;
 var option: char;
 begin
     repeat
+        writeln;
         write (message, ' (y/n): ');
         readln (option);
         Confirm := option in ['Y', 'y'];

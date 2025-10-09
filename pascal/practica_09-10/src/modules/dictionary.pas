@@ -10,10 +10,7 @@ module dictionary;
 
 export  dictionary = (
             GetWord,
-            PrintAllWords,
-            PrintTwoWordsInARow,
-            PrintAllWordsSorted,
-            PrintSortedDictionaryTwoWordsAtATime
+            PrintDictionary
 );
 
 import  StandardInput;
@@ -21,12 +18,10 @@ import  StandardInput;
         types qualified;
         utils qualified;
         files qualified;
+        pager qualified;
 
 function GetWord (language: types.tLanguage; long: integer): types.tWord;
-procedure PrintAllWords;
-procedure PrintTwoWordsInARow;
-procedure PrintAllWordsSorted;
-procedure PrintSortedDictionaryTwoWordsAtATime;
+procedure PrintDictionary(listName: string; sorted: boolean; wordsInRow: integer);
 
 end;
 
@@ -42,6 +37,17 @@ begin
         types.English:
             OpenDictionary := files.TextFileExists (f, types.F_ENGLISH) and_then files.TextFileIsBound (f, types.F_ENGLISH);
     end;
+end;
+
+function ExtractWordFromLine(line: string; long: integer; var extracted: string): boolean;
+begin
+    extracted := '';
+    case long of
+        4: if (length(line) >= 4) and_then (substr (line,  1, 4) <> '') then extracted := substr(line, 1, 4);
+        5: if (length(line) >= 10) and_then (substr (line,  6, 5) <> '') then extracted := substr(line, 6, 5);
+        6: if (length(line) >= 17) and_then (substr (line,  12, 6) <> '') then extracted := substr(line, 12, 6);
+    end;
+    ExtractWordFromLine := extracted <> '';
 end;
 
 procedure Quicksort(var list: types.tWordList; low, high: integer);
@@ -73,15 +79,69 @@ begin
     end;
 end;
 
-function ExtractWordFromLine(line: string; long: integer; var extracted: string): boolean;
+function PopulateListFromDictionary(var list: types.tWordList; language: types.tLanguage; long: integer): boolean;
+var f: types.tTextFile; aux: string (17); i: integer value 0;
 begin
-    extracted := '';
-    case long of
-        4: if (length(line) >= 4) and_then (substr (line,  1, 4) <> '') then extracted := substr(line, 1, 4);
-        5: if (length(line) >= 10) and_then (substr (line,  6, 5) <> '') then extracted := substr(line, 6, 5);
-        6: if (length(line) >= 17) and_then (substr (line,  12, 6) <> '') then extracted := substr(line, 12, 6);
+    list.size := 0;
+    if OpenDictionary(f, language)
+    then begin
+        reset (f);
+        i := 0;
+        while not eof (f) and_then (i < 100) do begin
+            readln (f, aux);
+            if ExtractWordFromLine(aux, long, aux)
+            then begin
+                i := i + 1;
+                list.item[i] := aux;
+            end;
+        end;
+        list.size := i;
+        PopulateListFromDictionary := list.size > 0;
+    end
+    else PopulateListFromDictionary := false;
+end;
+
+procedure SortList(var list: types.tWordList);
+begin
+    if list.size > 1
+    then Quicksort (list, 1, list.size);
+end;
+
+
+procedure PrintListHeader(listName: string; pageNumber: integer);
+begin
+    writeln('-------------------------');
+    writeln (' ', listName, ' - Page ', pageNumber:0);
+    writeln('-------------------------');
+    writeln;
+end;
+
+procedure PrintPaginatedList(listName: string; var list: types.tWordList; itemsPerLine: integer; pageSize: integer);
+var i, res: integer; pageNumber: pager.tPager; buffer: string (17);
+begin
+    if (list.size > 0) and_then (itemsPerLine > 0) and_then (pageSize > 0)
+    then begin
+        pager.PagerInit(pageNumber, pageSize);
+        { first page header }
+        PrintListHeader(listName, pager.PagerPageNumber(pageNumber));
+        i := 1;
+        buffer := '';
+        while (i <= list.size) do begin
+            if EQ(buffer, '')
+            then buffer := list.item[i]
+            else writestr(buffer, buffer, types.TAB, list.item[i]);
+            if (i mod itemsPerLine = 0)
+            then begin
+                writeln(buffer);
+                buffer := '';
+                res := pager.PagerConsume(pageNumber, 1);
+                if res = 1
+                then PrintListHeader(listName, pager.PagerPageNumber(pageNumber));
+            end;
+            i := i + 1;
+        end;
+        if buffer <> '' then writeln(buffer);
     end;
-    ExtractWordFromLine := extracted <> '';
 end;
 
 function GetWord;
@@ -102,172 +162,30 @@ begin
     else GetWord := '';
 end;
 
-procedure PrintAllWords;
-var finished: boolean value false; language: types.tLanguage; long: integer value 0;
-    f: types.tTextFile; aux: string (17); 
+procedure PrintDictionary;
+var finished: boolean value false; language: types.tLanguage; long: integer value 0; list: types.tWordList;
 begin
     language := utils.ChooseLanguage;
-    if language = types.NoLang
-    then finished := true;
-    if not finished
+    if language <> types.NoLang
     then long := utils.ChooseLength;
-    if long = 0
-    then finished := true;
-    if not finished
-    then begin
-        if OpenDictionary(f, language)
-        then begin
-            reset (f);
-            while not eof (f) do begin
-                readln (f, aux);
-                if ExtractWordFromLine(aux, long, aux)
-                then writeln(aux);
-            end;
-        end
-        else writeln('Could not open dictionary file.');
-    end
-    else writeln('Operation cancelled.');
-    writeln;
-    utils.WaitForEnter;
-end;
+    finished := (language = types.NoLang) or (long = 0);
 
-procedure PrintTwoWordsInARow;
-var finished: boolean value false; language: types.tLanguage; long: integer value 0;
-    f: types.tTextFile; buffer, aux: string (17);
-begin
-    language := utils.ChooseLanguage;
-    if language = types.NoLang
-    then finished := true;
-    if not finished
-    then long := utils.ChooseLength;
-    if long = 0
-    then finished := true;
     if not finished
     then begin
-        if OpenDictionary(f, language)
+        if PopulateListFromDictionary(list, language, long)
         then begin
-            reset (f);
-            buffer := '';
-            while not eof (f) do begin
-                readln (f, aux);
-                if ExtractWordFromLine(aux, long, aux)
-                then begin
-                    if buffer = ''
-                    then buffer := aux
-                    else begin
-                        writeln(buffer, types.TAB, aux);
-                        buffer := '';
-                    end;
-                end;
-            end;
-            if buffer <> '' then writeln(buffer);
-        end
-        else writeln('Could not open dictionary file.');
-    end
-    else writeln('Operation cancelled.');
-    writeln;
-    utils.WaitForEnter;
-end;
-
-procedure PrintAllWordsSorted;
-var finished: boolean value false; language: types.tLanguage; long, i: integer value 0;
-    f: types.tTextFile; list: types.tWordList; aux: string (17);
-begin
-    language := utils.ChooseLanguage;
-    if language = types.NoLang
-    then finished := true;
-    if not finished
-    then long := utils.ChooseLength;
-    if long = 0
-    then finished := true;
-    if not finished
-    then begin
-        if OpenDictionary(f, language)    
-        then begin
-            reset (f);
-            i := 0;
-            while not eof (f) and_then (i < 100) do begin
-                readln (f, aux);
-                if ExtractWordFromLine(aux, long, aux)
-                then begin
-                    i := i + 1;
-                    list.item[i] := aux;
-                end;
-            end;
-            list.size := i;
-            if list.size > 0
-            then begin
-                writeln;
-                writeln ('Sorting ', list.size:0, ' words...');
-                Quicksort (list, 1, list.size);
-                writeln ('Sorted words:');
-                writeln;
-                for i := 1 to list.size do begin
-                    write (list.item[i], types.TAB);
-                    if (i mod 5 = 0)
-                    then writeln;
-                end;
-            end
-            else writeln('No words found.');
-        end
-        else writeln('Could not open dictionary file.');
-    end
-    else writeln('Operation cancelled.');
-    writeln;
-    utils.WaitForEnter;
-end;
-
-procedure PrintSortedDictionaryTwoWordsAtATime;
-var finished: boolean value false; language: types.tLanguage; long, i: integer value 0;
-    f: types.tTextFile; list: types.tWordList; aux, buffer: string (17);
-begin
-    language := utils.ChooseLanguage;
-    if language = types.NoLang
-    then finished := true;
-    if not finished
-    then long := utils.ChooseLength;
-    if long = 0
-    then finished := true;
-    if not finished
-    then begin
-        if OpenDictionary(f, language)    
-        then begin
-            reset (f);
-            i := 0;
-            while not eof (f) and_then (i < 100) do begin
-                readln (f, aux);
-                if ExtractWordFromLine(aux, long, aux)
-                then begin
-                    i := i + 1;
-                    list.item[i] := aux;
-                end;
-            end;
-            list.size := i;
-            if list.size > 0
+            if sorted
             then begin
                 writeln;
                 writeln('Sorting ', list.size:0, ' words...');
-                Quicksort (list, 1, list.size);
-                writeln('Sorted words (two at a time):');
                 writeln;
-                i := 1;
-                buffer := '';
-                while i <= list.size do begin
-                    if EQ(buffer, '')
-                    then buffer := list.item[i]
-                    else begin
-                        writeln(buffer, types.TAB, list.item[i]);
-                        buffer := '';
-                    end;
-                    i := i + 1;
-                end;
-                if buffer <> '' then writeln(buffer);
-            end
-            else writeln('No words found.');
+                SortList(list);
+            end;
+            PrintPaginatedList(listName, list, wordsInRow, types.PAGE_SIZE);
         end
-        else writeln('Could not open dictionary file.');
-    end
-    else writeln('Operation cancelled.');
+        else writeln('No words found.');
+    end;
+    
     writeln;
     utils.WaitForEnter;
 end;
