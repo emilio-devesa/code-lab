@@ -12,7 +12,8 @@ export  dictionary = (
             GetWord,
             PrintAllWords,
             PrintTwoWordsInARow,
-            PrintAllWordsSorted
+            PrintAllWordsSorted,
+            PrintSortedDictionaryTwoWordsAtATime
 );
 
 import  StandardInput;
@@ -25,6 +26,7 @@ function GetWord (language: types.tLanguage; long: integer): types.tWord;
 procedure PrintAllWords;
 procedure PrintTwoWordsInARow;
 procedure PrintAllWordsSorted;
+procedure PrintSortedDictionaryTwoWordsAtATime;
 
 end;
 
@@ -71,6 +73,17 @@ begin
     end;
 end;
 
+function ExtractWordFromLine(line: string; long: integer; var extracted: string): boolean;
+begin
+    extracted := '';
+    case long of
+        4: if (length(line) >= 4) and_then (substr (line,  1, 4) <> '') then extracted := substr(line, 1, 4);
+        5: if (length(line) >= 10) and_then (substr (line,  6, 5) <> '') then extracted := substr(line, 6, 5);
+        6: if (length(line) >= 17) and_then (substr (line,  12, 6) <> '') then extracted := substr(line, 12, 6);
+    end;
+    ExtractWordFromLine := extracted <> '';
+end;
+
 function GetWord;
 var f: types.tTextFile; lineNumber, i: integer value 0; aux: string (17);
 begin
@@ -82,133 +95,180 @@ begin
             readln (f, aux);
             i := i + 1;
         end;
-        case long of
-            4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then aux := substr(aux, 1, 4);
-            5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then aux := substr(aux, 6, 5);
-            6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then aux := substr(aux, 12, 6);
-        end;
-        GetWord := aux;
+        if ExtractWordFromLine(aux, long, aux)
+        then GetWord := aux
+        else GetWord := '';
     end
     else GetWord := '';
 end;
 
 procedure PrintAllWords;
-var language: types.tLanguage; long: integer; f: types.tTextFile; aux: string (17);
+var finished: boolean value false; language: types.tLanguage; long: integer value 0;
+    f: types.tTextFile; aux: string (17); 
 begin
     language := utils.ChooseLanguage;
-    if language <> types.NoLang
+    if language = types.NoLang
+    then finished := true;
+    if not finished
+    then long := utils.ChooseLength;
+    if long = 0
+    then finished := true;
+    if not finished
     then begin
-        long := utils.ChooseLength;
-        if long in [4..6]
+        if OpenDictionary(f, language)
         then begin
-            if OpenDictionary(f, language)
-            then begin
-                reset (f);
-                while not eof (f) do begin
-                    readln (f, aux);
-                    case long of
-                        4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then writeln (substr (aux,  1, 4));
-                        5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then writeln (substr (aux,  6, 5));
-                        6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then writeln (substr (aux, 12, 6));
-                    end;
-                end;
-            end
-            else writeln('Could not open dictionary file.');
-        end;
-    end;
+            reset (f);
+            while not eof (f) do begin
+                readln (f, aux);
+                if ExtractWordFromLine(aux, long, aux)
+                then writeln(aux);
+            end;
+        end
+        else writeln('Could not open dictionary file.');
+    end
+    else writeln('Operation cancelled.');
+    writeln;
     utils.WaitForEnter;
 end;
 
 procedure PrintTwoWordsInARow;
-var language: types.tLanguage; long: integer; f: types.tTextFile; buffer: string (17); aux: string (17);
+var finished: boolean value false; language: types.tLanguage; long: integer value 0;
+    f: types.tTextFile; buffer, aux: string (17);
 begin
     language := utils.ChooseLanguage;
-    if language <> types.NoLang
+    if language = types.NoLang
+    then finished := true;
+    if not finished
+    then long := utils.ChooseLength;
+    if long = 0
+    then finished := true;
+    if not finished
     then begin
-        long := utils.ChooseLength;
-        if long in [4..6]
+        if OpenDictionary(f, language)
         then begin
-            if OpenDictionary(f, language)
-            then begin
-                reset (f);
-                buffer := '';
-                while not eof (f) do begin
-                    readln (f, aux);
-                    if EQ(buffer, '')
-                    then begin
-                        case long of
-                            4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then buffer := substr (aux, 1, 4);
-                            5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then buffer := substr (aux, 6, 5);
-                            6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then buffer := substr (aux, 12, 6);
-                        end;
-                    end
+            reset (f);
+            buffer := '';
+            while not eof (f) do begin
+                readln (f, aux);
+                if ExtractWordFromLine(aux, long, aux)
+                then begin
+                    if buffer = ''
+                    then buffer := aux
                     else begin
-                        case long of
-                            4: if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '') then writeln(buffer, types.TAB, substr (aux, 1, 4));
-                            5: if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '') then writeln(buffer, types.TAB, substr (aux, 6, 5));
-                            6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then writeln(buffer, types.TAB, substr (aux, 12, 6));
-                        end;
+                        writeln(buffer, types.TAB, aux);
                         buffer := '';
                     end;
                 end;
-                if buffer <> '' then writeln(buffer);
-            end
-            else writeln('Could not open dictionary file.');
-        end;
-    end;
+            end;
+            if buffer <> '' then writeln(buffer);
+        end
+        else writeln('Could not open dictionary file.');
+    end
+    else writeln('Operation cancelled.');
+    writeln;
     utils.WaitForEnter;
 end;
 
 procedure PrintAllWordsSorted;
-var language: types.tLanguage; long: integer; f: types.tTextFile; list: types.tWordList; aux: string (17); i: integer;
+var finished: boolean value false; language: types.tLanguage; long, i: integer value 0;
+    f: types.tTextFile; list: types.tWordList; aux: string (17);
 begin
     language := utils.ChooseLanguage;
-    if language <> types.NoLang
+    if language = types.NoLang
+    then finished := true;
+    if not finished
+    then long := utils.ChooseLength;
+    if long = 0
+    then finished := true;
+    if not finished
     then begin
-        long := utils.ChooseLength;
-        if long in [4..6]
+        if OpenDictionary(f, language)    
         then begin
-            if OpenDictionary(f, language)    
-            then begin
-                reset (f);
-                i := 0;
-                while not eof (f) and_then (i < 100) do begin
-                    readln (f, aux);
-                    case long of
-                        4:  if (length(aux) >= 4) and_then (substr (aux,  1, 4) <> '')
-                            then begin
-                                i := i + 1;
-                                list.item[i] := substr (aux,  1, 4);
-                            end;
-                        5:  if (length(aux) >= 10) and_then (substr (aux,  6, 5) <> '')
-                            then begin
-                                i := i + 1;
-                                list.item[i] := substr (aux,  6, 5);
-                            end;
-                        6:  if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '')
-                            then begin
-                                i := i + 1;
-                                list.item[i] := substr (aux, 12, 6);
-                            end;
-                    end;
-                end;
-                list.size := i;
-                if list.size > 0
+            reset (f);
+            i := 0;
+            while not eof (f) and_then (i < 100) do begin
+                readln (f, aux);
+                if ExtractWordFromLine(aux, long, aux)
                 then begin
-                    writeln ('Sorting ', list.size:0, ' words...');
-                    Quicksort (list, 1, list.size);
-                    writeln ('Sorted words:');
-                    for i := 1 to list.size do begin
-                        write (list.item[i], types.TAB);
-                        if (i mod 5 = 0)
-                        then writeln;
-                    end;
-                end
-                else writeln('No words found.');
+                    i := i + 1;
+                    list.item[i] := aux;
+                end;
+            end;
+            list.size := i;
+            if list.size > 0
+            then begin
+                writeln;
+                writeln ('Sorting ', list.size:0, ' words...');
+                Quicksort (list, 1, list.size);
+                writeln ('Sorted words:');
+                writeln;
+                for i := 1 to list.size do begin
+                    write (list.item[i], types.TAB);
+                    if (i mod 5 = 0)
+                    then writeln;
+                end;
             end
-            else writeln('Could not open dictionary file.');
-        end;
-    end;
+            else writeln('No words found.');
+        end
+        else writeln('Could not open dictionary file.');
+    end
+    else writeln('Operation cancelled.');
+    writeln;
+    utils.WaitForEnter;
+end;
+
+procedure PrintSortedDictionaryTwoWordsAtATime;
+var finished: boolean value false; language: types.tLanguage; long, i: integer value 0;
+    f: types.tTextFile; list: types.tWordList; aux, buffer: string (17);
+begin
+    language := utils.ChooseLanguage;
+    if language = types.NoLang
+    then finished := true;
+    if not finished
+    then long := utils.ChooseLength;
+    if long = 0
+    then finished := true;
+    if not finished
+    then begin
+        if OpenDictionary(f, language)    
+        then begin
+            reset (f);
+            i := 0;
+            while not eof (f) and_then (i < 100) do begin
+                readln (f, aux);
+                if ExtractWordFromLine(aux, long, aux)
+                then begin
+                    i := i + 1;
+                    list.item[i] := aux;
+                end;
+            end;
+            list.size := i;
+            if list.size > 0
+            then begin
+                writeln;
+                writeln('Sorting ', list.size:0, ' words...');
+                Quicksort (list, 1, list.size);
+                writeln('Sorted words (two at a time):');
+                writeln;
+                i := 1;
+                buffer := '';
+                while i <= list.size do begin
+                    if EQ(buffer, '')
+                    then buffer := list.item[i]
+                    else begin
+                        writeln(buffer, types.TAB, list.item[i]);
+                        buffer := '';
+                    end;
+                    i := i + 1;
+                end;
+                if buffer <> '' then writeln(buffer);
+            end
+            else writeln('No words found.');
+        end
+        else writeln('Could not open dictionary file.');
+    end
+    else writeln('Operation cancelled.');
+    writeln;
     utils.WaitForEnter;
 end;
 

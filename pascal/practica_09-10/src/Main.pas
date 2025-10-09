@@ -111,15 +111,16 @@ begin
         writeln ('1. Print words from dictionary');
         writeln ('2. Sort words from dictionary');
         writeln ('3. Print words from dictionary (two at a time)');
+        writeln ('4. Print words from dictionary, sorted and two at a time');
         writeln ('0. Back');
         writeln;
         write('Option?: ');
         readln(input);
         option := utils.StringToInteger(input, ok);
-        if ok and_then (option in [0 .. 3])
+        if ok and_then (option in [0 .. 4])
         then SubMenuPrintWords := option
         else writeln('Invalid option');        
-    until option in [0 .. 3];
+    until option in [0 .. 4];
 end;
 
 function start(option: integer): integer;
@@ -141,6 +142,7 @@ begin
                 1: { Print words from dictionary } dictionary.PrintAllWords;
                 2: { Sort words from dictionary } dictionary.PrintAllWordsSorted;
                 3: { Print words from dictionary (two at a time) } dictionary.PrintTwoWordsInARow;
+                4: { Print words from dictionary, sorted and two at a time } dictionary.PrintSortedDictionaryTwoWordsAtATime;
                 0: { Return };
             end;
         0: { Exit };
