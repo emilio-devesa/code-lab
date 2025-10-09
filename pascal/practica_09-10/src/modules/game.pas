@@ -79,14 +79,13 @@ begin
 end;
 
 procedure SaveGame (hiddenWord: types.tWord; numOfAttemps: types.tAttemps);
-var  newGame: types.tGameRecord; DateTime: types.tDateTime;
+var  newGame: types.tGameRecord;
 begin
     newGame.Word := hiddenWord;
     newGame.Attemps := numOfAttemps;
     write('Type your name: ');
     readln (newGame.Player);
-    GetTimeStamp(DateTime);
-    newGame.DateTime := DateTime;
+    GetTimeStamp(newGame.DateTime);
     highscores.Add(newGame);
 end;
 
