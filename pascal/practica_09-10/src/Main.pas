@@ -139,10 +139,10 @@ begin
                 0: { Return };
             end;
         3:  case (SubMenuPrintWords) of
-                1: { Print words from dictionary } dictionary.PrintAllWords;
-                2: { Sort words from dictionary } dictionary.PrintAllWordsSorted;
-                3: { Print words from dictionary (two at a time) } dictionary.PrintTwoWordsInARow;
-                4: { Print words from dictionary, sorted and two at a time } dictionary.PrintSortedDictionaryTwoWordsAtATime;
+                1: { Print words from dictionary } dictionary.PrintDictionary('All words', false, 1);
+                2: { Sort words from dictionary } dictionary.PrintDictionary('Sorted words', true, 1);
+                3: { Print words from dictionary (two at a time) } dictionary.PrintDictionary('Two words in a row', false, 2);
+                4: { Print words from dictionary, sorted and two at a time } dictionary.PrintDictionary('Two sorted words in a row', true, 2);
                 0: { Return };
             end;
         0: { Exit };
