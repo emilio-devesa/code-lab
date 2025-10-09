@@ -29,7 +29,7 @@ import  StandardInput;
         types qualified;
 
 function GetRandomInteger (max: integer): integer;
-function Confirm: boolean;
+function Confirm (message: string): boolean;
 procedure ClearScreen;
 procedure WaitForEnter;
 procedure CenterText (s: string);
@@ -58,7 +58,7 @@ function Confirm;
 var option: char;
 begin
     repeat
-        write ('Confirm? (y/n): ');
+        write (message, ' (y/n): ');
         readln (option);
         Confirm := option in ['Y', 'y'];
     until option in ['Y', 'y', 'N', 'n'];
@@ -90,8 +90,7 @@ end;
 function PrintError;
 begin
     writeln ('Error: ', error);
-    write ('Confirm to continue. ');
-    if Confirm
+    if Confirm('Continue?')
     then PrintError := true
     else PrintError := false;
 end;
