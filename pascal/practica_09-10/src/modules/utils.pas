@@ -14,8 +14,6 @@ export  utils = (
             ClearScreen,
             WaitForEnter,
             CenterText,
-            PrintError, 
-            PrintFatalError,
             ToLowercase,
             ToUppercase,
             StringToInteger,
@@ -33,8 +31,6 @@ function Confirm (message: string): boolean;
 procedure ClearScreen;
 procedure WaitForEnter;
 procedure CenterText (s: string);
-function PrintError (error: string): boolean;
-procedure PrintFatalError (error: string);
 function ToLowercase (c: char): char;
 function ToUppercase (c: char): char;
 function StringToInteger(input: string; var ok: boolean): integer;
@@ -85,21 +81,6 @@ begin
     for i := 1 to spaces do
         write(' ');
     writeln(s);
-end;
-
-function PrintError;
-begin
-    writeln ('Error: ', error);
-    if Confirm('Continue?')
-    then PrintError := true
-    else PrintError := false;
-end;
-
-procedure PrintFatalError;
-begin
-    writeln ('Fatal error: ', error);
-    writeln ('Execution aborted.');
-    halt;
 end;
 
 function ToLowercase;

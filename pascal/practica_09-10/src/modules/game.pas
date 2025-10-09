@@ -36,7 +36,7 @@ begin
     then Equals := true
     else begin
         Equals := false;
-        write ('Wrong guess. New clues: ');
+        write('Wrong guess. New clues: ');
         for i := 1 to length (aux2) do begin
             if (index(aux2, aux2[i]) = i) and_then (index(aux1, aux2[i]) > 0)
             then begin
@@ -112,17 +112,7 @@ begin
     then begin
         hiddenWord := dictionary.GetWord(language, length);
         if hiddenWord = ''
-        then begin
-            if utils.PrintError ('Can not open the file')
-            then begin
-                writeln ('Returning to Main Menu.');
-                utils.WaitForEnter;
-            end
-            else begin
-                writeln ('Execution aborted');
-                halt;
-            end;
-        end
+        then writeln('Can not open the file.')
         else begin
             writeln;
             if withValidation

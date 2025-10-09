@@ -112,7 +112,8 @@ begin
                         6: if (length(aux) >= 17) and_then (substr (aux,  12, 6) <> '') then writeln (substr (aux, 12, 6));
                     end;
                 end;
-            end;
+            end
+            else writeln('Could not open dictionary file.');
         end;
     end;
     utils.WaitForEnter;
@@ -151,7 +152,8 @@ begin
                     end;
                 end;
                 if buffer <> '' then writeln(buffer);
-            end;
+            end
+            else writeln('Could not open dictionary file.');
         end;
     end;
     utils.WaitForEnter;
@@ -203,7 +205,8 @@ begin
                     end;
                 end
                 else writeln('No words found.');
-            end;
+            end
+            else writeln('Could not open dictionary file.');
         end;
     end;
     utils.WaitForEnter;
