@@ -77,7 +77,7 @@ procedure Init;
 var f: types.tBinFile;
 begin
     if Load
-    then writeln('Highscores loaded successfully')
+    then writeln('Highscores loaded from file successfully. ', highscoresList.size:0, ' records found.')
     else begin
         writeln('No highscores file found, starting with an empty list');
         highscoresList.size := 0;
@@ -95,7 +95,6 @@ begin
     then begin
         reset(f);
         read(f, highscoresList);
-        writeln ('Highscores loaded from file successfully. ', highscoresList.size:0, ' records found.');
         Load := true;
     end
     else Load := false;
@@ -119,10 +118,9 @@ begin
     then begin
         highscoresList.size := highscoresList.size + 1;
         highscoresList.item[highscoresList.size] := newRecord;
-        writeln('New record added: ', newRecord.Word, ' by ', newRecord.Player, ' with id ', highscoresList.size:0);
         if Save
-        then writeln ('New record added successfully.')
-        else writeln ('Error saving new record to file.');
+        then writeln('New record added: ', newRecord.Word, ' by ', newRecord.Player, ' with ', newRecord.Attemps:0, ' attemps on ', Date(newRecord.DateTime))
+        else writeln('Error saving new record to file.');
     end
     else writeln ('Highscores list is full. New record not added.');
     utils.WaitForEnter;
@@ -135,7 +133,8 @@ begin
     if highscoresList.size = 0
     then writeln ('No highscores to display.')
     else begin
-        writeln ('Word', types.TAB, types.TAB, 'Player', types.TAB, types.TAB, 'Attemps', types.TAB, types.TAB, 'Date');
+        writeln ('Word            Player            Attemps        Date');
+        writeln ('-----------------------------------------------------------');
         for i := 1 to highscoresList.size do begin
             writestr (aux, highscoresList.item[i].Word,  types.TAB, types.TAB, highscoresList.item[i].Player);
             if highscoresList.item[i].Attemps = 0
@@ -154,12 +153,11 @@ begin
     then writeln('No highscores to sort.')
     else begin
         case criteria of
-            types.Word: writeln('Sorting by Word...');
-            types.Player: writeln('Sorting by Player...');
-            types.Attemps: writeln('Sorting by Attemps...');
-            types.DateTime: writeln('Sorting by Date...');
+            types.Word: writeln('Sorting ', highscoresList.size:0, ' records by Word...');
+            types.Player: writeln('Sorting ', highscoresList.size:0, ' records by Player...');
+            types.Attemps: writeln('Sorting ', highscoresList.size:0, ' records by Attemps...');
+            types.DateTime: writeln('Sorting ', highscoresList.size:0, ' records by Date...');
         end;
-        writeln('Sorting ', highscoresList.size:0, ' records');
         optimizedBubbleSort(criteria);
         Print;
     end;
