@@ -21,67 +21,69 @@ import  StandardInput;
         StandardOutput;
         types qualified;
         utils qualified;
-        files qualified; 
+        files qualified;
 
-procedure Init (var highscoresList: types.tHighscoresList);
-function Load (var highscoresList: types.tHighscoresList): boolean;
-function Save (var highscoresList: types.tHighscoresList): boolean;
-procedure Add (var highscoresList: types.tHighscoresList; var newRecord: types.tGameRecord);
-procedure Print (var highscoresList: types.tHighscoresList);
-procedure SortBy (var highscoresList: types.tHighscoresList; criteria: types.tCriteria);
+var highscoresList: types.tHighscoresList;
+
+procedure Init;
+function Load: boolean;
+function Save: boolean;
+procedure Add(var newRecord: types.tGameRecord);
+procedure Print;
+procedure SortBy(criteria: types.tCriteria);
 
 
 end;
 
 
 function Compare (var a, b: types.tGameRecord; criteria: types.tCriteria): boolean;
+var result: boolean;
 begin
     case criteria of
-        types.Word: Compare := LE(a.Word, b.Word);
-        types.Player: Compare := LE(a.Player, b.Player);
-        types.Attemps: Compare := a.Attemps <= b.Attemps;
-        types.DateTime: Compare := LE(Date(a.DateTime), Date(b.DateTime));
+        types.Word: result := a.Word < b.Word;
+        types.Player: result := a.Player <= b.Player;
+        types.Attemps: result := a.Attemps < b.Attemps;
+        types.DateTime: begin
+            result := a.DateTime.Year < b.DateTime.Year;
+            result := result and_then (a.DateTime.Month < b.DateTime.Month);
+            result := result and_then (a.DateTime.Day < b.DateTime.Day);
+            result := result and_then (a.DateTime.Hour < b.DateTime.Hour);
+            result := result and_then (a.DateTime.Minute < b.DateTime.Minute);
+            result := result and_then (a.DateTime.Second < b.DateTime.Second);
+        end;
     end;
+    Compare := result;
 end;
 
-procedure Quicksort (var highscoresList: types.tHighscoresList; low, high: integer; criteria: types.tCriteria);
-var i, j, pivot: integer; aux: types.tGameRecord;
+procedure optimizedBubbleSort(criteria: types.tCriteria);
+var i, j: integer; aux: types.tGameRecord; sorted: boolean;
 begin
-    if low < high
-    then begin
-        { Choose the pivot (in this case, the middle element) }
-        pivot := (low + high) div 2;
-        i := low;
-        j := high;
-        { Partition the array into two halves }
-        repeat
-            while Compare(highscoresList.item[i], highscoresList.item[pivot], criteria) do i := i + 1;
-            while Compare(highscoresList.item[pivot], highscoresList.item[j], criteria) do j := j - 1;
-            if i <= j
+    j := 1;
+    repeat
+        sorted := true;
+        for i := 1 to (highscoresList.size - j) do
+            if Compare (highscoresList.item[i + 1], highscoresList.item[i], criteria)
             then begin
-                { Swap elements and move indices }
                 aux := highscoresList.item[i];
-                highscoresList.item[i] := highscoresList.item[j];
-                highscoresList.item[j] := aux;
-                i := i + 1;
-                j := j - 1;
+                highscoresList.item[i] := highscoresList.item[i+1];
+                highscoresList.item[i+1] := aux;
+                sorted := false;
             end;
-        until i > j;
-        { Recursively sort the sub-lists }
-        Quicksort(highscoresList, low, j, criteria);
-        Quicksort(highscoresList, i, high, criteria);
-    end;
+        j := j + 1;
+    until (j >= highscoresList.size) or (sorted);
 end;
 
 procedure Init;
 var f: types.tBinFile;
 begin
-    if Load(highscoresList)
+    if Load
     then writeln('Highscores loaded successfully')
     else begin
         writeln('No highscores file found, starting with an empty list');
-        if files.BinFileIsBound(f, types.F_HIGHSCORES)
-        then rewrite(f);
+        highscoresList.size := 0;
+        if Save
+        then writeln('New highscores file created successfully')
+        else writeln('Error creating new highscores file');
         utils.WaitForEnter;
     end;
 end;
@@ -93,6 +95,7 @@ begin
     then begin
         reset(f);
         read(f, highscoresList);
+        writeln ('Highscores loaded from file successfully. ', highscoresList.size:0, ' records found.');
         Load := true;
     end
     else Load := false;
@@ -101,7 +104,7 @@ end;
 function Save;
 var f: types.tBinFile;
 begin
-    if (files.BinFileExists(f, types.F_HIGHSCORES) and_then files.BinFileIsBound(f, types.F_HIGHSCORES))
+    if files.BinFileIsBound(f, types.F_HIGHSCORES)
     then begin
         rewrite(f);
         write(f, highscoresList);
@@ -116,14 +119,12 @@ begin
     then begin
         highscoresList.size := highscoresList.size + 1;
         highscoresList.item[highscoresList.size] := newRecord;
-        if Save(highscoresList)
+        writeln('New record added: ', newRecord.Word, ' by ', newRecord.Player, ' with id ', highscoresList.size:0);
+        if Save
         then writeln ('New record added successfully.')
         else writeln ('Error saving new record to file.');
     end
-    else begin
-        writeln ('Highscores list is full. New record not added.');
-        writeln ('Returning to Main Menu.');
-    end;
+    else writeln ('Highscores list is full. New record not added.');
     utils.WaitForEnter;
 end;
 
@@ -131,21 +132,37 @@ procedure Print;
 var i: integer; aux: string (80);
 begin
     writeln;
-    writeln ('Word', types.TAB, types.TAB, 'Player', types.TAB, types.TAB, 'Attemps', types.TAB, types.TAB, 'Date');
-    for i := 1 to highscoresList.size do begin
-        writestr (aux, highscoresList.item[i].Word,  types.TAB, types.TAB, highscoresList.item[i].Player);
-        if highscoresList.item[i].Attemps = 0
-        then writestr (aux, aux, 'surrendered')
-        else writestr (aux, aux,  types.TAB, types.TAB, highscoresList.item[i].Attemps:0);
-        writestr (aux, aux,  types.TAB, Date(highscoresList.item[i].DateTime));
-        writeln (aux);
+    if highscoresList.size = 0
+    then writeln ('No highscores to display.')
+    else begin
+        writeln ('Word', types.TAB, types.TAB, 'Player', types.TAB, types.TAB, 'Attemps', types.TAB, types.TAB, 'Date');
+        for i := 1 to highscoresList.size do begin
+            writestr (aux, highscoresList.item[i].Word,  types.TAB, types.TAB, highscoresList.item[i].Player);
+            if highscoresList.item[i].Attemps = 0
+            then writestr (aux, aux, 'surrendered')
+            else writestr (aux, aux,  types.TAB, types.TAB, highscoresList.item[i].Attemps:0);
+            writestr (aux, aux,  types.TAB, Date(highscoresList.item[i].DateTime));
+            writeln (aux);
+        end;
     end;
+    writeln;
 end;
 
 procedure SortBy;
 begin
-    Quicksort (highscoresList, 1, highscoresList.size, criteria);
-    Print(highscoresList);
+    if highscoresList.size = 0
+    then writeln('No highscores to sort.')
+    else begin
+        case criteria of
+            types.Word: writeln('Sorting by Word...');
+            types.Player: writeln('Sorting by Player...');
+            types.Attemps: writeln('Sorting by Attemps...');
+            types.DateTime: writeln('Sorting by Date...');
+        end;
+        writeln('Sorting ', highscoresList.size:0, ' records');
+        optimizedBubbleSort(criteria);
+        Print;
+    end;
     utils.WaitForEnter;
 end;
 

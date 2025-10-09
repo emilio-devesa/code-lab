@@ -20,7 +20,7 @@ import  StandardInput;
         highscores qualified;
         dictionary qualified;
 
-procedure PlayGame (highscoresList: types.tHighscoresList; withValidation: boolean);
+procedure PlayGame (withValidation: boolean);
 
 
 end;
@@ -79,7 +79,7 @@ begin
     GuessWord := numOfAttemps;
 end;
 
-procedure SaveGame (var highscoresList: types.tHighscoresList; hiddenWord: types.tWord; numOfAttemps: types.tAttemps);
+procedure SaveGame (hiddenWord: types.tWord; numOfAttemps: types.tAttemps);
 var  newGame: types.tGameRecord; DateTime: types.tDateTime;
 begin
     newGame.Word := hiddenWord;
@@ -88,7 +88,7 @@ begin
     readln (newGame.Player);
     GetTimeStamp(DateTime);
     newGame.DateTime := DateTime;
-    highscores.Add(highscoresList, newGame);
+    highscores.Add(newGame);
 end;
 
 procedure PlayGame;
@@ -129,7 +129,7 @@ begin
             if withValidation
             then writeln ('Hidden word: ', hiddenWord);
             numOfAttemps := GuessWord (hiddenWord);
-            SaveGame(highscoresList, hiddenWord, numOfAttemps);
+            SaveGame(hiddenWord, numOfAttemps);
         end;
     end;
 end;
