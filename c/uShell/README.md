@@ -1,18 +1,18 @@
 ## uShell
 
-uShell es un pequeño terminal que te permite navegar por tu estructura de directorios y listar los archivos de tu sistema de ficheros: 
+uShell is a small terminal that allows you to navigate through your directory structure and list the files in your file system: 
 
-![](images/ushell.png)
+![](images/ushell.jpeg)
 
-Se puede compilar con la orden:
+Compilation:
 ```
 $ clang uShell.c -o uShell
 ```
-Y ejecutarlo con:
+Run:
 ```
 $ ./uShell
 ```
 
-![](images/ushell-xcode.png)
+![](images/ushell-code.jpeg)
 
-uShell es la implementación de mi otro proyecto "shell" modificado para que funcione adecuadamente en MacOS.
+uShell is the implementation of my other project “shell,” modified to work properly on macOS.
