@@ -1,14 +1,10 @@
-// Emilio Devesa
-// https://emiliodevesa.wordpress.com/2023/07/15/ushell-para-macos/
+// uShell - A simple MacOS shell implementation in C
 //
 // Target SO: MacOS 13.4.1 (Darwin 22.5.0)
 // Compiler: Apple clang version 14.0.3 (clang-1403.0.22.14.1)
 //
 //  uShell.c
-//  uShell
-//
 //  Created by Emilio Devesa on 8/7/23.
-//
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +28,7 @@ int countcmdargs (char *input, char * cmdargs []){
 }
 
 void printAuth(void){
-    printf("Emilio Devesa (https://emiliodevesa.wordpress.com/, 2023)\n");
+    printf("Emilio Devesa, 2023\n");
 }
 
 char *cwd(void){
