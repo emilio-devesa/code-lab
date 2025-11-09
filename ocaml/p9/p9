@@ -1,0 +1,31 @@
+(* PRACTICA 9 *)
+
+let es_valido (fila, col) solucion =
+  List.for_all
+    (fun (f, c) ->
+      c <> col && abs (col - c) <> abs (fila - f)
+    )
+    solucion;;
+
+let reinas_all n =
+  let rec colocar fila solucion =
+    if fila > n then
+      [solucion]
+    else
+      let rec probar_columna col =
+        if col > n then []
+        else
+          if es_valido (fila, col) solucion then
+            (colocar (fila + 1) ((fila, col) :: solucion))
+            @ (probar_columna (col + 1))
+          else
+            probar_columna (col + 1)
+      in
+      probar_columna 1
+  in
+  List.map List.rev (colocar 1 []);;
+
+let reinas n =
+  match reinas_all n with
+  | [] -> None
+  | h :: _ -> Some h;;
