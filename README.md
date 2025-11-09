@@ -39,6 +39,11 @@ Mainly **Pascal, C, Java**, and others.
 * **Webserver** – Basic web server implementation.
 * **JavaSQL** – Database-related project.
 
+### ocaml/
+* README.md: Documentation about Ocaml cli, definitions, functions, data types, structures, object orientation, etc.
+* assets/: Images for the README.md file
+* p1 .. p10: Practice exercises from course 2009-2010 including documentation and solutions
+
 ### pascal/
 
 * README.md: Documentation about GNU Pascal compilers, program structure, data types and structures, file handling...
