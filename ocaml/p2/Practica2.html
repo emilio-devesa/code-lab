@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE"
+ content="text/html; charset=windows-1252">
+  <title>PD - Práctica 2</title>
+  <meta name="GENERATOR" content="OpenOffice.org 2.2  (Win32)">
+  <meta name="AUTHOR" content="José Marí­a Molinelli">
+  <meta name="CREATED" content="20071013;10373648">
+  <meta name="CHANGEDBY" content="José M. Molinelli">
+  <meta name="CHANGED" content="20081026;10071554">
+  <meta name="ProgId" content="Word.Document">
+  <meta name="Originator" content="Microsoft Word 10">
+<!-- saved from url=(0059)http://www.lfcia.org/staff/molinelli/PD/04-05/Practica1.htm --><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Tabla normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!-- saved from url=(0053)http://www.lfcia.org/~molineli/PD/03-04/Practica1.htm --><!--[if gte mso 9]><xml>
+ <u1:DocumentProperties>
+  <u1:Author>José María Molinelli</u1:Author>
+  <u1:LastAuthor>José María Molinelli</u1:LastAuthor>
+  <u1:Revision>6</u1:Revision>
+  <u1:TotalTime>37</u1:TotalTime>
+  <u1:Created>2003-10-09T14:41:00Z</u1:Created>
+  <u1:LastSaved>2003-10-09T19:30:00Z</u1:LastSaved>
+  <u1:Pages>2</u1:Pages>
+  <u1:Words>418</u1:Words>
+  <u1:Characters>2384</u1:Characters>
+  <u1:Lines>19</u1:Lines>
+  <u1:Paragraphs>4</u1:Paragraphs>
+  <u1:CharactersWithSpaces>2927</u1:CharactersWithSpaces>
+  <u1:Version>9.2812</u1:Version>
+ </u1:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <u2:WordDocument>
+  <u2:Zoom>150</u2:Zoom>
+  <u2:HyphenationZone>21</u2:HyphenationZone>
+  <u2:DisplayHorizontalDrawingGridEvery>0</u2:DisplayHorizontalDrawingGridEvery>
+  <u2:DisplayVerticalDrawingGridEvery>0</u2:DisplayVerticalDrawingGridEvery>
+  <u2:UseMarginsForDrawingGridOrigin/>
+  <u2:Compatibility>
+   <u2:FootnoteLayoutLikeWW8/>
+   <u2:ShapeLayoutLikeWW8/>
+   <u2:AlignTablesRowByRow/>
+   <u2:ForgetLastTabAlignment/>
+   <u2:LayoutRawTableWidth/>
+   <u2:LayoutTableRowsApart/>
+  </u2:Compatibility>
+ </u2:WordDocument>
+</xml><![endif]-->
+  <style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm }
+		P { color: #000000 }
+		P.msonormal { margin-bottom: 0cm; font-family: "Times New Roman"; font-size: 10pt }
+		A:link { color: #0000ff }
+		A:visited { color: #800080 }
+	-->
+	</style>
+</head>
+<body dir="ltr" lang="es-ES" link="#0000ff" text="#000000"
+ vlink="#800080">
+<p align="center"><font style="font-size: 16pt;" size="4">Programación
+Declarativa<br>
+2009-2010<br>
+Práctica 2<br>
+<br>
+</font></p>
+<ol>
+  <li>
+    <p><font face="Arial">Escriba una </font><font face="Arial"><b>expresión</b></font><font
+ face="Arial"> en Caml cuyo valor sea siempre el mismo que:</font> </p>
+  </li>
+</ol>
+<p style="margin-left: 1.06cm;"><font face="Arial">-&nbsp;&nbsp;&nbsp;</font>
+<tt><font style="font-size: 13pt;" size="4"><b>abs x&nbsp;</b></font></tt>
+<font face="Arial">(* sin utilizar la función</font> <tt><font
+ style="font-size: 13pt;" size="4"><b>abs
+</b></font></tt><font face="Arial">*)</font><br>
+<font face="Arial">-&nbsp;&nbsp;&nbsp;</font>
+<tt><font style="font-size: 13pt;" size="4"><b>not x&nbsp;</b></font></tt>
+&nbsp;<font face="Arial">(* sin usar el operador</font> <tt><font
+ style="font-size: 13pt;" size="4"><b>not
+</b></font></tt><font face="Arial">*)<br>
+-&nbsp;&nbsp;&nbsp; </font><tt><font style="font-size: 13pt;" size="4"><b>max
+x y&nbsp;</b></font></tt> <font face="Arial">(* sin usar la función
+</font><tt><font style="font-size: 13pt;" size="4"><b>max </b></font></tt><font
+ face="Arial">*)</font><br>
+<font face="Arial">-&nbsp;&nbsp;&nbsp;
+</font><tt><font style="font-size: 13pt;" size="4"><b>min x y&nbsp;</b></font></tt>
+<font face="Arial">(* sin usar la función </font><tt><font
+ style="font-size: 13pt;" size="4"><b>min
+</b></font></tt><font face="Arial">*)</font><br>
+<font face="Arial">-&nbsp;&nbsp;&nbsp;</font>
+<tt><font style="font-size: 13pt;" size="4"><b>string_of_bool b&nbsp;</b></font></tt>
+<font face="Arial">(* sin utilizar la función</font>
+<tt><font style="font-size: 13pt;" size="4"><b>string_of_bool </b></font></tt><font
+ face="Arial">*)</font><font face="Courier New"><br>
+</font><font face="Arial">-&nbsp;&nbsp;&nbsp;</font>
+<tt><font style="font-size: 13pt;" size="4"><b>x mod y&nbsp;</b></font></tt>
+<font face="Arial">(* sin utilizar el operador</font> <tt><font
+ style="font-size: 13pt;" size="4"><b>mod</b></font></tt>
+<font face="Arial">*)</font><br>
+<font face="Arial">-&nbsp;&nbsp;&nbsp;</font>
+<tt><font style="font-size: 13pt;" size="4"><b>x &amp;&amp; (y || z)</b></font></tt>
+&nbsp;<font face="Arial">(* sin usar ni la conjunción ni la disyunción
+lógicas predefinidas<span style="font-weight: bold;"></span></font><tt><font
+ style="font-size: 13pt;" size="4"><b></b></font></tt><span
+ style="font-family: Arial;"><span style="font-weight: bold;"> </span></span><font
+ face="Arial">*)<br>
+-&nbsp;&nbsp;&nbsp;</font> <tt><font style="font-size: 13pt;" size="4"><b>Char.lowercase
+c</b></font></tt> &nbsp;&nbsp;<font face="Arial">(* sin usar la
+función</font> <tt><font style="font-size: 13pt;" size="4"><b>Char.lowercase</b></font></tt>
+<font face="Arial">*)<br>
+</font><br>
+<br>
+</p>
+<ol start="2">
+  <li>
+    <p><font face="Arial">Escriba en ocaml </font><font face="Arial"><b>definiciones</b></font><font
+ face="Arial"> "alternativas" para las funciones</font> <font
+ face="Courier New"><b>abs</b></font><font face="Arial">, </font><font
+ face="Courier New"><b>not</b></font><font face="Arial">, </font><font
+ face="Courier New"><b>max</b></font><font face="Arial">,</font> <font
+ face="Courier New"><b>min</b></font><font face="Arial">,</font> <font
+ face="Courier New"><b>string_of_bool y lowercase</b></font>&nbsp;<font
+ face="Arial">, como si no estuviesen predefinidas.</font> </p>
+  </li>
+</ol>
+<p><br>
+<br>
+</p>
+<ol start="3">
+  <li>
+    <p><font face="Arial"><font size="3">Intente deducir “a mano” cuál
+será el resultado de la compilación y ejecución de las siguientes
+frases (expresiones y definiciones) si se introdujesen en ese orden en
+el compilador . Escriba el resultado como lo escribiría el compilador
+interactivo de ocaml y comprube luego la respuesta real del compilador
+al introducir esas frases. Tome buena de todas las respuestas
+inesperadas y trate de explicar su razón. Si se produjera algún error,
+lea atentamente el mensaje del compilador y tome nota de por qué se ha
+producido.</font> </font> </p>
+  </li>
+</ol>
+<p><br>
+<br>
+</p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">"hola", "adios";;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">0, 0.0;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">fst ('a',0);;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">snd (false, true);;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(1,2,3);;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(1,2),3;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">fst ((1,2),3);;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">fst;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">snd;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">12, "octubre", 1492;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">snd ((12, "octubre"),
+1492);;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">snd (12, "octubre"),
+1492;;</font> </font>
+</p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">snd ((12, octubre), 1492);;</font>
+</font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(1, 1+1, 1+1+1);;</font> </font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">function x -&gt; x;;</font></font>
+</p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; x) (1,2,3);;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; x)
+int_of_char;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">function x -&gt; x, x;; </font></font>
+</p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; x, x) "hola";;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; x, x) 0;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function p -&gt; fst p +. snd
+p);;</font></font> </p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function p -&gt; fst p +. snd p)
+(1.5, 2.5);;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">function p -&gt; snd p, fst p;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function p -&gt; snd p, fst p)
+(('a', true), "true");;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function p -&gt; snd p, fst p)
+('a', true), "true";;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">function x -&gt; x &gt; 0;;</font></font>
+</p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; x &gt; 0) 2;;</font></font></p>
+<p class="msonormal"
+ style="margin-left: 1.25cm; margin-top: 0.21cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(function x -&gt; x &gt; 0)
+(-3);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let x,y,z = 1,2,3;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let x,y,z = z,x+z,x+y+z;;&nbsp; </font></font>
+</p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let doble x = 2 * x;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">doble (x + y + z);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">doble x + y + z;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let triple y = doble y + y;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">triple x + doble x;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let f = function p -&gt; doble
+(fst p) + triple (snd p);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">f (x,y);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let swap p = snd p, fst p;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">swap ("hola",
+"adios");;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let dup = function x -&gt; x, x;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">dup 0;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">dup "hip";;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let pos x = x &gt; 0;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">pos 2;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">pos (-3);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">pos - 3;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">pos 2.0;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let absolut = function x -&gt; if
+x &lt; 0. then -.x else x;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">absolut (-10.) + absolut 10.;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">absolut -5.;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">absolut -.5;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let longest p = <br>
+&nbsp;&nbsp;&nbsp;
+if String.length (fst p) &gt; String.length (snd p)<br>
+&nbsp;&nbsp;&nbsp;
+then fst p else snd p;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">longest (longest ("uno",
+"dos"), "tres");;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let g x y = x + 2 * y;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">g 2 3;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">(g 2) 3;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">g (2 3);;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">let h = g 0;;</font></font></p>
+<p class="msonormal" style="margin-left: 1.25cm; margin-bottom: 0.5cm;">
+<font face="monospace"><font size="4">h 5 + h 6;;</font></font></p>
+<p><br>
+<br>
+</p>
+</body>
+</html>

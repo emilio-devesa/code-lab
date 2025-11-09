@@ -1,0 +1,42 @@
+(* PRACTICA 3 *)
+
+(* Ejercicio 1 *)
+let rec fib n = if n < 2 then n else (fib (n-1) + fib (n-2));;
+(* val fib : int -> int = <fun> *)
+
+let rec sumto n = if n < 2 then n else (n + sumto (n-1));;
+(* val sumto : int -> int = <fun> *)
+
+
+(* Ejercicio 2 *)
+let rec fact n = if n <= 1
+				 then 1.
+				 else (float_of_int n *. fact (n-1));;
+(* val fact : int -> float = <fun> *)
+
+let rec fib n = if n < 2
+				then float_of_int n
+				else (fib (n-1) +. fib (n-2));;
+(* val fib : int -> float = <fun> *)
+
+
+(* Ejercicio 3 *)
+#load "nums.cma";;
+open Num;;
+let rec fact n = if n <= 1 
+				 then num_of_int n
+				 else (num_of_int n */ fact (n-1));;
+(* val fact : int -> Num.num = <fun> *)
+
+let rec fib n = if n < 2
+				then num_of_int n
+				else (fib (n-1) +/ fib (n-2));;
+(* val fib : int -> Num.num = <fun> *)
+
+
+(* Ejercicio 4 *)
+let fact_s n = string_of_num (fact n);;
+(* val fact_s : int -> string = <fun> *)
+
+let fib_s n = string_of_num (fib n);;
+(* val fib_s : int -> string = <fun> *)

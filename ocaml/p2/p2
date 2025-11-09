@@ -1,0 +1,234 @@
+(* PRACTICA 2 *)
+
+
+(* Ejercicio 1 *)
+(* Expresiones alternativas para: *)
+(* abs x *)
+if x < 0 then -x else x;;
+
+(* not x *)
+x = false;;
+
+(* max x y *)
+if x > y then x else y;;
+
+(* min x y *)
+if x < y then x else y;;
+
+(* string_of_bool b *)
+if b then "true" else "false";;
+
+(* x mod y *)
+x - y*(x/y);;
+
+(* x && (y || z) *)
+if y then x else (if z then x);;
+
+(* Char.lowercase c *)
+char_of_int(int_of_char c + 32);;
+
+
+(* Ejercicio 2 *)
+(* Definiciones alternativas para: *)
+(* abs *)
+let abs_alt x = if x < 0 then x=-x else x;;
+
+(* not *)
+let not_alt x = false;;
+
+(* max *)
+let max_alt x,y = if x > y then x else y;;
+
+(* min *)
+let min_alt x,y = if x < y then x else y;;
+
+(* string_of_bool *)
+let string_of_bool_alt b = if b then "true" else "false";;
+
+(* lowercase *)
+let lowercase_alt c = char_of_int(int_of_char c + 32);;﻿
+
+
+(* Ejercicio 3 *)
+"hola", "adios";;
+(* - : string * string = ("hola", "adios") *)
+
+0, 0.0;;
+(* - : int * float = (0, 0.) *)
+
+fst ('a',0);;
+(* - : char = 'a' *)
+
+snd (false, true);;
+(* - : bool = true *)
+
+(1,2,3);;
+(* - : int * int * int = (1, 2, 3) *)
+
+(1,2),3;;
+(* - : (int * int) * int = ((1, 2), 3) *)
+
+fst ((1,2),3);;
+(*- : int * int = (1, 2) *)
+
+fst;;
+(* - : 'a * 'b -> 'a = <fun> *)
+
+snd;;
+(* - : 'a * 'b -> 'b = <fun> *)
+
+12, "octubre", 1492;;
+(* - : int * string * int = (12, "octubre", 1492) *)
+
+snd ((12, "octubre"), 1492);;
+(* - : int = 1492 *)
+
+snd (12, "octubre"), 1492;;
+(* - : string * int = ("octubre", 1492) *)
+
+snd ((12, octubre), 1492);;
+(* Error: Unbound value octubre *)
+
+(1, 1+1, 1+1+1);;
+(* - : int * int * int = (1, 2, 3) *)
+
+function x -> x;;
+(* - : 'a -> 'a = <fun> *)
+
+﻿(function x -> x) (1,2,3);;
+(* - : int * int * int *)
+
+(function x -> x) int_of_char;;
+(* - : char -> int = <fun> *)
+
+function x -> x, x;;
+(* - : 'a -> 'a * 'a = <fun> *)
+
+(function x -> x, x) "hola";;
+(* - : string * string = ("hola", "hola") *)
+
+(function x -> x, x) 0;;
+(* - : int * int = (0, 0) *)
+
+(function p -> fst p +. snd p);;
+(* - : float * float -> float = <fun> *)
+
+(function p -> fst p +. snd p) (1.5, 2.5);;
+(* - : float = 4. *)
+
+﻿function p -> snd p, fst p;;
+(* - : 'a * 'b -> 'b * 'a = <fun> *)
+
+(function p -> snd p, fst p) (('a', true), "true");;
+(* - : string * (char * bool) = ("true", ('a', true)) *)
+
+(function p -> snd p, fst p) ('a', true), "true";;
+(* - : (bool * char) * string = ((true, 'a'), "true") *)﻿
+
+function x -> x > 0;;
+(* - : int -> bool = <fun> *)
+
+(function x -> x > 0) 2;;
+(* - : bool = true *)
+
+(function x -> x > 0) (-3);;
+(* - : bool = false *)
+
+let x,y,z = 1,2,3;;
+(* val x : int = 1
+   val y : int = 2
+   val z : int = 3 *)
+
+let x,y,z = z,x+z,x+y+z;;
+(* val x : int = 3
+   val y : int = 4
+   val z : int = 6 *)
+
+let doble x = 2 * x;;
+(* val doble : int -> int = <fun> *)
+
+doble (x + y + z);;
+(* - : int = 26 *)
+
+doble x + y + z;;
+(* - : int = 16 *)﻿
+
+let triple y = doble y + y;;
+(* val triple : int -> int = <fun> *)
+
+triple x + doble x;;
+(* - : int = 15 *)
+
+let f = function p -> doble (fst p) + triple (snd p);;
+(* val f : int * int -> int = <fun> *)
+
+f (x,y);;
+(* - : int * int -> int = 18 *)﻿
+
+let swap p = snd p, fst p;;
+(* val swap : 'a * 'b -> 'b * 'a *)
+
+swap ("hola", "adios");;
+(* - : string * string = ("adios", "hola") *)
+
+let dup = function x -> x, x;;
+(* val dup : 'a -> 'a * 'a = <fun> *)
+
+dup 0;;
+(* - : int * int = (0, 0) *)
+
+dup "hip";;
+(* - : string * string = ("hip", "hip") *)
+
+let pos x = x > 0;;
+(* val pos : int -> bool = <fun> *)
+
+pos 2;;
+(* - : bool = true *)
+
+pos (-3);;
+(* - : bool = false *)
+
+pos - 3;;
+(* Error: This expression has type int -> bool but is here used with type int *)
+
+pos 2.0;;
+(* Error: This expression has type int -> bool but is here used with type float *)
+
+let absolut = function x -> if x < 0. then -.x else x;;
+(* val absolut : float -> float = <fun> *)
+
+absolut (-10.) + absolut 10.;;
+(* Error: This expression has type float but is here used with type int *)
+
+absolut -5.;;
+(* Error: This expression has type float -> float but is here used with type int *)
+
+absolut -.5;;
+(* Error: This expression has type float -> float but is here used with type float *)
+
+let longest p =
+    if String.length (fst p) > String.length (snd p)
+    then fst p else snd p;;
+(* val longest : string * string -> string = <fun> *)
+
+longest (longest ("uno", "dos"), "tres");;
+(* - : string = "tres" *)
+
+let g x y = x + 2 * y;;
+(* val g : int -> int -> int = <fun> *)
+
+g 2 3;;
+(* - : int = 8 *)
+
+(g 2) 3;;
+(* - : int = 8 *)
+
+g (2 3);;
+(* Error: This expression is not a function, it cannot be applied *)
+
+let h = g 0;;
+(* val h : int -> int = <fun> *)
+
+h 5 + h 6;;
+(* - : int = 22 *)

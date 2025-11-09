@@ -1,0 +1,142 @@
+(* PRACTICA 7 *)
+
+(* Ejercicio 1 *)
+(* Definir raiz *)
+let raiz = function
+	Empty -> raise (Invalid_argument "raiz")
+	| Node (r,_,_) -> r;;
+(* val raiz : 'a bintree -> 'a = <fun> *)
+
+
+(* Definir ramaizda *)
+let ramaizda = function
+	Empty -> raise (Invalid_argument "ramaizda")
+	| Node (_,i,_) -> i;;
+(* val ramaizda : 'a bintree -> 'a bintree = <fun> *)
+
+
+(* Definir ramadcha *)
+let ramadcha = function
+	Empty -> raise (Invalid_argument "ramadcha")
+	| Node (_,_,d) -> d;;
+(* val ramadcha : 'a bintree -> 'a bintree = <fun> *)
+
+
+(* Definir altura *)
+let rec altura = function
+	Empty -> 0
+	| Node (_,i,d) -> 1 + max (altura i) (altura d);;
+(* val altura : 'a bintree -> int = <fun> *)
+
+
+(* Definir num_nodos *)
+let rec num_nodos = function
+	Empty -> 0
+	| Node (_,i,d) -> 1 + num_nodos i + num_nodos d;;
+(* val num_nodos : 'a bintree -> int = <fun> *)
+
+
+(* Definir t_max *)
+let rec t_max = function
+	Empty -> raise (Invalid_argument "t_max")
+	| Node (r,Empty,Empty) -> r
+	| Node (r,i,Empty) -> max r (t_max i)
+	| Node (r,Empty,d) -> max r (t_max d)
+	| Node (r,i,d) -> max r (max (t_max i) (t_max d));;
+(* val t_max : 'a bintree -> 'a = <fun> *)
+
+
+(* Definir t_min *)
+let rec t_min = function
+	Empty -> raise (Invalid_argument "t_min")
+	| Node (r,Empty,Empty) -> r
+	| Node (r,i,Empty) -> min r (t_min i)
+	| Node (r,Empty,d) -> min r (t_min d)
+	| Node (r,i,d) -> min r (min (t_min i) (t_min d));;
+(* val t_min : 'a bintree -> 'a = <fun> *)
+
+
+(* Definir t_sum *)
+let rec t_sum = function
+	Empty -> raise (Invalid_argument "t_sum")
+	| Node (r,Empty,Empty) -> r
+	| Node (r,i,Empty) -> r + t_sum i
+	| Node (r,Empty,d) -> r + t_sum d
+	| Node (r,i,d) -> r + t_sum i + t_sum d;;
+(* val t_sum : int bintree -> int = <fun> *)
+
+
+(* Definir t_spec *)
+let rec t_spec = function
+	Empty -> raise (Invalid_argument "t_spec")
+	| Node (r,Empty,Empty) -> Node (r,Empty,Empty)
+	| Node (r,i,Empty) -> Node (r,Empty,(t_spec i))
+	| Node (r,Empty,d) -> Node (r,(t_spec d),Empty)
+	| Node (r,i,d) -> Node (r, (t_spec d), (t_spec i));;
+(* val t_spec : 'a bintree -> 'a bintree = <fun> *)
+
+
+(* Definir hojas *)
+let rec hojas = function
+	Empty -> raise (Invalid_argument "hojas")
+	| Node (r,Empty,Empty) -> [r]
+	| Node (_,i,Empty) -> hojas i
+	| Node (_,Empty,d) -> hojas d
+	| Node (_,i,d) -> (hojas i) @ (hojas d);;
+(* val hojas : 'a bintree -> 'a list = <fun> *)
+
+
+(* Definir monticulo *)
+(* Definir completo *)
+
+
+(* Definir preorden *)
+let rec preorden = function
+	Empty -> raise (Invalid_argument "preorden")
+	| Node (r,Empty,Empty) -> [r]
+	| Node (r,i,Empty) -> r::(preorden i)
+	| Node (r,Empty,d) -> r::(preorden d)
+	| Node (r,i,d) -> r::(preorden i) @ (preorden d);;
+(* val preorden : 'a bintree -> 'a list = <fun> *)
+
+
+(* Definir postorden *)
+let rec postorden = function
+	Empty -> raise (Invalid_argument "postorden")
+	| Node (r,Empty,Empty) -> [r]
+	| Node (r,i,Empty) -> (postorden i) @ [r]
+	| Node (r,Empty,d) -> (postorden d) @ [r]
+	| Node (r,i,d) -> (postorden i) @ (postorden d) @ [r];;
+(* val postorden : 'a bintree -> 'a list = <fun> *)
+
+
+(* Definir inorden *)
+let rec inorden = function
+	Empty -> raise (Invalid_argument "inorden")
+	| Node (r,Empty,Empty) -> [r]
+	| Node (r,i,Empty) -> (inorden i) @ [r]
+	| Node (r,Empty,d) -> r::(inorden d)
+	| Node (r,i,d) -> (inorden i) @ r::(inorden d);;
+(* val inorden : 'a bintree -> 'a list = <fun> *)
+
+
+(* Definir anchura *)
+
+
+
+
+(* Ejercicio 2 *)
+(* Definir arbolgen_of_bintree *)
+let rec arbolgen_of_bintree = function
+	Empty -> raise (Invalid_argument "arbolgen_of_bintree")
+	| Node (r,Empty,Empty) -> Nodo (r,[])
+	| Node (r,i,d) -> Nodo (r,[arbolgen_of_bintree i; arbolgen_of_bintree d]);;
+(* val arbolgen_of_bintree : 'a bintree -> 'a arbolgen = <fun> *)
+
+
+(* Definir bintree_of_arbolgen *)
+let rec bintree_of_arbolgen = function
+	Nodo (x,[]) -> Node (x,Empty,Empty)
+	| Nodo (r, [i;d]) -> Node (r, bintree_of_arbolgen i, bintree_of_arbolgen d)
+	| _ -> raise (Invalid_argument "bintree_of_arbolgen");;
+(* val bintree_of_arbolgen : 'a arbolgen -> 'a bintree = <fun> *)
