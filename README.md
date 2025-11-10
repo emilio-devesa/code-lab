@@ -31,7 +31,7 @@ Mainly **Pascal, C, Java**, and others.
 * **KOT (Keep on Track)** – Final project for the _Multiplatform Application Development_ program (2022). 
 
 ### java/
-
+* **README.md** - Information on Java tools and basic development
 * **Ahorcado** – Hangman game implementation.
 * **TresEnRaya** – Tic-Tac-Toe game.
 * **ProducerConsumer** – Concurrency example (producer–consumer pattern).
@@ -40,13 +40,13 @@ Mainly **Pascal, C, Java**, and others.
 * **JavaSQL** – Database-related project.
 
 ### ocaml/
-* README.md: Documentation about Ocaml cli, definitions, functions, data types, structures, object orientation, etc.
-* assets/: Images for the README.md file
-* p1 .. p10: Practice exercises from course 2009-2010 including documentation and solutions
+* **README.md**: Documentation about Ocaml cli, definitions, functions, data types, structures, object orientation, etc.
+* **assets/**: Images for the README.md file
+* **p1 .. p10**: Practice exercises from course 2009-2010 including documentation and solutions
 
 ### pascal/
 
-* README.md: Documentation about GNU Pascal compilers, program structure, data types and structures, file handling...
+* **README.md**: Documentation about GNU Pascal compilers, program structure, data types and structures, file handling...
 * 2007.10.15: ascii.pas
 * 2007.10.29: datos.pas
 * 2007.10.30: bisiesto.pas
@@ -64,6 +64,6 @@ Mainly **Pascal, C, Java**, and others.
 * 2009.12.17: cuadrado.pas
 * 2010.05.31: factorial.pas, fibonacci.pas
 * 2010.09.19: CalcularNIF.pas
-* practica_07-08: Final assignment. See README.md in this directory for more information.
-* practica_08-09: Final assignment. See README.md in this directory for more information.
-* practica_09-10: Final assignment. See README.md in this directory for more information.
+* **practica_07-08**: Final assignment. See README.md in this directory for more information.
+* **practica_08-09**: Final assignment. See README.md in this directory for more information.
+* **practica_09-10**: Final assignment. See README.md in this directory for more information.
