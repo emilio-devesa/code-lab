@@ -32,7 +32,7 @@ La clase _Random_ debe ser importada, también forma parte del paquete _java.uti
 **Otras operaciones**  
 Dentro del método _partida_ hay dos secuencias de instrucciones que, sin ser complejas, nos conviene programar en métodos aparte. Así facilitamos la limpieza y la comprensión del código del método _partida()_ cuando lleguemos a él. La primera operación, por obvia, es _leerLetra()_. Debe recibir el input en los parámetros parámetros de la llamada y devolver un único carácter. Por supuesto, controlaremos las excepciones correspondientes, tal y como hicimos al leer las opciones del menú principal.
 
-![](images/ahoracado-leerLetra.png) 
+![](images/ahorcado-leerLetra.png) 
 
 Como la clase _Scanner_ no proporciona un método para leer el primer carácter, lo que hacemos es leer toda una línea (_nextLine()_), convertirla a minúsculas (_toLowerCase()_), y de ahí tomamos el carácter en la posición 0 (_charAt()_); En la clase _Character_ tenemos un método llamado _isLetter()_ que comprueba si un carácter dado es una letra, y no terminaremos el bucle de pedir letras mientras no obtengamos una.
 
